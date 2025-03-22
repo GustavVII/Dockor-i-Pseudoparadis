@@ -1,0 +1,81 @@
+{
+    "Loggbok": [
+        {
+            "dag": "1",
+            "datum": "3-11",
+            "tidSpenderad": "2:00",
+            "titel": "Projekt start",
+            "logg": "Startat projektet. Skapat grundläggande filer för projektet. Ytan består av 2 kanvas, en på topp och en på botten"
+        },
+        {
+            "dag": "2",
+            "datum": "3-12",
+            "tidSpenderad": "3:30",
+            "titel": "En kortlek",
+            "logg": "Med ett ritningsprogramm kallat paint.net har jag nu ritat grafik för spelkort. Jag har även laggt till kortleken till kanvaset nu, och senare en simpel spelare som kan skjuta på korten"
+        },
+        {
+            "dag": "3",
+            "datum": "3-13",
+            "tidSpenderad": "6:00",
+            "titel": "Trollkort",
+            "logg": "Jag har nu lagt till simpla trollkort, vars åbekallas med tangenten X. Samt har jag laggt till musik och en simpel inställningsmeny som hanterar ljudvolym. Även har jag laggt till att man kan vända på korten manuelt, eller när de träffas av skjutna kort."
+        },
+        {
+            "dag": "4",
+            "datum": "3-14",
+            "tidSpenderad": "7:00",
+            "titel": "Grafik och spawners",
+            "logg": "Den simpla spelaren har för övrigt fått en simpel grafik, samt skjuter den inte korten från ingenstans, utan från spesifika spawners. Dessa ökar i antal beroende på spelarens 'power level' som för närvarande manipuleras med dev tools. Lade även till en ring samt en mörk effekt när trollkort åbekallas"
+        },
+        {
+            "dag": "5",
+            "datum": "3-15",
+            "tidSpenderad": "9:00",
+            "titel": "Sortering och modularisering av kod",
+            "logg": "Tiden har kommit då jag lagt till mycket och inser att mycket som jag vill lägga till mer av är redan hårdkodat. Det mesta av min tid spenderades att ta funktioner från vissa centrala filer, och stoppa dem i sina egna filer för enklare hantering. Inte nog med det, behövde jag dra ut alla hårdkodade saker, som t.ex i funktionen för att kalla trollkort var ett enda kort hårdkodat in. Detta ändrades så att koden kan återanvändas för flera kort. Funktionen ansvarar nu endast för gemensamma grejer som ringen och den mörka effekten. Detta tog lång tid"
+        },
+        {
+            "dag": "6",
+            "datum": "3-16",
+            "tidSpenderad": "6:00",
+            "titel": "Finputsning av trollkortsgrafik",
+            "logg": "Jag valde att introducera porträtt som visas när trollkort åbekallas. Dessa dyker upp samt med en text som nämner vad trollkortet heter. Med det har jag även lagt till flera olika kort som lagras i en JSON fil. Även har jag laggt till flera olika karaktärer som OCKSÅ lagras i sin egna JSON fil, och där defineras vilket trollkort de använder"
+        },
+        {
+            "dag": "7",
+            "datum": "3-17",
+            "tidSpenderad": "2:00",
+            "titel": "Mer städande",
+            "logg": "Efter att ha visat vad jag gjort under lektionen, ritade jag för det mesta mer grafik under lektionen. Hemma sedan (arbetade inte mycket denna dag) sorterade jag filerna och kategoriserade dem mer, till exempel, filer för att rendera olika grejer hamna i en mapp, filer angående logik går in i ett annat ställe etc"
+        },
+        {
+            "dag": "8",
+            "datum": "3-18",
+            "tidSpenderad": "12:30",
+            "titel": "Återställning av oreda",
+            "logg": "Idag valde jag att sammanfoga båda kanvas till ett sort kanvas, för min syn för vad projektet skulle bli har ändrats. Nu har jag även skapat en devtools.js fil som ska innehålla saker för testande och som inte ska vara där när jag är färdig. Med mycket bråk med debugging, som att lista ut och fixa varför slowdown inte applicerades på spelaren, samt totalseparering av trollkortens textruta från porträttritaren, kan jag nu konstatera att projektet är exakt 2453 linjer långt! (programmet som jag räknade med gav mig originellt 1098512 linjer, men det visade sig att den räknade linjerna i musiken (???) så jag behövde manuellt räkna bort det)"
+        },
+        {
+            "dag": "9",
+            "datum": "3-19",
+            "tidSpenderad": "4:30",
+            "titel": "Fuck you CORS policy",
+            "logg": "CORS, som står för 'Cross-origin resource sharing', är en policy i chromium baserade browsers som hanterar vad en browser laddar eller inte. Normalt sätt är detta inte ett problem när jag kodad i en live server (localhost protocoll, eller 127.0.0.1:5500), men nu när jag öppnar med file:// protocollet visar det sig att json filer plötsligt är olagliga. Detta har tvingat mig ändra alla json filer till .js och deklarera datan som en array av konstanter, suck. Detta har fått mig att investera min tid inom forskning om jag kan tillverka ett C# program som kan ladda html filen istället, vilket både skippar CORS och ger in fin liten gamewindow. Spelkoden kommer fortfarande vara i JavaScript, men själva fönstret kommer vara i C i en .exe fil. Under dagens lektion ritade jag för det mesta grafik, specifikt ett porträtt för den 2a karaktären. Jag har nu också valt att ändra skalan på kanvas tillbaka till 1x (istället för 2x som innan), vilket ger mig mer plats att arbeta med. Om jag vill ha större grafik, pga en bugg som gör bilder blurriga om jag kallar in dem med dubbla storlek, gör jag bara bilden så stor som jag vill ha, så pixlarna blir 2x2 på själva bildfilen"
+        },
+        {
+            "dag": "10",
+            "datum": "3-20",
+            "tidSpenderad": "2:30",
+            "titel": "Stjärnfall, färglada stjärnor",
+            "logg": "Dagens arbete har givit den första alternativa eldtyp. Karaktärer kan nu skjuta stjärnor, och det är en karaktär som kommer att använda dessa mycket. Nu dessa stjärnor kan defineras med vilken färg man vill (av 8), i vilken orning de skjuts, och från vilken åbekallelsering som man vill. Heller, dessa stjärnor sjuter inte bara rakt up, utan de skjuter lite diagonalt. Jag kan definera och har full kontroll över vilken vinkel de avfyras i. För övrigt, jag är uppe i 23 filer som ansvarar alla för varsin del"
+        },
+        {
+            "dag": "11",
+            "datum": "3-21",
+            "tidSpenderad": "2:00",
+            "titel": "En inladdningsgrafik",
+            "logg": "Stor trötthet slog mig idag, venne varför. Lite arbete kom till, men en grundläggande startknapp samt en inladdningsskärm har lagits till. Temporärt använder jag en annan bild för att hålla testa, för grafiken är ganska stor och jag är osäker på temat på inladdningsbilden ska vara (även om man bara ser den i 2s, kanske 5s på en slö enhet)"
+        }
+    ]
+}
