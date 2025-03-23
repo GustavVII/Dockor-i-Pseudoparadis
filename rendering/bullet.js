@@ -10,6 +10,5 @@ class BulletRenderer {
     }
 }
 
-// Create an instance of BulletRenderer
 const bulletRenderer = new BulletRenderer();
 window.bulletRenderer = bulletRenderer;

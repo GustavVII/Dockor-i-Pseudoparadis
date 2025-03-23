@@ -12,10 +12,23 @@ const cards = [];
 const CARD_WIDTH = 20;
 const CARD_HEIGHT = 30;
 
+const cardImages = new Map();
+
 // Ladda in Back.png som en gemensam bild för baksidan av korten
 let backImage = null;
 async function loadBackImage() {
     backImage = await loadImage('assets/graphics/cards/Back.png');
+}
+
+async function loadCardImages() {
+    for (const suit of suits) {
+        for (let number = startNumber; number <= endNumber; number++) {
+            const image = await loadImage(`assets/graphics/cards/${suit}${number}.png`);
+            cardImages.set(`${suit}${number}`, image);
+            console.log(`Loaded image for ${suit}${number}`); // Debugging log
+        }
+    }
+    console.log('All card images loaded:', cardImages); // Debugging log
 }
 
 // Funktion för att rita in kort
@@ -62,56 +75,8 @@ function updateCardAnimation(card) {
     }
 }
 
-// Ladda in korten
-async function initializeCards() {
-    // Ladda Back.png first
-    await loadBackImage();
-    
-    let x = 0;
-    let y = 0;
-
-    // Skapa alla kort
-    for (const suit of suits) {
-        for (let number = startNumber; number <= endNumber; number++) {
-            // Tvinga flytta korten till nästa rad
-            if (x + CARD_WIDTH > canvas.width) {
-                x = 0;
-                y += CARD_HEIGHT + 5; // Radmellanrum
-            }
-
-            const card = createCard(suit, number, x, y);
-            card.image = await loadImage(`assets/graphics/cards/${suit}${number}.png`);
-
-            cards.push(card);
-
-            x += CARD_WIDTH + 5; // Mellanrum mellan på bred kort
-        }
-
-        x = 0;
-        y += CARD_HEIGHT + 5;
-    }
-
-    // Blanda kort i slumpmässig ordning
-    //shuffleArray(cards);
-
-    let index = 0;
-    for (let row = 0; row < 4; row++) {
-        for (let col = 0; col < 13; col++) {
-            if (index < cards.length) {
-                cards[index].x = col * (CARD_WIDTH + 5);
-                cards[index].y = row * (CARD_HEIGHT + 5);
-                index++;
-            }
-        }
-    }
-
-    renderCards(ctx);
-}
-
-
 // Funktion att visa alla kort på rätt kanvas
 function renderCards(ctx) {
-    
     const cardsOnCanvas = cards.filter(card => card.canvas);
 
     cardsOnCanvas.forEach(card => {
@@ -166,7 +131,6 @@ function loadImage(src) {
 
 // Funktion att framkalla kort
 function spawnCard(x, y, suit = null, number = null, isFaceDown = false, flipped180 = false) {
-
     const adjustedX = x;
     const adjustedY = y;
 
@@ -195,8 +159,13 @@ function spawnCard(x, y, suit = null, number = null, isFaceDown = false, flipped
         cards.push(card); // Lägg till kort i array
         console.log(`Kort tillagt i array: ${suit}${number} vid (${adjustedX}, ${adjustedY}) på kanvaset`);
         console.log('Kort för närvarande i array:', cards);
-
     }).catch((error) => {
         console.error('Fel i bildinladdning:', error);
     });
 }
+
+// Expose functions to the global scope
+window.spawnCard = spawnCard;
+window.renderCards = renderCards;
+window.updateCardAnimation = updateCardAnimation;
+window.cardImages = cardImages;

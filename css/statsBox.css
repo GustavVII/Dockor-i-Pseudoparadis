@@ -1,0 +1,63 @@
+#statsBox {
+    font-family: Arial, sans-serif;
+    font-size: 20px;
+    margin-left: 10px;
+    width: 300px;
+    height: 674px; 
+    border: 0px; 
+    color: white;
+    padding: 10px;
+    box-sizing: border-box;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Align text to the left */
+    justify-content: flex-start; /* Align content to the top */
+    text-align: left;
+    background-color: rgba(0, 0, 0, 0.5);
+    user-select: none;
+    pointer-events: none;
+  }
+  
+  #statsBox hr {
+    width: 100%;
+    border: 1px solid white;
+    margin: 10px 0;
+  }
+  
+  #statsBox div {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  
+  #statsBox span {
+    display: inline-block;
+  }
+  
+  /* Star styling for lives and bombs */
+  #statsBox .star {
+    display: inline-block;
+    width: 24px; /* Set the width of the star images */
+    height: 24px; /* Set the height of the star images */
+    margin-right: 5px; /* Add some spacing between stars */
+  }
+
+  #statsBox .player-text {
+    color: darkred;
+    text-shadow: 
+      -1px -1px 0 black,  
+       1px -1px 0 black,
+      -1px  1px 0 black,
+       1px  1px 0 black;
+  }
+
+  #statsBox .bomb-text {
+    color: darkgreen;
+    text-shadow: 
+      -1px -1px 0 black,  
+       1px -1px 0 black,
+      -1px  1px 0 black,
+       1px  1px 0 black;
+  }

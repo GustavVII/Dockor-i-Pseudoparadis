@@ -1,20 +1,18 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Add event listener to the start button
+    // Händelseavlyssnare för knappen
     document.getElementById('startButton').addEventListener('click', () => {
-        // Hide the start screen
+        // Göm laddningsskrämen
         document.getElementById('startScreen').style.display = 'none';
-        // Start the game initialization
         init();
     });
 });
 
 async function init() {
-    // Show the loading screen
+    // Visa laddningsskärmen
     const loadingScreen = document.getElementById('loadingScreen');
     loadingScreen.style.display = 'flex';
 
-    // Initialize game components
-    console.log("Adding event listeners for keyboard input...");
+    console.log("Tillägger händelseavlyssnare");
     window.addEventListener('keydown', (e) => {
         handleKeyDown(e);
     });
@@ -23,23 +21,40 @@ async function init() {
         handleKeyUp(e);
     });
 
-    await initializeCards();
     await initializeSoundEffects();
 
     createOptionsMenu();
-    playMusic();
 
     await spawnerManager.loadSpawnerImages();
-    await spellcardManager.loadSpellcards();
-    await laserManager.loadAssets();
+    await loadCardImages();
+    await loadBackImage();
+    shotTypeManager.laserImages = {
+        start: await loadImage('assets/graphics/bullets/lasers/laser1.png'),
+        middle: await loadImage('assets/graphics/bullets/lasers/laser2.png'),
+        end: await loadImage('assets/graphics/bullets/lasers/laser3.png'),
+    };
     shotTypeManager.starImages = await loadStarImages();
 
     window.characterManager.setCharacter('Murasa');
     updateStatsBox();
 
-    // Force a 1-second delay before hiding the loading screen and showing the main menu
+    // Temporär tvångst av en extra sekund av inladding 
+    // för att se att den laddar in korrekt
     setTimeout(() => {
         loadingScreen.style.display = 'none';
-        startMainMenu(); // Start the main menu
-    }, 1000); // 1000ms = 1 second
+        stopGameMusic();
+        startMainMenu(); // Skicka till huvudmenyn
+    }, 1000);
 }
+
+// Function to start the game
+function startGame() {
+    // Initialize Level 1
+    initializeLevel(level1Data);
+
+    // Start the game loop
+    requestAnimationFrame(gameLoop);
+}
+
+// Expose the startGame function to the global scope
+window.startGame = startGame;

@@ -8,10 +8,10 @@ class ShotTypeManager {
         this.shotTypes = shotTypesData.shotTypes;
         this.focusMode = false;
 
-        this.bullets = [];
         this.starImages = []; // Array to store star images
-        this.spawnerColorIndices = {}; // Track color indices per spawner        
+        this.spawnerColorIndices = {}; // Track color indices per spawner
     }
+
 
     // Set the current shot type
     setShotType(shotType) {
@@ -91,6 +91,7 @@ class ShotTypeManager {
         } else {
             playSoundEffect(soundEffects.shot);
         }
+        updateScore(100);
 
         // Get spawn positions based on the current shot type and power level
         const spawnPositions = this.getSpawnPositions();
@@ -106,9 +107,16 @@ class ShotTypeManager {
 
             switch (shotType.behavior) {
                 case "shootCards":
-                    const randomCard = cards[Math.floor(Math.random() * cards.length)];
-                    const cardBullet = new CardBullet(x, y, 15, randomCard);
-                    this.bullets.push(cardBullet);
+                    // Get a random card from the suits and numbers
+                    const suit = suits[Math.floor(Math.random() * suits.length)];
+                    const number = Math.floor(Math.random() * (endNumber - startNumber + 1)) + startNumber;
+
+                    // Create a card object with the correct properties
+                    const card = { suit, number };
+
+                    // Create the card bullet and add it to the BulletManager
+                    const cardBullet = new CardBullet(x, y, 15, card);
+                    bulletManager.addBullet(cardBullet); // Add to BulletManager
                     break;
 
                 case "shootStars":
@@ -121,9 +129,15 @@ class ShotTypeManager {
                     const color = colors[this.spawnerColorIndices[index] % colors.length];
                     this.spawnerColorIndices[index]++; // Increment the color index for this spawner
 
-                    // Create the star bullet with the selected color
+                    // Create the star bullet and add it to the BulletManager
                     const starBullet = new StarBullet(x, y, 15, this.starImages, angle, color);
-                    this.bullets.push(starBullet);
+                    bulletManager.addBullet(starBullet); // Add to BulletManager
+                    break;
+
+                case "shootLaser":
+                    // Create a laser bullet and add it to the BulletManager
+                    const laser = new Laser(x, y, 12, 32, 32, this.laserImages.middle);
+                    bulletManager.addBullet(laser); // Add to BulletManager
                     break;
 
                 // Add more cases for other bullet types
@@ -134,48 +148,6 @@ class ShotTypeManager {
         if (!ignoreCooldown) {
             this.cooldownCounter = this.cooldownFrames;
         }
-    }
-
-    // Update bullet positions and handle collisions
-    updateBullets() {
-        for (let i = this.bullets.length - 1; i >= 0; i--) {
-            const bullet = this.bullets[i];
-            bullet.update();
-
-            // Check collisions between bullets and static cards
-            for (let j = cards.length - 1; j >= 0; j--) {
-                const card = cards[j];
-                if (this.checkCollision(bullet, card)) {
-                    if (card.flipCooldown <= 0) {
-                        playSoundEffect(soundEffects.hit);
-
-                        card.isAnimating = true;
-                        card.targetScaleX = 0;
-                        card.flipCooldown = 60;
-                        incrementFlipCounter();
-
-                        if (!bullet.isSpellcard) {
-                            this.bullets.splice(i, 1);
-                        }
-                    }
-                }
-            }
-
-            // Remove bullets that go off-screen
-            if (bullet.isOffScreen()) {
-                this.bullets.splice(i, 1);
-            }
-        }
-    }
-
-    // Check collision between a bullet and a card
-    checkCollision(bullet, card) {
-        return (
-            bullet.x < card.x + CARD_WIDTH &&
-            bullet.x + bullet.width > card.x &&
-            bullet.y < card.y + CARD_HEIGHT &&
-            bullet.y + bullet.height > card.y
-        );
     }
 }
 

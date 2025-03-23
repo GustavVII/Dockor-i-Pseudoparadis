@@ -7,7 +7,11 @@ class CardBullet {
         this.width = 32; // Card width
         this.height = 32; // Card height;
 
-        // Debug: Log the card image
+        // Ensure the card image is loaded from the cache
+        this.image = window.cardImages.get(`${card.suit}${card.number}`); // Use window.cardImages
+        if (!this.image) {
+            console.error(`Card image for ${card.suit}${card.number} is missing or not loaded.`);
+        }
     }
 
     update() {
@@ -15,9 +19,9 @@ class CardBullet {
     }
 
     render(ctx) {
-        if (this.card.image) {
+        if (this.image) {
             ctx.drawImage(
-                this.card.image,
+                this.image,
                 0, 0, 32, 32, // Source rectangle (from the card image)
                 this.x, this.y, this.width, this.height // Destination rectangle (on the canvas)
             );

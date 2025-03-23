@@ -1,3 +1,5 @@
+// soundHandler.js
+
 // Ljudeffekter
 const soundEffects = {
     shot: null,
@@ -39,7 +41,17 @@ async function initializeSoundEffects() {
     }
 }
 
+// Stop the game music
+function stopGameMusic() {
+    if (window.gameMusic) {
+        window.gameMusic.pause();
+        window.gameMusic.currentTime = 0; // Reset the music to the beginning
+        window.gameMusic = null; // Unload the music to save memory
+    }
+}
+
 // Export functions for use in other files
 window.playSoundEffect = playSoundEffect;
 window.initializeSoundEffects = initializeSoundEffects;
 window.soundEffects = soundEffects; // Export soundEffects for use elsewhere
+window.stopGameMusic = stopGameMusic; // Export stopGameMusic

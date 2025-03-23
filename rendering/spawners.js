@@ -7,15 +7,13 @@ class SpawnerManager {
         this.animationSpeed = 2;
         this.baseAnimationSpeed = 2;
 
-        // Track spawner positions for smooth transitions
         this.currentSpawnerPositions = [];
         this.targetSpawnerPositions = [];
         this.transitionStartTime = 0;
-        this.transitionDuration = 30; // Transition duration in milliseconds
+        this.transitionDuration = 30;
         this.elapsedTime = 0;
     }
 
-    // Load images
     async loadSpawnerImages() {
         for (let i = 1; i <= this.NUM_ANIMATION_FRAMES; i++) {
             const image = await loadImage(`assets/graphics/spawners/spawn${i}.png`);
@@ -50,22 +48,18 @@ class SpawnerManager {
         }
     }
 
-    // Update spawner positions for smooth transitions
     updateSpawnerPositions() {
         if (this.currentSpawnerPositions.length === 0) {
-            // Initialize current positions if empty
             this.currentSpawnerPositions = this.targetSpawnerPositions;
             return;
         }
     
-        // Increment elapsed time by the frame time
         this.elapsedTime += frameTime;
     
     
         if (this.elapsedTime < this.transitionDuration) {
             const progress = this.elapsedTime / this.transitionDuration;
     
-            // Interpolate between current and target positions
             this.currentSpawnerPositions = this.currentSpawnerPositions.map((currentPos, index) => {
                 const targetPos = this.targetSpawnerPositions[index];
                 return {
@@ -74,19 +68,14 @@ class SpawnerManager {
                 };
             });
         } else {
-            // Transition complete, snap to target positions
             this.currentSpawnerPositions = this.targetSpawnerPositions;        }
     }
 
-    // Set target spawner positions and start transition
     setSpawnerPositions(spawnPositions) {
-        // Reset current positions to the current rendered positions
         this.currentSpawnerPositions = this.currentSpawnerPositions.map(pos => ({ ...pos }));
     
-        // Set new target positions
         this.targetSpawnerPositions = spawnPositions.map(pos => ({ ...pos }));
     
-        // Reset elapsed time for the new transition
         this.elapsedTime = 0;
     }
 
@@ -95,7 +84,6 @@ class SpawnerManager {
             return;
         }
     
-        // Update spawner positions for smooth transitions
         this.updateSpawnerPositions();
     
         const currentImageIndex = this.getCurrentSpawnerImageIndex();

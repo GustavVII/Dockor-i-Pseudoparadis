@@ -1,0 +1,17 @@
+.canvas-container {
+    display: flex;
+    flex-direction: column;
+    z-index: 1; /* Ensure the canvas is above the background */
+  }
+  
+  canvas {
+    border: 2px solid #000;
+    margin-left: 50px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    background-color: #d4d0c8;
+    image-rendering: crisp-edges;
+    image-rendering: pixelated;
+    border: 0px solid #2d0080;
+    display: block;
+  }

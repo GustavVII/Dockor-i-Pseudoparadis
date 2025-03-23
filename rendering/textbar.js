@@ -1,31 +1,29 @@
 class TextBarManager {
     constructor() {
         this.isActive = false;
-        this.text = ''; // Spellcard name
-        this.x = -300; // Start off-screen to the left
-        this.y = 520; // Vertical position (will be updated)
-        this.targetY = 0; // Target Y position for smooth movement
-        this.width = 240; // Width of the text bar
-        this.height = 30; // Height of the text bar
+        this.text = '';
+        this.x = -300;
+        this.y = 520;
+        this.targetY = 0;
+        this.width = 240;
+        this.height = 30;
         this.opacity = 1;
-        this.slideInTime = 500; // Time to slide in
-        this.moveDownTime = 500; // Time to move to the bottom
-        this.slideOutTime = 500; // Time to slide out after spellcard ends
+        this.slideInTime = 500;
+        this.moveDownTime = 500;
+        this.slideOutTime = 500;
 
-        // Animation phases
-        this.animationPhase = 'slideIn'; // Phases: slideIn, moveDown, stay, slideOut
-        this.startTime = 0; // Track timing for text bar animations
+        this.animationPhase = 'slideIn';
+        this.startTime = 0;
     }
 
     start(spellcardName) {
         this.isActive = true;
         this.text = spellcardName;
-        this.x = -300; // Start off-screen to the left
+        this.x = -300;
         this.y = 520;
-        this.targetY = 0; // Will be updated during animation
+        this.targetY = 0;
         this.opacity = 1;
 
-        // Initialize text bar animation
         this.animationPhase = 'slideIn';
         this.startTime = performance.now();
     }
@@ -38,13 +36,12 @@ class TextBarManager {
 
         switch (this.animationPhase) {
             case 'slideIn':
-                // Slide in from the left over 0.5 seconds
                 if (elapsedTime < this.slideInTime) {
-                    this.x = -300 + (elapsedTime / this.slideInTime) * 320; // Move to x = 0
+                    this.x = -300 + (elapsedTime / this.slideInTime) * 320;
                 } else {
-                    this.x = 20; // Final position
+                    this.x = 20; //Slutposition
                     this.animationPhase = 'stay';
-                    this.startTime = currentTime; // Reset timer for the next phase
+                    this.startTime = currentTime;
                     
                 }
                 break;
@@ -52,36 +49,33 @@ class TextBarManager {
             case 'stay':
                 if (elapsedTime >= 1000) {
                     this.animationPhase = 'moveDown';
-                    this.startTime = currentTime; // Reset timer for the next phase
+                    this.startTime = currentTime;
                 }
                 break;
 
             case 'moveDown':
-                // Move the text bar to the bottom over 0.5 seconds
                 if (elapsedTime < this.moveDownTime) {
-                    this.targetY = canvas.height - this.height - 20; // Target Y position
-                    this.y += (this.targetY - this.y) * 0.1; // Smooth movement
+                    this.targetY = canvas.height - this.height - 20;
+                    this.y += (this.targetY - this.y) * 0.1;
                 } else {
-                    this.y = this.targetY; // Snap to final position
+                    this.y = this.targetY;
                     this.animationPhase = 'secondStay';
-                    this.startTime = currentTime; // Reset timer for the next phase
+                    this.startTime = currentTime;
                 }
                 break;
 
             case 'secondStay':
-                // Stay on screen for 3 seconds
                 if (elapsedTime >= 4500) {
                     this.animationPhase = 'slideOut';
-                    this.startTime = currentTime; // Reset timer for the next phase
+                    this.startTime = currentTime;
                 }
                 break;
 
             case 'slideOut':
-                // Slide out to the bottom over 0.5 seconds
                 if (elapsedTime < this.slideOutTime) {
-                    this.y += 2; // Slide out to the bottom
+                    this.y += 2;
                 } else {
-                    this.isActive = false; // Deactivate text bar when off-screen
+                    this.isActive = false;
                 }
                 break;
         }
@@ -93,11 +87,11 @@ class TextBarManager {
         ctx.save();
         ctx.globalAlpha = this.opacity;
 
-        // Draw the red rectangle
+        // En liten röd rektangel
         ctx.fillStyle = 'red';
         ctx.fillRect(this.x, this.y, this.width, this.height);
 
-        // Draw the white text with black outline
+        // Med vit text och svart ytterkant
         ctx.font = '16px Arial';
         ctx.fillStyle = 'white';
         ctx.strokeStyle = 'black';
@@ -111,5 +105,4 @@ class TextBarManager {
     }
 }
 
-// Create an instance of TextBarManager
 const textBarManager = new TextBarManager();

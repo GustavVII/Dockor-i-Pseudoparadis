@@ -76,6 +76,13 @@
             "tidSpenderad": "2:00",
             "titel": "En inladdningsgrafik",
             "logg": "Stor trötthet slog mig idag, venne varför. Lite arbete kom till, men en grundläggande startknapp samt en inladdningsskärm har lagits till. Temporärt använder jag en annan bild för att hålla testa, för grafiken är ganska stor och jag är osäker på temat på inladdningsbilden ska vara (även om man bara ser den i 2s, kanske 5s på en slö enhet)"
+        },
+        {
+            "dag": "12",
+            "datum": "3-22",
+            "tidSpenderad": "10:00",
+            "titel": "Menyer och stormodularisering",
+            "logg": "Dagens arbete har ledat till att jag laggt till en massa menyer, som en startmeny, en meny för pausskärnm sant har jag refaktorerat i förberedelse till att lägga till en massa nivåer. Grafikritning har tagit ett bra tag, då jag ritat in mer till bakgrund. Statsboxen vid sidan har fått en hel makeover och har nu det mesta som den slutliga versionen har, även räknare för saker som inte kommer att finnas på ett bra tag. Jag har även gort en total refaktorering av musikspelaren. Menyerna har så himlans många problem och buggar, jobbiga att rensa och fixa, och sedan så visar det sig att fixen gav 3 nya buggar, suck. Hopsan, nu paja jag laserstrålarna. Få fixa det imorg-... fan klockan är ett nästa dag redan. Glömde nämna jag gjorde en GitHub repo för projektet"
         }
     ]
 }
