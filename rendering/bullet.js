@@ -9,6 +9,3 @@ class BulletRenderer {
         });
     }
 }
-
-const bulletRenderer = new BulletRenderer();
-window.bulletRenderer = bulletRenderer;

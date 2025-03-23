@@ -133,10 +133,8 @@ function handleInput() {
         shotTypeManager.shoot(false, false, characterManager.cursor);
     }
 
-    // Trollkortsåbekallning (only if pause menu is not active)
-    if ((keys.x || keys.X) && !spellcardManager.isSpellcardActive && !pauseMenuActive) {
-        spellcardManager.invokeSpellcard('', characterManager.cursor);
-        spellcardManager.isSpellcardActive = true;
+    if ((keys.x || keys.X) && !pauseMenuActive && !characterManager.isSpellcardActive) {
+        spellcardManager.invokeSpellcard(characterManager.currentCharacter.name);
     }
 
     // Tag bort detta senare; för testande

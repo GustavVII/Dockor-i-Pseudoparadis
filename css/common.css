@@ -14,7 +14,7 @@ body {
   display: flex;
   width: 960px; /* Set the width explicitly */
   height: 720px; /* Set the height explicitly */
-  border: 3px solid #2d0080;
+  border: 2px solid #2d0080;
   align-items: center; 
   transform: scale(1) translateY(5%);
   transform-origin: top center;

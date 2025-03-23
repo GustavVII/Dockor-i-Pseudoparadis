@@ -104,5 +104,3 @@ class TextBarManager {
         ctx.restore();
     }
 }
-
-const textBarManager = new TextBarManager();

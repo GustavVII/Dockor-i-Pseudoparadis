@@ -16,20 +16,6 @@ const cardImages = new Map();
 
 // Ladda in Back.png som en gemensam bild för baksidan av korten
 let backImage = null;
-async function loadBackImage() {
-    backImage = await loadImage('assets/graphics/cards/Back.png');
-}
-
-async function loadCardImages() {
-    for (const suit of suits) {
-        for (let number = startNumber; number <= endNumber; number++) {
-            const image = await loadImage(`assets/graphics/cards/${suit}${number}.png`);
-            cardImages.set(`${suit}${number}`, image);
-            console.log(`Loaded image for ${suit}${number}`); // Debugging log
-        }
-    }
-    console.log('All card images loaded:', cardImages); // Debugging log
-}
 
 // Funktion för att rita in kort
 function createCard(suit, number, x, y) {
@@ -79,6 +65,9 @@ function updateCardAnimation(card) {
 function renderCards(ctx) {
     const cardsOnCanvas = cards.filter(card => card.canvas);
 
+    // Use the preloaded Back.png image from assetLoader
+    const backImage = assetLoader.getImage('cardBack');
+
     cardsOnCanvas.forEach(card => {
         updateCardAnimation(card); // Uppdatera kortanimation
 
@@ -119,16 +108,6 @@ function renderCards(ctx) {
     });
 }
 
-// Bildinladdningsfunktion
-function loadImage(src) {
-    return new Promise((resolve, reject) => {
-        const img = new Image();
-        img.src = src;
-        img.onload = () => resolve(img);
-        img.onerror = reject;
-    });
-}
-
 // Funktion att framkalla kort
 function spawnCard(x, y, suit = null, number = null, isFaceDown = false, flipped180 = false) {
     const adjustedX = x;
@@ -153,15 +132,17 @@ function spawnCard(x, y, suit = null, number = null, isFaceDown = false, flipped
     card.isFaceDown = isFaceDown; // Set face up/down
     card.flipped180 = flipped180; // Set flipped 180 degrees
 
-    // Ladda kortbild
-    loadImage(`assets/graphics/cards/${suit}${number}.png`).then((img) => {
-        card.image = img;
+    // Use the preloaded card image from assetLoader
+    const imageKey = `card${suit}${number}`;
+    card.image = assetLoader.getImage(imageKey);
+
+    if (!card.image) {
+        console.error(`Card image for ${suit}${number} not found in assetLoader.`);
+    } else {
         cards.push(card); // Lägg till kort i array
         console.log(`Kort tillagt i array: ${suit}${number} vid (${adjustedX}, ${adjustedY}) på kanvaset`);
         console.log('Kort för närvarande i array:', cards);
-    }).catch((error) => {
-        console.error('Fel i bildinladdning:', error);
-    });
+    }
 }
 
 // Expose functions to the global scope

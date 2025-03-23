@@ -1,5 +1,8 @@
+// portrait.js
+
 class PortraitManager {
-    constructor() {
+    constructor(characterManager) {
+        this.characterManager = characterManager; // Reference to CharacterManager
         this.portrait = null;
         this.isActive = false;
         this.opacity = 0;
@@ -12,15 +15,23 @@ class PortraitManager {
         this.fadeoutTime = 800;
     }
 
-    async loadPortrait(imagePath) {
-        try {
-            this.portrait = await loadImage(imagePath);
-        } catch (error) {
-            console.error('Failed to load portrait image:', error);
-        }
-    }
-
+    // Method to start the portrait animation
     start() {
+        const characterName = this.characterManager.currentCharacter?.name;
+        if (!characterName) {
+            console.error("No active character found.");
+            return;
+        }
+
+        // Load the portrait for the active character
+        const imageKey = `portrait${characterName}`;
+        this.portrait = assetLoader.getImage(imageKey);
+
+        if (!this.portrait) {
+            console.error(`Portrait image for "${characterName}" not found in assetLoader.`);
+            return;
+        }
+
         this.isActive = true;
         this.opacity = 0;
         this.x = -200;
@@ -30,6 +41,7 @@ class PortraitManager {
         this.animationPhase = 'slideIn';
     }
 
+    // Method to update the portrait animation
     update() {
         if (!this.isActive) return;
 
@@ -38,7 +50,6 @@ class PortraitManager {
 
         switch (this.animationPhase) {
             case 'slideIn':
-                
                 if (elapsedTime < 500) {
                     this.x = -200 + (elapsedTime / 500) * 328;
                     this.opacity = 0.7;
@@ -58,7 +69,7 @@ class PortraitManager {
 
             case 'fadeOut':
                 if (elapsedTime < this.fadeoutTime) {
-                    // Zoom och uttoning
+                    // Zoom and fade out
                     this.opacity = 0.8 - (elapsedTime / this.fadeoutTime) * 1.2;
                     this.width = 256 + (elapsedTime / this.fadeoutTime) * 256;
                     this.height = 256 + (elapsedTime / this.fadeoutTime) * 256;
@@ -69,6 +80,7 @@ class PortraitManager {
         }
     }
 
+    // Method to render the portrait
     render(ctx) {
         if (!this.isActive || !this.portrait) return;
 
@@ -96,5 +108,3 @@ class PortraitManager {
         ctx.restore();
     }
 }
-
-const portraitManager = new PortraitManager();

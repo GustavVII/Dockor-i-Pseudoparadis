@@ -1,6 +1,6 @@
 // soundHandler.js
 
-// Ljudeffekter
+// Sound effects
 const soundEffects = {
     shot: null,
     hit: null,
@@ -9,25 +9,30 @@ const soundEffects = {
     laser: null, // Add laser sound effect
 };
 
-// Funktion att ladda ljudeffekt
+// Function to load a sound effect
 async function loadSoundEffect(src) {
     return new Promise((resolve, reject) => {
         const audio = new Audio(src);
         audio.oncanplaythrough = () => resolve(audio);
-        audio.onerror = reject;
+        audio.onerror = (error) => {
+            console.error(`Failed to load sound effect: ${src}`, error);
+            reject(error);
+        };
     });
 }
 
-// Och för att spela den
+// Function to play a sound effect
 function playSoundEffect(sound) {
-    if (sound) {
-        sound.currentTime = 0;
-        sound.volume = getSfxVolume(); // Use the volume from the options menu
+    if (sound && sound.play) {
+        sound.currentTime = 0; // Reset the sound to the beginning
+        sound.volume = getSfxVolume(); // Apply the current SFX volume
         sound.play();
+    } else {
+        console.error("Invalid sound object:", sound);
     }
 }
 
-// Ladda ljudeffekterna
+// Load all sound effects
 async function initializeSoundEffects() {
     try {
         soundEffects.shot = await loadSoundEffect('assets/sfx/shot.wav');
@@ -35,7 +40,7 @@ async function initializeSoundEffects() {
         soundEffects.spellcard = await loadSoundEffect('assets/sfx/spellcard.wav');
         soundEffects.powershot = await loadSoundEffect('assets/sfx/powershot.wav');
         soundEffects.laser = await loadSoundEffect('assets/sfx/laser.wav'); // Load laser sound effect
-        console.log('All sound effects loaded successfully.');
+        console.log('All sound effects loaded successfully:', soundEffects);
     } catch (error) {
         console.error('Failed to load sound effects:', error);
     }

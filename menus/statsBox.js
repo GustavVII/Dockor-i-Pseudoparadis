@@ -26,6 +26,8 @@ function updateStatsBox() {
         if (statsBox) {
             // High Score and Score
             statsBox.innerHTML = `
+                <br>
+                <br>
                 <div style="display: flex; justify-content: space-between;">
                     <span>High Score</span>
                     <span>${padNumber(highScore, 9)}</span>
@@ -34,7 +36,7 @@ function updateStatsBox() {
                     <span>Score</span>
                     <span>${padNumber(score, 9)}</span>
                 </div>
-                <hr>
+                <br>
                 <div style="display: flex; justify-content: space-between;">
                     <span class="player-text">Player</span>
                     <span>${generateStars(playerLives - 1, 'health')}</span>
@@ -43,7 +45,7 @@ function updateStatsBox() {
                     <span class="bomb-text">Bomb</span>
                     <span>${generateStars(bombs, 'bomb')}</span>
                 </div>
-                <hr>
+                <br>
                 <div style="display: flex; justify-content: space-between;">
                     <span>Power</span>
                     <span>${power}</span>

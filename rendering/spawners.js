@@ -12,14 +12,26 @@ class SpawnerManager {
         this.transitionStartTime = 0;
         this.transitionDuration = 30;
         this.elapsedTime = 0;
+
+        // Initialize spawner images
     }
 
     async loadSpawnerImages() {
-        for (let i = 1; i <= this.NUM_ANIMATION_FRAMES; i++) {
-            const image = await loadImage(`assets/graphics/spawners/spawn${i}.png`);
-            this.spawnerImages.push(image);
+        try {
+            for (let i = 1; i <= 4; i++) {
+                const imageKey = `spawner${i}`;
+                const image = assetLoader.getImage(imageKey);
+                if (image) {
+                    this.spawnerImages.push(image);
+                } else {
+                    console.error(`Spawner image "${imageKey}" not found in assetLoader.`);
+                }
+            }
+            this.spawnerImagesLoaded = true;
+            console.log("Spawner images loaded successfully:", this.spawnerImages);
+        } catch (error) {
+            console.error("Failed to load spawner images:", error);
         }
-        this.spawnerImagesLoaded = true;
     }
 
     updateAnimation() {
@@ -56,7 +68,6 @@ class SpawnerManager {
     
         this.elapsedTime += frameTime;
     
-    
         if (this.elapsedTime < this.transitionDuration) {
             const progress = this.elapsedTime / this.transitionDuration;
     
@@ -68,14 +79,13 @@ class SpawnerManager {
                 };
             });
         } else {
-            this.currentSpawnerPositions = this.targetSpawnerPositions;        }
+            this.currentSpawnerPositions = this.targetSpawnerPositions;
+        }
     }
 
     setSpawnerPositions(spawnPositions) {
         this.currentSpawnerPositions = this.currentSpawnerPositions.map(pos => ({ ...pos }));
-    
         this.targetSpawnerPositions = spawnPositions.map(pos => ({ ...pos }));
-    
         this.elapsedTime = 0;
     }
 
@@ -102,5 +112,3 @@ class SpawnerManager {
         });
     }
 }
-
-const spawnerManager = new SpawnerManager();

@@ -150,7 +150,3 @@ class ShotTypeManager {
         }
     }
 }
-
-// Create an instance of ShotTypeManager
-const shotTypeManager = new ShotTypeManager();
-window.shotTypeManager = shotTypeManager;

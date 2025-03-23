@@ -1,3 +1,5 @@
+// gameLoop.js
+
 function gameLoop(currentTime) {
     deltaTime = currentTime - lastTime;
 
@@ -19,45 +21,34 @@ function gameLoop(currentTime) {
 
             spawnerManager.updateAnimation();
 
-            // Handle screen shake
-            let shakeOffset = { x: 0, y: 0 };
-            if (spellcardManager.isSpellcardActive) {
-                shakeOffset = spellcardManager.updateShake();
-            }
-
             // Apply screen shake
-            ctx.translate(shakeOffset.x, shakeOffset.y);
+            spellcardManager.applyScreenShake(ctx);
 
             renderCards(ctx, canvas);
             bulletManager.update(); // Update all bullets
-            Laser.updateLasers();
             bulletManager.render(ctx); // Render all bullets
 
             // Stop screen shake so that the darkening layer doesn't shake
             ctx.setTransform(1, 0, 0, 1, 0, 0);
 
+            // Update and render the darkening layer
+            spellcardManager.updateDarkeningLayer();
             spellcardManager.renderDarkeningLayer(ctx);
 
-            // Re-enable screen shake
-            ctx.translate(shakeOffset.x, shakeOffset.y);
+            // Update and render the portrait
+            portraitManager.update();
+            portraitManager.render(ctx);
 
             characterManager.renderCursor();
             spawnerManager.renderSpawners(ctx, characterManager.cursor, shotTypeManager.powerLevel);
-            spellcardManager.renderSpellcardRing(ctx);
 
             // Stop shaking again so that portraits, text, etc., don't shake
             ctx.setTransform(1, 0, 0, 1, 0, 0);
 
             shotTypeManager.updateCooldown();
-            spellcardManager.updateSpellcardRing();
-            spellcardManager.updateDarkeningLayer();
 
-            portraitManager.update();
-            portraitManager.render(ctx);
             textBarManager.update();
             textBarManager.render(ctx);
-
-            spellcardManager.checkSpellcardEnd(characterManager.cursor);
         }
 
         lastTime = currentTime;

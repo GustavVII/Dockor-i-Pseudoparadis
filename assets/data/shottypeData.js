@@ -87,6 +87,50 @@ const shotTypesData = {
                     ]
                 }
             }
+        },
+        {
+            "name": "Laser",
+            "behavior": "shootLaser",
+            "spawnPositions": {
+                "powerLevel0": [
+                    { "xOffset": 0, "yOffset": -20 }
+                ],
+                "powerLevel1": [
+                    { "xOffset": -16, "yOffset": -20 },
+                    { "xOffset": 16, "yOffset": -20 }
+                ],
+                "powerLevel2": [
+                    { "xOffset": -30, "yOffset": -10 },
+                    { "xOffset": 0, "yOffset": -20 },
+                    { "xOffset": 30, "yOffset": -10 }
+                ],
+                "powerLevel3": [
+                    { "xOffset": -40, "yOffset": 0 },
+                    { "xOffset": -16, "yOffset": -20 },
+                    { "xOffset": 16, "yOffset": -20 },
+                    { "xOffset": 40, "yOffset": 0 }
+                ],
+                "focus": {
+                    "powerLevel0": [
+                        { "xOffset": 0, "yOffset": -10 }
+                    ],
+                    "powerLevel1": [
+                        { "xOffset": -8, "yOffset": -10 },
+                        { "xOffset": 8, "yOffset": -10 }
+                    ],
+                    "powerLevel2": [
+                        { "xOffset": -12, "yOffset": -5 },
+                        { "xOffset": 0, "yOffset": -10 },
+                        { "xOffset": 12, "yOffset": -5 }
+                    ],
+                    "powerLevel3": [
+                        { "xOffset": -20, "yOffset": 0 },
+                        { "xOffset": -8, "yOffset": -10 },
+                        { "xOffset": 8, "yOffset": -10 },
+                        { "xOffset": 20, "yOffset": 0 }
+                    ]
+                }
+            }
         }
     ]
 };

@@ -62,16 +62,5 @@ class StarBullet {
     }
 }
 
-// Load star images
-async function loadStarImages() {
-    const starImages = [];
-    for (let i = 1; i <= 8; i++) {
-        const image = await loadImage(`assets/graphics/bullets/stars/${i}.png`);
-        starImages.push(image);
-    }
-    return starImages;
-}
-
 // Export the StarBullet class and loadStarImages function
 window.StarBullet = StarBullet;
-window.loadStarImages = loadStarImages;

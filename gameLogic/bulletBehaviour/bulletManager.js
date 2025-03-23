@@ -99,7 +99,3 @@ class BulletManager {
         );
     }
 }
-
-// Create an instance of BulletManager
-const bulletManager = new BulletManager();
-window.bulletManager = bulletManager;

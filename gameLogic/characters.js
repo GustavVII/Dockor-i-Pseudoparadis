@@ -43,12 +43,13 @@ class CharacterManager {
             console.log("Character speed not updated: spellcard is active"); // Debugging
         }
     
-        this.cursor.image = null; // Reset image to force reload
-        loadImage(character.image).then(img => {
-            this.cursor.image = img;
-        }).catch(error => {
-            console.error(`Failed to load character image for "${character.name}":`, error);
-        });
+        // Use the preloaded character image from assetLoader
+        const imageKey = `character${character.name}Cursor`; // Example key for the cursor image
+        this.cursor.image = assetLoader.getImage(imageKey);
+    
+        if (!this.cursor.image) {
+            console.error(`Character cursor image for "${character.name}" not found in assetLoader.`);
+        }
     
         // Set the shot type for the character
         shotTypeManager.setShotType(character.shotType);
@@ -120,29 +121,6 @@ class CharacterManager {
         }
     }
 
-    handleKeyDown(e) {
-        if (e.key in this.keys) {
-            this.keys[e.key] = true;
-        }
-
-        if (e.key === ' ' && selectedCard) {
-            e.preventDefault(); // Prevent space from scrolling the page
-        }
-
-        // Spellcard activation
-        if (e.key === 'x' && !spellcardManager.isSpellcardActive) {
-            const spellcardType = this.currentCharacter.spellcard;
-            spellcardManager.invokeSpellcard(spellcardType, this.cursor);
-        }
-
-    }
-
-    handleKeyUp(e) {
-        if (e.key in this.keys) {
-            this.keys[e.key] = false;
-        }
-    }
-
     renderCursor() {
         if (this.cursor.isActive && this.cursor.image) {
             const cursorX = Math.round(this.cursor.x);
@@ -162,5 +140,3 @@ const characterManager = new CharacterManager();
 window.characterManager = characterManager;
 
 // Add event listeners for key handling
-window.addEventListener('keydown', (e) => characterManager.handleKeyDown(e));
-window.addEventListener('keyup', (e) => characterManager.handleKeyUp(e));

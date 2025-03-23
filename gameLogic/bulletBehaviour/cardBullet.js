@@ -5,12 +5,12 @@ class CardBullet {
         this.speed = speed;
         this.card = card; // The card object (e.g., from your card data)
         this.width = 32; // Card width
-        this.height = 32; // Card height;
+        this.height = 32; // Card height
 
-        // Ensure the card image is loaded from the cache
-        this.image = window.cardImages.get(`${card.suit}${card.number}`); // Use window.cardImages
+        // Get the preloaded card image from assetLoader
+        this.image = assetLoader.getImage(`card${card.suit}${card.number}`);
         if (!this.image) {
-            console.error(`Card image for ${card.suit}${card.number} is missing or not loaded.`);
+            console.error(`Card image for ${card.suit}${card.number} not found in assetLoader.`);
         }
     }
 

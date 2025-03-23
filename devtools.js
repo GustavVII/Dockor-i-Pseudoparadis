@@ -27,7 +27,6 @@ function decreasePowerLevel() {
 // Ladda in korten
 async function testDeck() {
     // Ladda Back.png first
-    await loadBackImage();
     
     let x = 0;
     let y = 0;
@@ -42,7 +41,6 @@ async function testDeck() {
             }
 
             const card = createCard(suit, number, x, y);
-            card.image = await loadImage(`assets/graphics/cards/${suit}${number}.png`);
 
             cards.push(card);
 

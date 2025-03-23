@@ -1,18 +1,23 @@
+// init.js
+
 document.addEventListener('DOMContentLoaded', () => {
-    // Händelseavlyssnare för knappen
+    // Event listener for the start button
     document.getElementById('startButton').addEventListener('click', () => {
-        // Göm laddningsskrämen
+        // Hide the start screen
         document.getElementById('startScreen').style.display = 'none';
         init();
     });
 });
 
 async function init() {
-    // Visa laddningsskärmen
+    // Show the loading screen
     const loadingScreen = document.getElementById('loadingScreen');
     loadingScreen.style.display = 'flex';
 
-    console.log("Tillägger händelseavlyssnare");
+    // Declare and initialize all managers
+    declareManagers();
+
+    console.log("Adding event listeners");
     window.addEventListener('keydown', (e) => {
         handleKeyDown(e);
     });
@@ -21,29 +26,41 @@ async function init() {
         handleKeyUp(e);
     });
 
+    // Initialize sound effects
     await initializeSoundEffects();
 
+    // Create the options menu
     createOptionsMenu();
 
-    await spawnerManager.loadSpawnerImages();
-    await loadCardImages();
-    await loadBackImage();
-    shotTypeManager.laserImages = {
-        start: await loadImage('assets/graphics/bullets/lasers/laser1.png'),
-        middle: await loadImage('assets/graphics/bullets/lasers/laser2.png'),
-        end: await loadImage('assets/graphics/bullets/lasers/laser3.png'),
-    };
-    shotTypeManager.starImages = await loadStarImages();
+    // Load all assets
+    await loadAllAssets();
 
-    window.characterManager.setCharacter('Murasa');
+    // Assign preloaded images to managers
+    shotTypeManager.laserImages = {
+        start: assetLoader.getImage('laser1'),
+        middle: assetLoader.getImage('laser2'),
+        end: assetLoader.getImage('laser3'),
+    };
+    shotTypeManager.starImages = [
+        assetLoader.getImage('star1'),
+        assetLoader.getImage('star2'),
+        assetLoader.getImage('star3'),
+        assetLoader.getImage('star4'),
+        assetLoader.getImage('star5'),
+        assetLoader.getImage('star6'),
+        assetLoader.getImage('star7'),
+        assetLoader.getImage('star8'),
+    ];
+
+    // Set the initial character
+    characterManager.setCharacter('Murasa');
     updateStatsBox();
 
-    // Temporär tvångst av en extra sekund av inladding 
-    // för att se att den laddar in korrekt
+    // Temporary delay to ensure assets are loaded
     setTimeout(() => {
         loadingScreen.style.display = 'none';
         stopGameMusic();
-        startMainMenu(); // Skicka till huvudmenyn
+        startMainMenu(); // Go to the main menu
     }, 1000);
 }
 
