@@ -61,7 +61,7 @@ async function init() {
         loadingScreen.style.display = 'none';
         stopGameMusic();
         startMainMenu(); // Go to the main menu
-    }, 1000);
+    }, 0);
 }
 
 // Function to start the game

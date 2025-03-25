@@ -106,38 +106,40 @@ function createOptionsMenu() {
 }
 
 // Funktion att spela musik
-// Funktion att spela musik
 function playMusic(track) {
     if (musicAudio) {
         musicAudio.pause();
         musicAudio = null; // Unload the previous music
     }
 
-    // Check if the music file exists
-    fetch(track)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`Music file not found: ${track}`);
-            }
-            return response;
-        })
-        .then(() => {
-            // Ladda musik
-            musicAudio = new Audio(track);
-            musicAudio.volume = musicVolume;
-            musicAudio.muted = isMusicMuted;
-            musicAudio.loop = true;
+    try {
+        // Create audio object directly
+        musicAudio = new Audio(track);
+        
+        // Set up event listeners to handle errors
+        musicAudio.addEventListener('error', (e) => {
+            console.error(`Error loading music file: ${track}`, e);
+            musicAudio = null;
+        });
+        
+        // Set up properties
+        musicAudio.volume = musicVolume;
+        musicAudio.muted = isMusicMuted;
+        musicAudio.loop = true;
 
-            console.log(`Now playing: ${track}`); // Log the currently playing music file
+        console.log(`Now playing: ${track}`);
 
-            // Play the music directly
-            musicAudio.play().catch((error) => {
+        // Attempt to play
+        const playPromise = musicAudio.play();
+        
+        if (playPromise !== undefined) {
+            playPromise.catch(error => {
                 console.error('Error playing music:', error);
             });
-        })
-        .catch(error => {
-            console.error(error.message);
-        });
+        }
+    } catch (error) {
+        console.error(`Error initializing music: ${track}`, error);
+    }
 }
 
 

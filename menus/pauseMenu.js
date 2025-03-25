@@ -1,15 +1,15 @@
-let pauseMenuActive = false; // Track if the pause menu is active
-let selectedPauseOption = 0; // Track the currently selected option (0 = Resume, 1 = Options, 2 = Exit)
-let exitConfirmationActive = false; // Track if the exit confirmation menu is active
-let selectedExitOption = 0; // Track the currently selected exit option (0 = No, 1 = Yes)
+let pauseMenuActive = false;
+let selectedPauseOption = 0;
+let exitConfirmationActive = false;
+let selectedExitOption = 0;
 
-// Render the pause menu
+// Pausmeny
 function renderPauseMenu(ctx) {
     // Darken the game screen
     ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
     ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
-    // Draw the pause menu options
+    // Rita in valen
     ctx.fillStyle = 'white';
     ctx.font = '40px Arial';
     ctx.textAlign = 'center';
@@ -19,14 +19,14 @@ function renderPauseMenu(ctx) {
 
     options.forEach((option, index) => {
         if (index === selectedPauseOption) {
-            ctx.fillStyle = 'yellow'; // Highlight selected option
+            ctx.fillStyle = 'yellow'; // Highlighta vald knapp
         } else {
             ctx.fillStyle = 'white';
         }
         ctx.fillText(option, ctx.canvas.width / 2, startY + index * 60);
     });
 
-    // Render exit confirmation menu if active
+    // Visa bekräftelsemeny
     if (exitConfirmationActive) {
         ctx.fillStyle = 'rgba(0, 0, 0, 0.9)';
         ctx.fillRect(ctx.canvas.width / 2 - 150, ctx.canvas.height / 2 - 100, 300, 200);
@@ -40,7 +40,7 @@ function renderPauseMenu(ctx) {
 
         exitOptions.forEach((option, index) => {
             if (index === selectedExitOption) {
-                ctx.fillStyle = 'yellow'; // Highlight selected option
+                ctx.fillStyle = 'yellow';
             } else {
                 ctx.fillStyle = 'white';
             }
@@ -49,57 +49,54 @@ function renderPauseMenu(ctx) {
     }
 }
 
-// Handle pause menu input
+// Hantera input för pausmenyn
 function handlePauseMenuInput() {
     if (exitConfirmationActive) {
-        // Handle exit confirmation menu input
+        // Bekräftelse för att lämna
         if (keys.ArrowUp || keys.ArrowDown) {
-            selectedExitOption = (selectedExitOption + 1) % 2; // Toggle between No and Yes
-            keys.ArrowUp = false; // Reset key state
-            keys.ArrowDown = false; // Reset key state
+            selectedExitOption = (selectedExitOption + 1) % 2;
+            keys.ArrowUp = false;
+            keys.ArrowDown = false;
         }
 
         if (keys.z || keys.Z) {
-            if (selectedExitOption === 1) {
-                // Yes: Set flag to exit to main menu
+            if (selectedExitOption === 0) {
                 shouldExitToMainMenu = true;
                 pauseMenuActive = false;
                 exitConfirmationActive = false;
             } else {
-                // No: Close the exit confirmation menu
                 exitConfirmationActive = false;
             }
-            keys.z = false; // Reset key state
-            keys.Z = false; // Reset key state
+            keys.z = false;
+            keys.Z = false;
         }
 
-        // Handle X key to cancel exit confirmation
         if (keys.x || keys.X) {
             exitConfirmationActive = false;
-            keys.x = false; // Reset key state
-            keys.X = false; // Reset key state
+            keys.x = false;
+            keys.X = false;
         }
     } else {
-        // Handle main pause menu input
+        // Egentliga pausmenyn
         if (keys.ArrowUp || keys.ArrowDown) {
-            selectedPauseOption = (selectedPauseOption + 1) % 3; // Cycle through options
-            keys.ArrowUp = false; // Reset key state
-            keys.ArrowDown = false; // Reset key state
+            selectedPauseOption = (selectedPauseOption + 1) % 3;
+            keys.ArrowUp = false;
+            keys.ArrowDown = false;
         }
 
         if (keys.z || keys.Z) {
             if (selectedPauseOption === 0) {
-                // Resume: Unpause the game
+                // Resume: fortsätt spelet
                 pauseMenuActive = false;
             } else if (selectedPauseOption === 1) {
-                // Options: Do nothing for now (future implementation)
+                // Options: Framtida saker här
             } else if (selectedPauseOption === 2) {
-                // Exit: Open the exit confirmation menu
+                // Exit: Öppna meny för bekräftelse
                 exitConfirmationActive = true;
-                selectedExitOption = 0; // Default to "No"
+                selectedExitOption = 1;
             }
-            keys.z = false; // Reset key state
-            keys.Z = false; // Reset key state
+            keys.z = false;
+            keys.Z = false;
         }
 
         // Handle X key to close the pause menu

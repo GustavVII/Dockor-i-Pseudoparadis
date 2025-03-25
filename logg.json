@@ -87,9 +87,16 @@
         {
             "dag": "13",
             "datum": "3-23",
-            "tidSpenderad": "10:00",
+            "tidSpenderad": "11:00",
             "titel": "Laserstrul och centraliserad grafikinladdning",
             "logg": "Laser trollkorten har haft ett sånt himlans jobbigt strul. Över timmar har jag individuellt kammat ut nästan alla. Först var det att de renderas fel igen, så den gamla metoden slet vi ut och byggde om. Nu är den korrekt typ men oj slutbitarna är inverterade i när de vill renderas. Sen slutar kollitionschecken fungera, och där försvann ljudet. Nog med laser, jag gjorde en centraliserad inladdning av grafik. I grunden innebär detta att alla funktioner för att ladda grafik har flyttats till en ny fil som hanterar det, istället för att det finns 6 olika sprida över typ 8 filer. När detta var implementerat var det bara att ta bort de äldre funktionerna och kolla i konsolen en efter en för alla inladdninsfel, kolla vilken fil som klagar och skriva om dem till att hämta grafiken från ett nyckelord de angivs när de laddas in och skickas till den centrala grafik-arrayen. Implementeringen var ganska snabb, och fixandet för all grafik tog inte mycket längre tid. Nu är det bara att lägga till ny grafik i inladdningsfilen, ge den ett nyckelord, sedan kalla bilden efter sitt nyckelord. Förinladdningen må ta några 4mb totalt (jag använder små pixelart bilder som grafik så inte så dyrt i lagring), men underlättar mycket för äldre/slöa datorer som inte kan snabbt ladda in filer. Märkte på skoldatorn att porträttbilderna (som innnan inte var förinladdade) kunde halta spelet i 0.2s medans den försöker hitta bilden mitt under spelgång. Borde nu ha fixats med denna nya updatering. UPPDATERING NÅGRA TIMMAR SENARE, det visar sig att under utvecklingen har trollkortshanteraren fallit bak så långt, samt med laser att jag valt att temporärt plocka bort dem från projektet och skriva om dem från grunden up. SUCK"
+        },
+        {
+            "dag": "14",
+            "datum": "3-24",
+            "tidSpenderad": "2:00",
+            "titel": "Mindre grafikritning och CSS test",
+            "logg": "Idag gjorde jag inte mycket. Dock hade jag lite tid att snygga till all text och grafik som visas vid sidomenyn. Att arbeta med CSS och testa gradienter tills jag fick den perfekta var ganska roligt, och att se resultatet att det var så fint var nästan magiskt. Den nya grafiken i grunden var stjärnorna som representerar olika saker, som antal liv och antall trollkort (bomber) som spelaren har. Ser mycket bättre ut än den nästan monofärgade innan"
         }
     ]
 }

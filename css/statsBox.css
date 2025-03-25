@@ -1,6 +1,8 @@
 #statsBox {
     font-family: Arial, sans-serif;
+    font-family: 'Brush Script MT', cursive;
     font-size: 20px;
+    font-weight: bold;
     margin-left: 10px;
     width: 300px;
     height: 674px; 
@@ -14,9 +16,10 @@
     align-items: flex-start; /* Align text to the left */
     justify-content: flex-start; /* Align content to the top */
     text-align: left;
-    background-color: rgba(0, 0, 0, 0.5);
+    /*background-color: rgba(0, 0, 0, 0.5);*/
     user-select: none;
     pointer-events: none;
+    filter: drop-shadow(2px 2px black);
   }
   
   #statsBox hr {
@@ -36,28 +39,83 @@
     display: inline-block;
   }
   
-  /* Star styling for lives and bombs */
   #statsBox .star {
     display: inline-block;
     width: 24px; /* Set the width of the star images */
     height: 24px; /* Set the height of the star images */
-    margin-right: 5px; /* Add some spacing between stars */
+    margin-left: 5px; /* Add some spacing between stars */
+  }
+
+  #statsBox .highscore-text {
+    background: -webkit-linear-gradient(lightblue, white, LightSteelBlue, dimgrey, black);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: none;
+  }
+
+  #statsBox .score-text {
+    background: -webkit-linear-gradient(lightblue, white, LightSteelBlue, dimgrey, black);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: none;
   }
 
   #statsBox .player-text {
-    color: darkred;
-    text-shadow: 
-      -1px -1px 0 black,  
-       1px -1px 0 black,
-      -1px  1px 0 black,
-       1px  1px 0 black;
+    background: -webkit-linear-gradient(white, lightgrey, lightyellow, dimgrey, black);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: none;
   }
 
   #statsBox .bomb-text {
-    color: darkgreen;
-    text-shadow: 
-      -1px -1px 0 black,  
-       1px -1px 0 black,
-      -1px  1px 0 black,
-       1px  1px 0 black;
+    background: -webkit-linear-gradient(white, lightgrey, lightyellow, dimgrey, black);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: none;
+  }
+
+  #statsBox .power-text {
+    background: -webkit-linear-gradient(red, lightgrey);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: none;
+  }
+
+  #statsBox .graze-text {
+    background: -webkit-linear-gradient(lightgrey, green);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: none;
+  }
+
+  #statsBox .highscore-data {
+    font-size: 24px;
+    background: -webkit-linear-gradient(lightblue, white, LightSteelBlue, dimgrey);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: none;
+  }
+
+  #statsBox .score-data {
+    font-size: 24px;
+    background: -webkit-linear-gradient(lightblue, white, LightSteelBlue, dimgrey);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: none;
+  }
+
+  #statsBox .power-data {
+    font-size: 24px;
+    background: -webkit-linear-gradient(lightblue, white, LightSteelBlue, dimgrey);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: none;
+  }
+
+  #statsBox .graze-data {
+    font-size: 24px;
+    background: -webkit-linear-gradient(lightblue, white, LightSteelBlue, dimgrey);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: none;
   }

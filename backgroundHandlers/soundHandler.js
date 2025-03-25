@@ -39,7 +39,10 @@ async function initializeSoundEffects() {
         soundEffects.hit = await loadSoundEffect('assets/sfx/hit.wav');
         soundEffects.spellcard = await loadSoundEffect('assets/sfx/spellcard.wav');
         soundEffects.powershot = await loadSoundEffect('assets/sfx/powershot.wav');
-        soundEffects.laser = await loadSoundEffect('assets/sfx/laser.wav'); // Load laser sound effect
+        soundEffects.laser = await loadSoundEffect('assets/sfx/laser.wav');
+        soundEffects.select = await loadSoundEffect('assets/sfx/select.wav');
+        soundEffects.ok = await loadSoundEffect('assets/sfx/ok.wav');
+        soundEffects.cancel = await loadSoundEffect('assets/sfx/cancel.wav');
         console.log('All sound effects loaded successfully:', soundEffects);
     } catch (error) {
         console.error('Failed to load sound effects:', error);

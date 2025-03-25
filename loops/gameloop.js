@@ -62,5 +62,6 @@ function gameLoop(currentTime) {
         shouldExitToMainMenu = false; // Reset the flag
         stopGameMusic(); // Stop the game music
         startMainMenu(); // Return to the main menu
+        cancelAnimationFrame(gameLoop);
     }
 }

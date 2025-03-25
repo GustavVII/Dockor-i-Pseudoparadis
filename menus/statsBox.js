@@ -1,16 +1,16 @@
-let highScore = localStorage.getItem('highScore') || 0; // Load high score from local storage
+let highScore = localStorage.getItem('highScore') || 0;
 let score = 0;
-let playerLives = 3; // Player starts with 3 lives (2 extra lives)
-let bombs = 3; // Player starts with 3 bombs
-let power = 0; // Power level
-let graze = 0; // Graze count
+let playerLives = 3;
+let bombs = 3;
+let power = 0;
+let graze = 0;
 
-// Function to pad numbers with leading zeros
+// Få nummer att starta med 0
 function padNumber(number, length) {
     return String(number).padStart(length, '0');
 }
 
-// Function to generate star images
+// Funktion för att kalla på ikonerna i lådan
 function generateStars(count, type) {
     let stars = '';
     for (let i = 0; i < count; i++) {
@@ -19,22 +19,21 @@ function generateStars(count, type) {
     return stars;
 }
 
-// Function to update the stats box
+// Updaterande av lådan
 function updateStatsBox() {
-    if (!menuActive) { // Only update the statbox if the game is active
+    if (!menuActive) { // Rendera endast om inte i menyn, dvs i spelet
         const statsBox = document.getElementById('statsBox');
         if (statsBox) {
-            // High Score and Score
             statsBox.innerHTML = `
                 <br>
                 <br>
                 <div style="display: flex; justify-content: space-between;">
-                    <span>High Score</span>
-                    <span>${padNumber(highScore, 9)}</span>
+                    <span class="highscore-text">High Score</span>
+                    <span class="highscore-data">${padNumber(highScore, 9)}</span>
                 </div>
                 <div style="display: flex; justify-content: space-between;">
-                    <span>Score</span>
-                    <span>${padNumber(score, 9)}</span>
+                    <span class="score-text">Score</span>
+                    <span class="score-data">${padNumber(score, 9)}</span>
                 </div>
                 <br>
                 <div style="display: flex; justify-content: space-between;">
@@ -47,53 +46,53 @@ function updateStatsBox() {
                 </div>
                 <br>
                 <div style="display: flex; justify-content: space-between;">
-                    <span>Power</span>
-                    <span>${power}</span>
+                    <span class="power-text">Power</span>
+                    <span class="power-data">${power}</span>
                 </div>
                 <div style="display: flex; justify-content: space-between;">
-                    <span>Graze</span>
-                    <span>${graze}</span>
+                    <span class="graze-text">Graze</span>
+                    <span class="graze-data">${graze}</span>
                 </div>
             `;
         }
     }
 }
 
-// Function to update the score
+// poänguppdateringsfunktion
 function updateScore(points) {
     score += points;
     if (score > highScore) {
         highScore = score;
-        localStorage.setItem('highScore', highScore); // Save new high score to local storage
+        localStorage.setItem('highScore', highScore); // Spara highscore till lokalminne
     }
     updateStatsBox();
 }
 
-// Function to update player lives
+// Uppdatera antal liv
 function updatePlayerLives(lives) {
     playerLives = lives;
     updateStatsBox();
 }
 
-// Function to update bombs
+// Uppdatera antal bomber
 function updateBombs(bombCount) {
     bombs = bombCount;
     updateStatsBox();
 }
 
-// Function to update power
+// Uppdatera antal power
 function updatePower(powerLevel) {
     power = powerLevel;
     updateStatsBox();
 }
 
-// Function to update graze
+// Uppdatera antalet graze
 function updateGraze(grazeCount) {
     graze = grazeCount;
     updateStatsBox();
 }
 
-// Function to reset all stats (except high score)
+// Testfunktion att återställa alla nummer
 function resetStats() {
     score = 0;
     playerLives = 3;
@@ -103,7 +102,7 @@ function resetStats() {
     updateStatsBox();
 }
 
-// Reset stats when 'R' is pressed
+// Återställning vid tryck av R
 window.addEventListener('keydown', (e) => {
     if (e.key === 'r' || e.key === 'R') {
         resetStats();
