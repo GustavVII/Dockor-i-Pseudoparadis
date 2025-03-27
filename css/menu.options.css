@@ -1,0 +1,164 @@
+.option-name {
+    font-size: 28px;
+    font-weight: bold;
+    display: inline-block;
+    width: 120px;
+    text-align: left;
+    flex: 1;
+    text-align: left;
+    min-width: 150px; /* Fixed width for alignment */
+    padding-right: 20px;
+    background: -webkit-linear-gradient(lightblue, white, LightSteelBlue, dimgrey, black);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    min-width: 180px;
+}
+
+.option-name.selected {
+    background: -webkit-linear-gradient(white, silver, pink, crimson, black);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 20px #ff0000aa;
+    transform: scale(1.05);
+    transition: all 0.2s ease;
+}
+
+.option-value {
+    display: inline-block;
+    width: 80px;
+    text-align: center;
+    font-weight: bold;
+    background: -webkit-linear-gradient(palegoldenrod, gold, goldenrod, black);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-align: right;
+    min-width: 80px;
+}
+
+#menuBox {
+    width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Option Row Layout */
+.option-row {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+}
+
+/* For Player/Bomb value options */
+.option-values {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+    flex: 1;
+}
+
+/* Value Options Styling */
+.value-option {
+    padding: 2px 10px;
+    border-radius: 4px;
+    background: -webkit-linear-gradient(lightblue, white, LightSteelBlue, dimgrey, black);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 28px;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.value-option.active {
+    background: -webkit-linear-gradient(white, palegoldenrod, goldenrod, black);
+    text-shadow: 0 0 5px rgba(255, 215, 0, 0.7);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: bold;
+}
+
+#optionsMenuContainer {
+    position: absolute;
+    margin: 50px;
+    top: 0;
+    width: 60%;
+    height: 500px;
+    border-radius: 10px;
+    padding: 20px;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Options Menu Header */
+.options-header {
+    font-size: 40px;
+    font-weight: bold;
+    background: -webkit-linear-gradient(palegoldenrod, gold, goldenrod, black);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-align: center;
+    margin-bottom: 30px;
+    text-shadow: 0 0 5px rgba(255, 215, 0, 0.7);
+}
+
+/* Options List Container */
+.options-list {
+    flex: 1;
+    overflow-y: auto;
+}
+
+/* Individual Option Items */
+.option-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 15px;
+    margin: 8px 0;
+    border-radius: 5px;
+    transition: all 0.2s ease;
+}
+
+.single-value {
+    font-weight: bold;
+    background: -webkit-linear-gradient(white, palegoldenrod, goldenrod, black);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 28px;
+    min-width: 80px;
+    text-align: right;
+}
+
+.value-option.active {
+    color: gold;
+    background-color: rgba(255, 215, 0, 0.3);
+    font-weight: bold;
+    transform: scale(1.1);
+}
+
+/* Action Items (Restore Default, Quit) */
+.action-item {
+    font-weight: bold;
+    background: -webkit-linear-gradient(lightblue, white, LightSteelBlue, dimgrey, black);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 28px;
+    text-align: left;
+    padding: 12px;
+}
+
+.action-item.selected {
+    background: -webkit-linear-gradient(white, silver, pink, crimson, black);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 20px #ff0000aa;
+    transform: scale(1.05);
+}
+
+/* Hide scrollbar but keep functionality */
+.options-list::-webkit-scrollbar {
+    width: 0;
+    background: transparent;
+}

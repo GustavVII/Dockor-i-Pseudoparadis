@@ -11,5 +11,3 @@
 11: Boss - Dichromatic Lotus Butterfly ~ Red and White
 12: Bad end - Eternal Shrine Maiden
 13: Good end - The Strange Everyday Life of the Flying Shrine Maiden
-
-Not included in GitHub because its quite large in filesize.

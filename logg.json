@@ -97,6 +97,20 @@
             "tidSpenderad": "2:00",
             "titel": "Mindre grafikritning och CSS test",
             "logg": "Idag gjorde jag inte mycket. Dock hade jag lite tid att snygga till all text och grafik som visas vid sidomenyn. Att arbeta med CSS och testa gradienter tills jag fick den perfekta var ganska roligt, och att se resultatet att det var så fint var nästan magiskt. Den nya grafiken i grunden var stjärnorna som representerar olika saker, som antal liv och antall trollkort (bomber) som spelaren har. Ser mycket bättre ut än den nästan monofärgade innan"
+        },
+        {
+            "dag": "15",
+            "datum": "3-25",
+            "tidSpenderad": "7:00",
+            "titel": "Storslagna menyer",
+            "logg": "En ful tidig meny har nu plockats bort: Den externa inställningsmenyn. Denna är nu integrerad i startmenyn. Jag har även experimenterat mer med HTML manipulerande javaScript, vilket var lite jobbigt att arbeta med, men senare visade sig vara mycket lättare än att göra saker med text och menyer på kanvas. Kanvasen är nu gömd tills spelet startar. Jag har även gort en större restrukturering så att rotmappen ser mycket finare ut, med endast index.html som fil i roten (och loggen). Har även experimenterat med att bygga en webview applikation i C#, men det gick inte så bra: EXE filen krashar direkt och loggen säger inget. Detta är vad 60% av dagen spenderades på. Tyvärr går det in i shitcode mappen med laserhanteraren, där jag sparar gammla/icke fungerande saker jag kastat :broken_heart"
+        },
+        {
+            "dag": "16",
+            "datum": "3-26",
+            "tidSpenderad": "9:30",
+            "titel": "CSS och mer menyer",
+            "logg": "I början designa jag menyerna att bara existera, för jag trodde att javaScript skulle lösa alla mina problem med var allt skulle dyka upp. Nej, gick inte bra, så jag börja studera CSS. Nu ser de lite bättre, men sen upptäckte jag gradienterna, att jag kan inkludera div klasser för valda element separat från de andra för highlighting, och sen gick det som en snöboll ner för klippan. CSS hela dagen, och nu har jag en vacker vacker inställningsmeny, huvudmeny och musikrum. Startknappen har även uppdaterats från att skicka spelaren till spelet, till att låta spelaren välja karaktärer med en beskrivning av dem. Älskar nu CSS, inte visste jag att leka runt med gradientfärger kunde vara så kul. Nu saknas bara att jag manuellt ritar en bakgrundsbild. Har en placeholder. Jag rekommenderar verkligen att läsaren laddar ner dagens version (Uppdatering 2) och lyssnar på musiken i musikrummet. Kommentarerna där är relaterade till vad spelet kommer att bli för de som är nyfikna. På själva spelfronten: inget nytt för jag råka paja spelinitieringen och har inte löst det än, kanske imorgon."
         }
     ]
 }
