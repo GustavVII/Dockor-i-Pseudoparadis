@@ -13,6 +13,14 @@ async function init() {
     loadingScreen.style.display = 'flex';
     const settings = loadSettings();
 
+    // If parsing failed or values are invalid, use defaults
+    if (isNaN(sfxVolume) || sfxVolume < 0 || sfxVolume > 1) {
+        sfxVolume = 0.8;
+    }
+    if (isNaN(musicVolume) || musicVolume < 0 || musicVolume > 1) {
+        musicVolume = 0.6;
+    }
+
     musicVolume = settings.music / 100;
     sfxVolume = settings.sound / 100;
 
@@ -21,14 +29,16 @@ async function init() {
     document.getElementById('menuBox').style.display = 'none';
     document.getElementById('playerStatsDisplay').style.display = 'none';
 
-    // Declare and initialize all managers
-    declareManagers();
-
+    
     console.log("Adding event listeners");
     
     // Initialize sound effects
     await initializeSoundEffects();
 
+    
+    await languageManager.init();
+    // Declare and initialize all managers
+    await declareManagers();
     // Load all assets
     await loadAllAssets();
 

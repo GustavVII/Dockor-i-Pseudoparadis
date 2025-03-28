@@ -16,24 +16,21 @@ let currentMenuState = MENU_STATES.MAIN;
 // Render the main menu
 function renderMainMenu() {
     const menuBox = document.getElementById('menuBox');
+    if (!menuBox) return;
+    
     menuBox.innerHTML = '';
     
-    // Only render main menu buttons if in main menu state
-    if (currentMenuState === MENU_STATES.MAIN) {
-        if (!menuBox) return;
+    const menuItems = [
+        'start', 'practiseStart', 'score', 'musicRoom', 'options', 'quit'
+    ];
     
-        // Clear existing content completely
-        menuBox.innerHTML = '';
-        
-        // Only render the actual menu buttons once
-        menuButtons.forEach((button, index) => {
-            const buttonElement = document.createElement('div');
-            buttonElement.className = `menu-button ${selectedButton === index ? 'selected' : ''}`;
-            buttonElement.textContent = button; // Set text content
-            menuBox.appendChild(buttonElement);
-        });
-    }
-    }
+    menuItems.forEach((item, index) => {
+        const buttonElement = document.createElement('div');
+        buttonElement.className = `menu-button ${selectedButton === index ? 'selected' : ''}`;
+        buttonElement.textContent = languageManager.getText(`mainMenu.${item}`);
+        menuBox.appendChild(buttonElement);
+    });
+}
 
 function showMenu() {
     const menuBox = document.getElementById(MENU_BOX_ID);

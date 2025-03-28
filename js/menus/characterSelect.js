@@ -11,7 +11,6 @@ class CharacterSelect {
     }
 
     createStatRow = (container, label, rating) => {
-        // Arrow function automatically binds 'this'
         const row = document.createElement('div');
         row.className = 'character-stat-row';
         
@@ -37,16 +36,19 @@ class CharacterSelect {
 
     render() {
         const menuBox = document.getElementById('menuBox');
+        if (!menuBox) return;
+        
+        const currentCharacter = this.characters[this.currentCharacterIndex];
+        if (!currentCharacter) return;
+        
         menuBox.innerHTML = '';
         
-        const currentChar = this.characters[this.currentCharacterIndex];
-        
-        // Always show instructions at the bottom
+        // Instructions using translations
         const instructions = document.createElement('div');
         instructions.className = 'character-select-instructions';
         instructions.innerHTML = `
-            <div>Press Z to select character</div>
-            <div>Press X to return to main menu</div>
+            <div>${languageManager.getText('startMenu.instructions.Z')}</div>
+            <div>${languageManager.getText('startMenu.instructions.X')}</div>
         `;
         menuBox.appendChild(instructions);
     
@@ -58,7 +60,6 @@ class CharacterSelect {
             const nextContainer = document.createElement('div');
             nextContainer.className = 'character-container next';
             
-            // Calculate positions based on direction
             if (this.transitionState.direction === 'right') {
                 currentContainer.style.transform = `translateX(${-100 * this.transitionState.progress}%)`;
                 nextContainer.style.transform = `translateX(${100 - (100 * this.transitionState.progress)}%)`;
@@ -67,7 +68,7 @@ class CharacterSelect {
                 nextContainer.style.transform = `translateX(${-100 + (100 * this.transitionState.progress)}%)`;
             }
             
-            this.populateCharacterData(currentContainer, currentChar);
+            this.populateCharacterData(currentContainer, currentCharacter);
             this.populateCharacterData(nextContainer, 
                 this.characters[this.transitionState.nextIndex]);
                 
@@ -77,18 +78,25 @@ class CharacterSelect {
             // Normal view - just show current character
             const container = document.createElement('div');
             container.className = 'character-container';
-            this.populateCharacterData(container, currentChar);
+            this.populateCharacterData(container, currentCharacter);
             menuBox.appendChild(container);
         }
     }
     
     populateCharacterData(container, character) {
+        if (!container || !character) return;
+        
         container.innerHTML = '';
         
-        // Portrait
+        // Portrait from assetLoader using character ID
         const portrait = document.createElement('img');
-        portrait.src = character.portrait;
         portrait.className = 'character-portrait';
+        const portraitImage = window.assetLoader.getImage(`portrait${character.id}`);
+        if (portraitImage) {
+            portrait.src = portraitImage.src;
+        } else {
+            console.error(`Portrait image not found for character ID: ${character.id}`);
+        }
         container.appendChild(portrait);
         
         // Character name and title
@@ -106,26 +114,33 @@ class CharacterSelect {
         const statsContainer = document.createElement('div');
         statsContainer.className = 'character-stats';
         
-        // Movement speed
-        this.createStatRow(statsContainer, 'Movement speed', character.speedRating);
-        
-        // Attack range
-        this.createStatRow(statsContainer, 'Attack range', character.attackRangeRating);
-        
-        // Attack power
-        this.createStatRow(statsContainer, 'Attack power', character.attackPowerRating);
+        this.createStatRow(statsContainer, 
+            languageManager.getText('startMenu.movementRating'), 
+            character.speedRating);
+        this.createStatRow(statsContainer, 
+            languageManager.getText('startMenu.attackRangeRating'), 
+            character.attackRangeRating);
+        this.createStatRow(statsContainer, 
+            languageManager.getText('startMenu.attackPowerRating'), 
+            character.attackPowerRating);
         
         container.appendChild(statsContainer);
         
-        // Shot type and spellcard
+        // Localized shot type and spellcard
         const shotTypeElement = document.createElement('div');
         shotTypeElement.className = 'character-ability';
-        shotTypeElement.innerHTML = `<span>Shot Type:</span> ${character.shotType}`;
+        shotTypeElement.innerHTML = `
+            <span>${languageManager.getText('startMenu.shotType')}:</span> 
+            ${languageManager.getText(`shotTypes.${character.shotType}`) || character.shotType}
+        `;
         container.appendChild(shotTypeElement);
         
         const spellcardElement = document.createElement('div');
         spellcardElement.className = 'character-ability';
-        spellcardElement.innerHTML = `<span>Spellcard:</span> ${character.spellcard}`;
+        spellcardElement.innerHTML = `
+            <span>${languageManager.getText('startMenu.spellcard')}:</span> 
+            ${languageManager.getText(`spellcards.${character.spellcard}`) || character.spellcard}
+        `;
         container.appendChild(spellcardElement);
     }
 

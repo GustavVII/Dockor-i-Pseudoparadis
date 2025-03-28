@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="sv">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -45,19 +45,31 @@
         let shouldExitToMainMenu = false;
         let lastTime = 0;
         let deltaTime = 0;
+
+        let sfxVolume = parseFloat(localStorage.getItem('sfxVolume'));
+        let musicVolume = parseFloat(localStorage.getItem('musicVolume'));
+
+        let musicAudio = null;
     </script>
 
-    <script src="assets/data/characterData.js"></script>
-    <script src="assets/data/shottypeData.js"></script>
-    <script src="assets/data/spellcardData.js"></script>
-    <script src="assets/music/musicData.js"></script>
+    <script src="lang/de/menuTranslation.js"></script>
+    <script src="lang/en/menuTranslation.js"></script>
+    <script src="lang/sv/menuTranslation.js"></script>
 
+    <script src="data/characterData.js"></script>
+    <script src="data/shottypeData.js"></script>
+    <script src="data/spellcardData.js"></script>
     
-    <script src="assets/data/levels/level1Data.js"></script>
+    <script src="data/stages/stage1/stage1Data.js"></script>
     
+    <script src="assets/music/musicData.js"></script>
+    
+    <script src="js/managers/languageManager.js"></script>
+    <!--<script src="js/managers/dataManager.js"></script>-->
+
     <script src="js/backgroundHandlers/gameInputHandler.js"></script>
     <script src="js/backgroundHandlers/soundHandler.js"></script>
-    <script src="js/backgroundHandlers/levelHandler.js"></script>
+    <script src="js/backgroundHandlers/stageHandler.js"></script>
     <script src="js/backgroundHandlers/spellcardHandler.js"></script>
     
     <script src="js/menus/playerStatsDisplay.js"></script>

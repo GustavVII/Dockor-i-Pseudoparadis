@@ -2,35 +2,45 @@ class OptionsMenu {
     constructor() {
         this.options = [
             { 
-                name: 'Player', 
+                key: 'player', 
+                name: 'Player',
                 value: parseInt(localStorage.playerLives) || 3, 
                 min: 1, 
                 max: 5, 
                 step: 1 
             },
             { 
-                name: 'Bomb', 
+                key: 'bomb', 
+                name: 'Bomb',
                 value: parseInt(localStorage.bombs) || 3, 
                 min: 0, 
                 max: 3, 
                 step: 1 
             },
             { 
-                name: 'Music', 
+                key: 'music', 
+                name: 'Music',
                 value: parseInt(localStorage.musicVolume) || 80, 
                 min: 0, 
                 max: 100, 
                 step: 5 
             },
             { 
-                name: 'Sound', 
+                key: 'sound', 
+                name: 'Sound',
                 value: parseInt(localStorage.sfxVolume) || 60, 
                 min: 0, 
                 max: 100, 
                 step: 5 
             },
-            { name: 'Restore Default' },
-            { name: 'Quit' }
+            { 
+                key: 'restoreDefault', 
+                name: 'Restore Default' 
+            },
+            { 
+                key: 'quit', 
+                name: 'Quit' 
+            }
         ];
         this.selectedOption = 0;
         this.soundTestInterval = null;
@@ -58,7 +68,7 @@ class OptionsMenu {
         if (!this.container) return;
         
         this.container.innerHTML = `
-            <div class="options-header">OPTIONS</div>
+            <div class="options-header">${languageManager.getText('optionsMenu.title')}</div>
             <div class="options-list" id="optionsList"></div>
         `;
 
@@ -70,22 +80,33 @@ class OptionsMenu {
             optionElement.className = `option-item ${this.selectedOption === index ? 'selected' : ''}`;
             
             if (option.step !== undefined) {
-                if (option.name === 'Player' || option.name === 'Bomb') {
+                if (option.key === 'player' || option.key === 'bomb') {
                     optionElement.innerHTML = `
-                        <span class="option-name ${this.selectedOption === index ? 'selected' : ''}">${option.name}</span>
+                        <span class="option-name ${this.selectedOption === index ? 'selected' : ''}">
+                            ${languageManager.getText(`optionsMenu.${option.key}`)}
+                        </span>
                         <div class="option-values">
                             ${this.generateValueOptions(option)}
                         </div>
                     `;
+                } else if (option.key === 'language') {
+                    optionElement.innerHTML = `
+                        <span class="option-name">${languageManager.getText(`optionsMenu.${option.key}`)}</span>
+                        <span class="language-value">
+                            ${languageManager.availableLanguages[option.value]}
+                        </span>
+                    `;
                 } else {
                     optionElement.innerHTML = `
-                        <span class="option-name ${this.selectedOption === index ? 'selected' : ''}">${option.name}</span>
+                        <span class="option-name ${this.selectedOption === index ? 'selected' : ''}">
+                            ${languageManager.getText(`optionsMenu.${option.key}`)}
+                        </span>
                         <span class="single-value">${option.value}%</span>
                     `;
                 }
             } else {
                 optionElement.className = `action-item ${this.selectedOption === index ? 'selected' : ''}`;
-                optionElement.textContent = option.name;
+                optionElement.textContent = languageManager.getText(`optionsMenu.${option.key}`);
             }
             
             optionsList.appendChild(optionElement);
@@ -155,10 +176,10 @@ class OptionsMenu {
         }
 
         if (menuInputHandler.keys.z || menuInputHandler.keys.Z) {
-            if (currentOption.name === 'Restore Default') {
+            if (currentOption.key === 'restoreDefault') {
                 playSoundEffect(soundEffects.ok);
                 this.restoreDefaults();
-            } else if (currentOption.name === 'Quit') {
+            } else if (currentOption.key === 'quit') {
                 playSoundEffect(soundEffects.cancel);
                 menuInputHandler.keys.z = false;
                 menuInputHandler.keys.Z = false;
@@ -221,7 +242,7 @@ class OptionsMenu {
 
 
     startSoundTestIfNeeded() {
-        if (this.options[this.selectedOption].name === 'Sound') {
+        if (this.options[this.selectedOption].key === 'sound') {
             this.stopSoundTest();
             this.playSoundTest();
             this.soundTestInterval = setInterval(() => this.playSoundTest(), 1000);
@@ -262,5 +283,14 @@ class OptionsMenu {
         
         // Save to storage
         saveSettings();
+    }
+    
+    addLanguageOption() {
+        this.options.splice(4, 0, { 
+            key: 'language',
+            name: 'Language',
+            value: languageManager.currentLanguage,
+            options: Object.keys(languageManager.availableLanguages)
+        });
     }
 }

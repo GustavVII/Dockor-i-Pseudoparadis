@@ -124,7 +124,7 @@
 .track-title {
     font-size: 28px;
     font-weight: bold;
-    background: -webkit-linear-gradient(palegoldenrod, gold, goldenrod, black);
+    background: -webkit-linear-gradient(palegoldenrod, palegoldenrod, goldenrod, black);
     background-clip: text;
     -webkit-text-fill-color: transparent;
     text-shadow: 0 0 20px #ffff00cc;
@@ -160,4 +160,3 @@
     z-index: 2;
     background-color: rgba(0, 0, 0, 0.8);
 }
-

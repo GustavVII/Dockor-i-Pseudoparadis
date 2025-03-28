@@ -1,15 +1,9 @@
-let sfxVolume = parseFloat(localStorage.getItem('sfxVolume')) || 0.6;
-let musicVolume = parseFloat(localStorage.getItem('musicVolume')) || 0.8;
-let isMusicMuted = localStorage.getItem('isMusicMuted') === 'true';
-let musicAudio = null;
-
-// Sound effects
 const soundEffects = {
     shot: null,
     hit: null,
     spellcard: null,
     powershot: null,
-    laser: null, // Add laser sound effect
+    laser: null,
 };
 
 // Function to load a sound effect
@@ -163,9 +157,12 @@ function saveSettings() {
 
 // Load settings from localStorage
 function loadSettings() {
+    const music = parseInt(localStorage.getItem('musicVolume'));
+    const sound = parseInt(localStorage.getItem('sfxVolume'));
+    
     return {
-        music: parseInt(localStorage.getItem('musicVolume')) || localStorage.music,
-        sound: parseInt(localStorage.getItem('sfxVolume')) || localStorage.sound,
+        music: (isNaN(music) || music < 0 || music > 100) ? 60 : music,
+        sound: (isNaN(sound) || sound < 0 || sound > 100) ? 80 : sound,
         playerLives: parseInt(localStorage.getItem('playerLives')) || localStorage.playerLives,
         bombs: parseInt(localStorage.getItem('bombs')) || localStorage.bombs
     };

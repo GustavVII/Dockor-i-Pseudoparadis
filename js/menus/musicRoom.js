@@ -36,7 +36,7 @@ class MusicRoom {
         menuBox.innerHTML = `
             <div class="music-room-container">
                 <div class="music-room-header">
-                    <div class="music-room-title">Music Room</div>
+                    <div class="music-room-title">${languageManager.getText('musicRoomMenu.title')}</div>
                 </div>
                 <div class="music-room-content">
                     <div class="track-list-container">
@@ -45,8 +45,8 @@ class MusicRoom {
                     <div class="now-playing"></div>
                 </div>
                 <div class="music-room-instructions">
-                    <div>Press Z to play selected track</div>
-                    <div>Press X to return to main menu</div>
+                    <div>${languageManager.getText('musicRoomMenu.instructions.Z')}</div>
+                    <div>${languageManager.getText('musicRoomMenu.instructions.X')}</div>
                 </div>
             </div>
         `;
