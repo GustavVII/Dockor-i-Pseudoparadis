@@ -1,4 +1,3 @@
-// js/managers/languageManager.js
 class LanguageManager {
     constructor() {
         this.currentLanguage = 'en';
@@ -7,27 +6,30 @@ class LanguageManager {
             'en': 'English',
             'sv': 'Svenska',
             'de': 'Deutsch',
-            // Add more languages as needed
+            'ru': 'Русский',
+            'pl': 'Polska'
+            // fler språk
         };
         
-        // Pre-loaded translation files
+        // Förinladda filer
         this.translationFiles = {
             'en': window.enTranslations || {},
             'sv': window.svTranslations || {},
-            'de': window.deTranslations || {}
+            'de': window.deTranslations || {},
+            'ru': window.ruTranslations || {},
+            'pl': window.plTranslations || {}
         };
     }
 
     init() {
-        // Set initial language from HTML lang attribute
+        // Leta efter dokumentets språk
         this.currentLanguage = document.documentElement.lang || 'en';
         
-        // Validate language
+        // Om språk satt inte har filer...
         if (!this.availableLanguages[this.currentLanguage]) {
-            this.currentLanguage = 'en';
+            this.currentLanguage = 'en'; // ...byt till engelska
         }
         
-        // Load translations
         this.loadTranslations();
         return Promise.resolve();
     }
@@ -35,7 +37,7 @@ class LanguageManager {
     loadTranslations() {
         this.translations = this.translationFiles[this.currentLanguage] || {};
         
-        // Fallback to English if current language fails
+        // Ta engelska om språket inte finns (igen)
         if (Object.keys(this.translations).length === 0 && this.currentLanguage !== 'en') {
             console.warn(`No translations found for ${this.currentLanguage}, falling back to English`);
             this.currentLanguage = 'en';
@@ -54,7 +56,7 @@ class LanguageManager {
     }
 
     getText(keyPath, fallback = '') {
-        // Support nested keys like "mainMenu.start"
+        // Lösning för att hantera nyckar innuti nycklar (som "optionsMenu>>>.<<<title" där . deklarerar säger att leta efter nyckeln under kategorin deklarerad innan)
         return keyPath.split('.').reduce((obj, key) => 
             (obj && obj[key] !== undefined) ? obj[key] : fallback, 
             this.translations

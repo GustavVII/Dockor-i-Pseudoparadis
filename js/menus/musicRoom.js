@@ -14,18 +14,15 @@ class MusicRoom {
     }
 
     loadTrackData() {
-        // Use the data from musicData.js
         this.tracks = musicData.tracks.map(track => {
             return {
                 id: track.ID,
-                name: track.name,
-                title: track.title || "",
-                comment: track.comment || "",
+                name: languageManager.getText(`music.${track.ID}.name`) || `Track ${track.ID}`,
+                title: languageManager.getText(`music.${track.ID}.title`) || "",
+                comment: languageManager.getText(`music.${track.ID}.comment`) || "",
                 audioPath: `assets/music/DiPP_${track.ID}.mp3`
             };
         });
-
-        // Sort tracks by ID to ensure correct order
         this.tracks.sort((a, b) => parseInt(a.id) - parseInt(b.id));
     }
 
@@ -94,15 +91,15 @@ class MusicRoom {
     }
 
     handleInput() {
-        const now = Date.now();
+        if (inputLocked) return false;
         
+        const now = Date.now();
         if (now - lastMenuInput < 100) {
             return false;
         }
         lastMenuInput = now;
     
         if (menuInputHandler.keys.ArrowUp) {
-            // Wrap to bottom if at top
             if (this.selectedTrack === 0) {
                 this.selectedTrack = this.tracks.length - 1;
             } else {
@@ -111,11 +108,10 @@ class MusicRoom {
             menuInputHandler.keys.ArrowUp = false;
             playSoundEffect(soundEffects.select);
             this.scrollToSelected();
-            this.render();
+            this.updateTrackSelection();
         }
         
         if (menuInputHandler.keys.ArrowDown) {
-            // Wrap to top if at bottom
             if (this.selectedTrack === this.tracks.length - 1) {
                 this.selectedTrack = 0;
             } else {
@@ -124,27 +120,30 @@ class MusicRoom {
             menuInputHandler.keys.ArrowDown = false;
             playSoundEffect(soundEffects.select);
             this.scrollToSelected();
-            this.render();
+            this.updateTrackSelection();
         }
-
+    
         if (menuInputHandler.keys.z || menuInputHandler.keys.Z) {
             playSoundEffect(soundEffects.ok);
             this.playSelectedTrack();
             menuInputHandler.keys.z = false;
             menuInputHandler.keys.Z = false;
         }
-
+    
         if (menuInputHandler.keys.x || menuInputHandler.keys.X) {
             playSoundEffect(soundEffects.cancel);
             this.stopCurrentTrack();
             window.playMusic("assets/music/DiPP_01.mp3");
-            this.selectedTrack = 0
+            this.selectedTrack = 0;
             menuInputHandler.keys.x = false;
             menuInputHandler.keys.X = false;
-            transitionToMenu(MENU_STATES.MAIN); // Use the transition function
+            transitionToMenu(MENU_STATES.MAIN);
+            document.getElementById('menuBox').style.display = 'flex';
+            renderMainMenu();
+            menuBox.appendChild(titleManager.createTitle());
             return true;
         }
-
+    
         return false;
     }
 
@@ -166,5 +165,33 @@ class MusicRoom {
             window.stopGameMusic();
         }
         this.currentlyPlaying = null;
+    }
+
+    updateTrackSelection() {
+        const trackItems = document.querySelectorAll('.track-item');
+        trackItems.forEach((item, index) => {
+            item.classList.toggle('selected', index === this.selectedTrack);
+        });
+        
+        // Update now playing if needed
+        if (this.selectedTrack === this.currentlyPlaying) {
+            this.updateNowPlaying();
+        }
+    }
+
+    updateNowPlaying() {
+        const nowPlaying = document.querySelector('.now-playing');
+        if (!nowPlaying) return;
+        
+        const currentTrack = this.tracks[this.currentlyPlaying];
+        const commentLines = currentTrack.comment ? currentTrack.comment.split('<br>') : [];
+        const commentHTML = commentLines.map(line => 
+            `<div class="comment-line">${line}</div>`
+        ).join('');
+        
+        nowPlaying.innerHTML = `
+            <div class="track-title">${currentTrack.title || currentTrack.name}</div>
+            <div class="track-comment">${commentHTML}</div>
+        `;
     }
 }

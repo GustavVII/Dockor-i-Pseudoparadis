@@ -63,7 +63,6 @@ function playMusic(track) {
     try {
         musicAudio = new Audio(track);
         musicAudio.volume = musicVolume;
-        musicAudio.muted = isMusicMuted;
         musicAudio.loop = true;
         
         const playPromise = musicAudio.play();
@@ -98,7 +97,6 @@ function getMusicVolume() {
 function saveAudioSettings() {
     localStorage.setItem('sfxVolume', sfxVolume);
     localStorage.setItem('musicVolume', musicVolume);
-    localStorage.setItem('isMusicMuted', isMusicMuted);
 }
 
 // Update playMusic function (from old optionsMenu.js)
@@ -111,7 +109,6 @@ function playMusic(track) {
     try {
         musicAudio = new Audio(track);
         musicAudio.volume = musicVolume;
-        musicAudio.muted = isMusicMuted;
         musicAudio.loop = true;
         
         const playPromise = musicAudio.play();

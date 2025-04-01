@@ -129,6 +129,16 @@ async function loadAllAssets() {
 
         console.log("All assets loaded");
 
+       
+    try {
+        // Stage 1 backgrounds
+        await assetLoader.loadImage('bg1_bg', 'assets/graphics/backgrounds/stage1/bg1.png');
+        
+        console.log("All background images loaded successfully!");
+    } catch (error) {
+        console.error("Failed to load background images:", error);
+    }
+
         // Initialize spawner images in SpawnerManager after all assets are loaded
         spawnerManager.loadSpawnerImages();
     } catch (error) {

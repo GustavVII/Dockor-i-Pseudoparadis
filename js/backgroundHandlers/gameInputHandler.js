@@ -23,6 +23,7 @@ class GameInputHandler {
     }
 
     handleKeyDown(e) {
+        if (!gameRunning) return;
         const key = e.key;
 
         if (key === 'Escape') {
@@ -80,6 +81,7 @@ class GameInputHandler {
     }
 
     handleKeyUp(e) {
+        if (!gameRunning) return;
         const key = e.key;
 
         if (key === 'Escape') {
@@ -106,41 +108,28 @@ class GameInputHandler {
         }
     }
 
-    handleInput() {
-        // Character movement
-        if (this.keys.ArrowLeft) {
-            characterManager.moveCursor('left');
-        }
-        if (this.keys.ArrowRight) {
-            characterManager.moveCursor('right');
-        }
-        if (this.keys.ArrowUp) {
-            characterManager.moveCursor('up');
-        }
-        if (this.keys.ArrowDown) {
-            characterManager.moveCursor('down');
-        }
-
+    handleInput() {     
+        if (!gameRunning) return;
         // Shooting (both Z and Space)
-        if ((this.keys.z || this.keys.Z ) && shotTypeManager.cooldownCounter <= 0) {
-            shotTypeManager.shoot(false, false, characterManager.cursor);
+        if ((this.keys.z || this.keys.Z) && shotTypeManager.cooldownCounter <= 0) {
+            shotTypeManager.shoot(characterManager.cursor);
         }
-
+    
         // Bomb/Spellcard
-        if ((this.keys.x || this.keys.X) && !pauseMenuActive && !characterManager.isSpellcardActive) {
+        if ((this.keys.x || this.keys.X) && gameRunning && !characterManager.isSpellcardActive) {
             spellcardManager.invokeSpellcard(characterManager.currentCharacter.name);
         }
-
-        // Power level adjustment
+    
+        // Power adjustment
         if (this.keys['+'].pressed && !this.keys['+'].handled) {
-            increasePowerLevel();
+            updatePower(1);
             this.keys['+'].handled = true;
         }
         if (this.keys['-'].pressed && !this.keys['-'].handled) {
-            decreasePowerLevel();
+            decreasePower(1);
             this.keys['-'].handled = true;
         }
-
+    
         // Focus mode
         if (this.keys.Shift) {
             characterManager.setFocusMode(true);

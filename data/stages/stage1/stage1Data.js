@@ -1,14 +1,51 @@
 const stage1Data = {
-    levelName: "The Forgottens path ~ When People Truly Vanish",
-    music: "02", //Track key (ID)
+    id: "stage1",
+    levelName: "The Forgotten Path ~ When People Truly Vanish",
+    music: "02",
     bossMusic: "03",
-    background: "", //Future keyname to background, or maybe not necessary, make the future stage handler just load an image with key ${id}bg that has the image
-    bgScrollSpeedX: 3, // slight right scroll
-    bgScrollSpeedY: 20, // pixels per second that it scrolls
-    // background image and/or its speed may also be set or changed by stageProgression,
-    // so that if the begining is a loop looking like its flying over a forest,
-    // it can later at the end be changed to reach for examlpe a house in the middle
-    // (that is, backgorund will be changed out for the new one)
+    backgrounds: [
+        {
+            id: "bg1",
+            image: "assets/graphics/backgrounds/stage1/bg1.png",
+            scrollSpeedX: 3,
+            scrollSpeedY: 20,
+            parallax: 0.8
+        },
+        {
+            id: "bg2",
+            image: "assets/graphics/backgrounds/stage1/bg2.png",
+            scrollSpeedX: 5,
+            scrollSpeedY: 25,
+            parallax: 0.6
+        }
+    ],
+    phases: [
+        {
+            id: "phase1",
+            background: "bg1",
+            enemies: "stage1_phase1"
+        },
+        {
+            id: "phase2",
+            background: "bg2",
+            enemies: "stage1_phase2"
+        },
+        {
+            id: "midboss",
+            background: "bg2",
+            enemies: "stage1_midboss"
+        }
+    ],
+    defaultEnemyBehavior: {
+        bulletSpeed: 6,
+        bulletDamage: 1,
+        health: 100,
+        scoreValue: 2500,
+        dropRates: {
+            power: 0.5,
+            point: 0.8
+        }
+    }
 };
 
 window.stage1Data = stage1Data;

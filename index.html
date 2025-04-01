@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="sv">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="css/menu.options.css">
     <link rel="stylesheet" href="css/canvas.css">
     <link rel="stylesheet" href="css/background.css">
+    <link rel="stylesheet" href="css/loading-transition.css">
 </head>
 <body>
     <div class="container" width="960" height="720">
@@ -23,7 +24,7 @@
         </div>
     
         <div id="loadingScreen">
-            <img src="assets/graphics/loading.png" alt="Loading...">
+            <img src="assets/graphics/loadingBackground.png" alt="Loading...">
         </div>
     
         <div id="menuBox"></div>
@@ -43,8 +44,13 @@
         const frameTime = 1000 / targetFPS;
 
         let shouldExitToMainMenu = false;
+        let gameRunning = false;
+        let menuActive = true;
+
         let lastTime = 0;
         let deltaTime = 0;
+        let lastFrameTime = Date.now();
+        let accumulatedTime = 0;
 
         let sfxVolume = parseFloat(localStorage.getItem('sfxVolume'));
         let musicVolume = parseFloat(localStorage.getItem('musicVolume'));
@@ -52,20 +58,40 @@
         let musicAudio = null;
     </script>
 
-    <script src="lang/de/menuTranslation.js"></script>
-    <script src="lang/en/menuTranslation.js"></script>
-    <script src="lang/sv/menuTranslation.js"></script>
+    <script src="lang/en/menus.js"></script>
+    <script src="lang/en/characters.js"></script>
+    <script src="lang/en/music.js"></script>
+    <script src="lang/en/spells.js"></script>
+    
+    <script src="lang/sv/menus.js"></script>
+    <script src="lang/sv/characters.js"></script>
+    <script src="lang/sv/music.js"></script>
+    <script src="lang/sv/spells.js"></script>
+    
+    <script src="lang/de/menus.js"></script>
+    <script src="lang/de/characters.js"></script>
+    <script src="lang/de/music.js"></script>
+    <script src="lang/de/spells.js"></script>
+
+    <script src="lang/ru/menus.js"></script>
+    <script src="lang/ru/characters.js"></script>
+    <script src="lang/ru/music.js"></script>
+    <script src="lang/ru/spells.js"></script>
+
+    <script src="lang/pl/menus.js"></script>
+    <script src="lang/pl/characters.js"></script>
+    <script src="lang/pl/music.js"></script>
+    <script src="lang/pl/spells.js"></script>
 
     <script src="data/characterData.js"></script>
     <script src="data/shottypeData.js"></script>
     <script src="data/spellcardData.js"></script>
+    <script src="data/musicData.js"></script>
     
     <script src="data/stages/stage1/stage1Data.js"></script>
-    
-    <script src="assets/music/musicData.js"></script>
+    <script src="data/stages/stage1/phases/stage1Phase1Data.js"></script>
     
     <script src="js/managers/languageManager.js"></script>
-    <!--<script src="js/managers/dataManager.js"></script>-->
 
     <script src="js/backgroundHandlers/gameInputHandler.js"></script>
     <script src="js/backgroundHandlers/soundHandler.js"></script>
@@ -79,6 +105,7 @@
     <script src="js/menus/pauseMenu.js"></script>
     <script src="js/menus/menuHandler.js"></script>
     <script src="js/menus/menuInputHandler.js"></script>
+    <script src="js/menus/title.js"></script>
     
     <script src="js/rendering/card.js"></script>
     <script src="js/rendering/spawners.js"></script>
@@ -86,15 +113,13 @@
     <script src="js/rendering/textbar.js"></script>
     <script src="js/rendering/bullet.js"></script>
     <script src="js/rendering/laserRenderer.js"></script>
-    
-    <script src="js/manualCardManipulation/dragger.js"></script>
-    
+        
     <script src="js/gameLogic/bulletBehaviour/cardBullet.js"></script>
     <script src="js/gameLogic/bulletBehaviour/starBullet.js"></script>
     <script src="js/gameLogic/bulletBehaviour/laserBullet.js"></script>
     <script src="js/gameLogic/bulletBehaviour/bulletManager.js"></script>
     
-    <script src="js/gameLogic/characters.js"></script>
+    <script src="js/gameLogic/characterManager.js"></script>
     <script src="js/gameLogic/shottype.js"></script>
     <script src="js/gameLogic/spellcard.js"></script>
 
@@ -104,6 +129,5 @@
     <script src="js/loaders/assetLoad.js"></script>
     <script src="js/loaders/declareManagers.js"></script>
     <script src="js/loaders/init.js"></script>
-    <script src="js/devtools.js"></script>
 </body>
 </html>

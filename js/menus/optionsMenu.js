@@ -3,7 +3,6 @@ class OptionsMenu {
         this.options = [
             { 
                 key: 'player', 
-                name: 'Player',
                 value: parseInt(localStorage.playerLives) || 3, 
                 min: 1, 
                 max: 5, 
@@ -11,7 +10,6 @@ class OptionsMenu {
             },
             { 
                 key: 'bomb', 
-                name: 'Bomb',
                 value: parseInt(localStorage.bombs) || 3, 
                 min: 0, 
                 max: 3, 
@@ -19,7 +17,6 @@ class OptionsMenu {
             },
             { 
                 key: 'music', 
-                name: 'Music',
                 value: parseInt(localStorage.musicVolume) || 80, 
                 min: 0, 
                 max: 100, 
@@ -27,7 +24,6 @@ class OptionsMenu {
             },
             { 
                 key: 'sound', 
-                name: 'Sound',
                 value: parseInt(localStorage.sfxVolume) || 60, 
                 min: 0, 
                 max: 100, 
@@ -35,11 +31,9 @@ class OptionsMenu {
             },
             { 
                 key: 'restoreDefault', 
-                name: 'Restore Default' 
             },
             { 
                 key: 'quit', 
-                name: 'Quit' 
             }
         ];
         this.selectedOption = 0;
@@ -67,7 +61,7 @@ class OptionsMenu {
     render() {
         if (!this.container) return;
         
-        this.container.innerHTML = `
+        this.container.innerHTML = /*Dra titeln från språktiteln. Detta händer vid varje benämning av "key"*/`
             <div class="options-header">${languageManager.getText('optionsMenu.title')}</div>
             <div class="options-list" id="optionsList"></div>
         `;
@@ -205,9 +199,9 @@ class OptionsMenu {
     }
 
     updateSettings() {
-        // Update game settings based on current values
-        const musicOption = this.options.find(o => o.name === 'Music');
-        const soundOption = this.options.find(o => o.name === 'Sound');
+        // Uppdatera inställningar med nya värden
+        const musicOption = this.options.find(o => o.key === 'music');
+        const soundOption = this.options.find(o => o.key === 'sound');
         
         if (musicOption) {
             musicVolume = musicOption.value / 100;
@@ -219,7 +213,7 @@ class OptionsMenu {
         }
         
         saveSettings();
-        this.render(); // Update the display
+        this.render(); // Uppdatera containern
     }
 
     updateVolume() {
@@ -251,7 +245,7 @@ class OptionsMenu {
 
     playSoundTest() {
         if (soundEffects.timeout) {
-            soundEffects.timeout.volume = this.options.find(o => o.name === 'Sound').value / 100;
+            soundEffects.timeout.volume = this.options.find(o => o.key === 'sound').value / 100;
             playSoundEffect(soundEffects.timeout);
         }
     }

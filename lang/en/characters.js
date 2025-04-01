@@ -1,0 +1,24 @@
+// en
+window.enTranslations = window.enTranslations || {};
+window.enTranslations.characters = {
+    "Reimu": {
+        "name": "Reimu Hakkurei",
+        "title": "Shrine Maiden of Paradise",
+        "description": "A slow but balanced character with a weaker homing attack and spellcard",
+    },
+    "Marisa": {
+        "name": "Marisa Kirisame",
+        "title": "Magician of the Ordinary",
+        "description": "A low ranged character with a high speed and powerful attack to compensate",
+    },
+    "Murasa": {
+        "name": "Minamitsu Murasa",
+        "title": "Ghost Left From the Shipwreck Accident",
+        "description": "A medium character with pretty balanced stats",
+    },
+    "Nue": {
+        "name": "Nue Houjuu",
+        "title": "Unidentified Fantastic Flying Alien",
+        "description": "A character with a powerful melee, if you dare to get up personal that is. Agile to compensate",
+    }
+};

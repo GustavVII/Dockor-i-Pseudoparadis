@@ -11,6 +11,6 @@ canvas {
   background-color: #d4d0c8;
   image-rendering: crisp-edges;
   image-rendering: pixelated;
-  border: 0px solid #2d0080;
+  border: 3px solid #2d0080;
   display: block;
 }

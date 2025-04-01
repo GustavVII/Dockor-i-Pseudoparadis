@@ -1,152 +1,79 @@
 class ShotTypeManager {
     constructor() {
         this.cooldownCounter = 0;
-        this.baseCooldownFrames = 3;
-        this.cooldownFrames = this.baseCooldownFrames;
-        this.powerLevel = 0;
-        this.currentShotType = "Persuation Card";
-        this.shotTypes = shotTypesData.shotTypes;
-        this.focusMode = false;
-
-        this.starImages = []; // Array to store star images
-        this.spawnerColorIndices = {}; // Track color indices per spawner
+        this.baseCooldown = 5;
+        this.currentCooldown = this.baseCooldown;
+        this.power = 0;
+        this.damage = 10;
+        this.currentSpawnPattern = this.singleCardPattern;
     }
 
+    singleCardPattern = () => [{ xOffset: 0, yOffset: 0 }];
+    doubleCardPattern = () => [
+        { xOffset: -16, yOffset: 0 },
+        { xOffset: 16, yOffset: 0 }
+    ];
+    tripleCardPattern = () => [
+        { xOffset: -24, yOffset: 0 },
+        { xOffset: 0, yOffset: -10 },
+        { xOffset: 24, yOffset: 0 }
+    ];
+    quadCardPattern = () => [
+        { xOffset: -32, yOffset: 0 },
+        { xOffset: -12, yOffset: -10 },
+        { xOffset: 12, yOffset: -10 },
+        { xOffset: 32, yOffset: 0 }
+    ];
 
-    // Set the current shot type
-    setShotType(shotType) {
-        this.currentShotType = shotType;
-    }
-
-    // Update the cooldown counter
-    updateCooldown() {
-        if (this.cooldownCounter > 0) {
-            this.cooldownCounter--;
-        }
-    }
-
-    // Update cooldown frames based on power level
-    updateCooldownFrames() {
-        switch (this.powerLevel) {
-            case 0:
-                this.cooldownFrames = this.baseCooldownFrames;
-                break;
-            case 1:
-                this.cooldownFrames = this.baseCooldownFrames + 1;
-                break;
-            case 2:
-                this.cooldownFrames = this.baseCooldownFrames + 2;
-                break;
-            case 3:
-                this.cooldownFrames = this.baseCooldownFrames + 3;
-                break;
-        }
-    }
-
-    // Set focus mode (affects spawn positions)
-    setFocusMode(isFocused) {
-        this.focusMode = isFocused;
-        this.updateSpawnerPositions(); // Update spawner positions when focus mode changes
-    }
-
-    // Get spawn positions for the current shot type and power level
-    getSpawnPositions() {
-        const shotType = this.shotTypes.find(st => st.name === this.currentShotType);
-        if (!shotType) {
-            console.error(`Shot type "${this.currentShotType}" not found.`);
-            return [{ xOffset: 0, yOffset: -10 }]; // Default to single shot
-        }
-
-        // Determine which spawn positions to use (normal or focus mode)
-        let spawnPositions;
-        if (this.focusMode) {
-            const focusKey = `powerLevel${this.powerLevel}`;
-            spawnPositions = shotType.spawnPositions.focus?.[focusKey];
+    setPower(power) {
+        this.power = Math.min(power, 128);
+        
+        if (power >= 128) {
+            this.damage = 24;
+            this.currentCooldown = this.baseCooldown + 1;
+            this.currentSpawnPattern = this.quadCardPattern;
+        } else if (power >= 112) {
+            this.damage = 20;
+            this.currentCooldown = this.baseCooldown;
+            this.currentSpawnPattern = this.tripleCardPattern;
+        } else if (power >= 80) {
+            this.damage = 20;
+            this.currentCooldown = this.baseCooldown - 1;
+            this.currentSpawnPattern = this.tripleCardPattern;
+        } else if (power >= 48) {
+            this.damage = 16;
+            this.currentCooldown = this.baseCooldown;
+            this.currentSpawnPattern = this.doubleCardPattern;
+        } else if (power >= 16) {
+            this.damage = 12;
+            this.currentCooldown = this.baseCooldown - 1;
+            this.currentSpawnPattern = this.singleCardPattern;
         } else {
-            const powerLevelKey = `powerLevel${this.powerLevel}`;
-            spawnPositions = shotType.spawnPositions[powerLevelKey];
+            this.damage = 10;
+            this.currentCooldown = this.baseCooldown;
+            this.currentSpawnPattern = this.singleCardPattern;
         }
-
-        if (!spawnPositions) {
-            console.error(`Spawn positions for power level ${this.powerLevel} (focus: ${this.focusMode}) not found.`);
-            return [{ xOffset: 0, yOffset: -10 }]; // Default to single shot
-        }
-
-        return spawnPositions;
     }
 
-    // Notify the spawner manager of new spawn positions
-    updateSpawnerPositions() {
-        const spawnPositions = this.getSpawnPositions();
-        spawnerManager.setSpawnerPositions(spawnPositions);
+    update() {
+        if (this.cooldownCounter > 0) this.cooldownCounter--;
     }
 
-    // Shoot bullets based on the current shot type
-    shoot(ignoreCooldown = false, isSpellcard = false, cursor) {
-        if (!cursor.isActive || (!ignoreCooldown && this.cooldownCounter > 0)) return;
-
-        // Play the appropriate sound effect
-        if (isSpellcard) {
-            playSoundEffect(soundEffects.powershot);
-        } else {
-            playSoundEffect(soundEffects.shot);
-        }
-        updateScore(100);
-
-        // Get spawn positions based on the current shot type and power level
-        const spawnPositions = this.getSpawnPositions();
-
-        // Create bullets for each spawn position
-        spawnPositions.forEach(({ xOffset, yOffset, angle = 0, colors = [1] }, index) => {
-            const x = cursor.x + cursor.width / 2 + xOffset - 16; // Adjust for bullet width
-            const y = cursor.y + yOffset - 20;
-
-            // Determine the bullet type based on the shot type
-            const shotType = this.shotTypes.find(st => st.name === this.currentShotType);
-            if (!shotType) return;
-
-            switch (shotType.behavior) {
-                case "shootCards":
-                    // Get a random card from the suits and numbers
-                    const suit = suits[Math.floor(Math.random() * suits.length)];
-                    const number = Math.floor(Math.random() * (endNumber - startNumber + 1)) + startNumber;
-
-                    // Create a card object with the correct properties
-                    const card = { suit, number };
-
-                    // Create the card bullet and add it to the BulletManager
-                    const cardBullet = new CardBullet(x, y, 15, card);
-                    bulletManager.addBullet(cardBullet); // Add to BulletManager
-                    break;
-
-                case "shootStars":
-                    // Initialize the color index for this spawner if it doesn't exist
-                    if (!this.spawnerColorIndices[index]) {
-                        this.spawnerColorIndices[index] = 0;
-                    }
-
-                    // Get the current color for this spawner
-                    const color = colors[this.spawnerColorIndices[index] % colors.length];
-                    this.spawnerColorIndices[index]++; // Increment the color index for this spawner
-
-                    // Create the star bullet and add it to the BulletManager
-                    const starBullet = new StarBullet(x, y, 15, this.starImages, angle, color);
-                    bulletManager.addBullet(starBullet); // Add to BulletManager
-                    break;
-
-                case "shootLaser":
-                    // Create a laser bullet and add it to the BulletManager
-                    const laser = new Laser(x, y, 12, 32, 32, this.laserImages.middle);
-                    bulletManager.addBullet(laser); // Add to BulletManager
-                    break;
-
-                // Add more cases for other bullet types
+    shoot(cursor) {
+        if (!cursor || this.cooldownCounter > 0) return;
+        
+        this.currentSpawnPattern().forEach(pos => {
+            const x = cursor.x + cursor.width / 2 + pos.xOffset;
+            const y = cursor.y + pos.yOffset;
+            const bullet = CardBullet.create(x, y, this.damage);
+            if (window.bulletManager) {
+                window.bulletManager.addBullet(bullet);
             }
         });
-
-        // Activate cooldown (only if not ignoring cooldown)
-        if (!ignoreCooldown) {
-            this.cooldownCounter = this.cooldownFrames;
+        
+        this.cooldownCounter = this.currentCooldown;
+        if (window.playSoundEffect) {
+            playSoundEffect(soundEffects.shot);
         }
     }
 }

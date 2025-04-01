@@ -5,14 +5,14 @@
             "datum": "3-11",
             "tidSpenderad": "2:00",
             "titel": "Projekt start",
-            "logg": "Startat projektet. Skapat grundläggande filer för projektet. Ytan består av 2 kanvas, en på topp och en på botten"
+            "logg": "Startat projektet. Skapat grundläggande filer för projektet. Ytan består av 2 kanvas, en på topp och en på botten."
         },
         {
             "dag": "2",
             "datum": "3-12",
             "tidSpenderad": "3:30",
             "titel": "En kortlek",
-            "logg": "Med ett ritningsprogramm kallat paint.net har jag nu ritat grafik för spelkort. Jag har även laggt till kortleken till kanvaset nu, och senare en simpel spelare som kan skjuta på korten"
+            "logg": "Med ett ritningsprogramm kallat paint.net har jag nu ritat grafik för spelkort. Jag har även laggt till kortleken till kanvaset nu, och senare en simpel spelare som kan skjuta på korten."
         },
         {
             "dag": "3",
@@ -26,84 +26,84 @@
             "datum": "3-14",
             "tidSpenderad": "7:00",
             "titel": "Grafik och spawners",
-            "logg": "Den simpla spelaren har för övrigt fått en simpel grafik, samt skjuter den inte korten från ingenstans, utan från spesifika spawners. Dessa ökar i antal beroende på spelarens 'power level' som för närvarande manipuleras med dev tools. Lade även till en ring samt en mörk effekt när trollkort åbekallas"
+            "logg": "Den simpla spelaren har för övrigt fått en simpel grafik, samt skjuter den inte korten från ingenstans, utan från spesifika spawners. Dessa ökar i antal beroende på spelarens 'power level' som för närvarande manipuleras med dev tools. Lade även till en ring samt en mörk effekt när trollkort åbekallas."
         },
         {
             "dag": "5",
             "datum": "3-15",
             "tidSpenderad": "9:00",
             "titel": "Sortering och modularisering av kod",
-            "logg": "Tiden har kommit då jag lagt till mycket och inser att mycket som jag vill lägga till mer av är redan hårdkodat. Det mesta av min tid spenderades att ta funktioner från vissa centrala filer, och stoppa dem i sina egna filer för enklare hantering. Inte nog med det, behövde jag dra ut alla hårdkodade saker, som t.ex i funktionen för att kalla trollkort var ett enda kort hårdkodat in. Detta ändrades så att koden kan återanvändas för flera kort. Funktionen ansvarar nu endast för gemensamma grejer som ringen och den mörka effekten. Detta tog lång tid"
+            "logg": "Tiden har kommit då jag lagt till mycket och inser att mycket som jag vill lägga till mer av är redan hårdkodat. Det mesta av min tid spenderades att ta funktioner från vissa centrala filer, och stoppa dem i sina egna filer för enklare hantering. Inte nog med det, behövde jag dra ut alla hårdkodade saker, som t.ex i funktionen för att kalla trollkort var ett enda kort hårdkodat in. Detta ändrades så att koden kan återanvändas för flera kort. Funktionen ansvarar nu endast för gemensamma grejer som ringen och den mörka effekten. Detta tog lång tid."
         },
         {
             "dag": "6",
             "datum": "3-16",
             "tidSpenderad": "6:00",
             "titel": "Finputsning av trollkortsgrafik",
-            "logg": "Jag valde att introducera porträtt som visas när trollkort åbekallas. Dessa dyker upp samt med en text som nämner vad trollkortet heter. Med det har jag även lagt till flera olika kort som lagras i en JSON fil. Även har jag laggt till flera olika karaktärer som OCKSÅ lagras i sin egna JSON fil, och där defineras vilket trollkort de använder"
+            "logg": "Jag valde att introducera porträtt som visas när trollkort åbekallas. Dessa dyker upp samt med en text som nämner vad trollkortet heter. Med det har jag även lagt till flera olika kort som lagras i en JSON fil. Även har jag laggt till flera olika karaktärer som OCKSÅ lagras i sin egna JSON fil, och där defineras vilket trollkort de använder."
         },
         {
             "dag": "7",
             "datum": "3-17",
             "tidSpenderad": "2:00",
             "titel": "Mer städande",
-            "logg": "Efter att ha visat vad jag gjort under lektionen, ritade jag för det mesta mer grafik under lektionen. Hemma sedan (arbetade inte mycket denna dag) sorterade jag filerna och kategoriserade dem mer, till exempel, filer för att rendera olika grejer hamna i en mapp, filer angående logik går in i ett annat ställe etc"
+            "logg": "Efter att ha visat vad jag gjort under lektionen, ritade jag för det mesta mer grafik under lektionen. Hemma sedan (arbetade inte mycket denna dag) sorterade jag filerna och kategoriserade dem mer, till exempel, filer för att rendera olika grejer hamna i en mapp, filer angående logik går in i ett annat ställe etc."
         },
         {
             "dag": "8",
             "datum": "3-18",
             "tidSpenderad": "12:30",
             "titel": "Återställning av oreda",
-            "logg": "Idag valde jag att sammanfoga båda kanvas till ett sort kanvas, för min syn för vad projektet skulle bli har ändrats. Nu har jag även skapat en devtools.js fil som ska innehålla saker för testande och som inte ska vara där när jag är färdig. Med mycket bråk med debugging, som att lista ut och fixa varför slowdown inte applicerades på spelaren, samt totalseparering av trollkortens textruta från porträttritaren, kan jag nu konstatera att projektet är exakt 2453 linjer långt! (programmet som jag räknade med gav mig originellt 1098512 linjer, men det visade sig att den räknade linjerna i musiken (???) så jag behövde manuellt räkna bort det)"
+            "logg": "Idag valde jag att sammanfoga båda kanvas till ett sort kanvas, för min syn för vad projektet skulle bli har ändrats. Nu har jag även skapat en devtools.js fil som ska innehålla saker för testande och som inte ska vara där när jag är färdig. Med mycket bråk med debugging, som att lista ut och fixa varför slowdown inte applicerades på spelaren, samt totalseparering av trollkortens textruta från porträttritaren, kan jag nu konstatera att projektet är exakt 2453 linjer långt! (programmet som jag räknade med gav mig originellt 1098512 linjer, men det visade sig att den räknade linjerna i musiken (???) så jag behövde manuellt räkna bort det)."
         },
         {
             "dag": "9",
             "datum": "3-19",
             "tidSpenderad": "4:30",
             "titel": "Fuck you CORS policy",
-            "logg": "CORS, som står för 'Cross-origin resource sharing', är en policy i chromium baserade browsers som hanterar vad en browser laddar eller inte. Normalt sätt är detta inte ett problem när jag kodad i en live server (localhost protocoll, eller 127.0.0.1:5500), men nu när jag öppnar med file:// protocollet visar det sig att json filer plötsligt är olagliga. Detta har tvingat mig ändra alla json filer till .js och deklarera datan som en array av konstanter, suck. Detta har fått mig att investera min tid inom forskning om jag kan tillverka ett C# program som kan ladda html filen istället, vilket både skippar CORS och ger in fin liten gamewindow. Spelkoden kommer fortfarande vara i JavaScript, men själva fönstret kommer vara i C i en .exe fil. Under dagens lektion ritade jag för det mesta grafik, specifikt ett porträtt för den 2a karaktären. Jag har nu också valt att ändra skalan på kanvas tillbaka till 1x (istället för 2x som innan), vilket ger mig mer plats att arbeta med. Om jag vill ha större grafik, pga en bugg som gör bilder blurriga om jag kallar in dem med dubbla storlek, gör jag bara bilden så stor som jag vill ha, så pixlarna blir 2x2 på själva bildfilen"
+            "logg": "CORS, som står för 'Cross-origin resource sharing', är en policy i chromium baserade browsers som hanterar vad en browser laddar eller inte. Normalt sätt är detta inte ett problem när jag kodad i en live server (localhost protocoll, eller 127.0.0.1:5500), men nu när jag öppnar med file:// protocollet visar det sig att json filer plötsligt är olagliga. Detta har tvingat mig ändra alla json filer till .js och deklarera datan som en array av konstanter, suck. Detta har fått mig att investera min tid inom forskning om jag kan tillverka ett C# program som kan ladda html filen istället, vilket både skippar CORS och ger in fin liten gamewindow. Spelkoden kommer fortfarande vara i JavaScript, men själva fönstret kommer vara i C i en .exe fil. Under dagens lektion ritade jag för det mesta grafik, specifikt ett porträtt för den 2a karaktären. Jag har nu också valt att ändra skalan på kanvas tillbaka till 1x (istället för 2x som innan), vilket ger mig mer plats att arbeta med. Om jag vill ha större grafik, pga en bugg som gör bilder blurriga om jag kallar in dem med dubbla storlek, gör jag bara bilden så stor som jag vill ha, så pixlarna blir 2x2 på själva bildfilen."
         },
         {
             "dag": "10",
             "datum": "3-20",
             "tidSpenderad": "2:30",
             "titel": "Stjärnfall, färglada stjärnor",
-            "logg": "Dagens arbete har givit den första alternativa eldtyp. Karaktärer kan nu skjuta stjärnor, och det är en karaktär som kommer att använda dessa mycket. Nu dessa stjärnor kan defineras med vilken färg man vill (av 8), i vilken orning de skjuts, och från vilken åbekallelsering som man vill. Heller, dessa stjärnor sjuter inte bara rakt up, utan de skjuter lite diagonalt. Jag kan definera och har full kontroll över vilken vinkel de avfyras i. För övrigt, jag är uppe i 23 filer som ansvarar alla för varsin del"
+            "logg": "Dagens arbete har givit den första alternativa eldtyp. Karaktärer kan nu skjuta stjärnor, och det är en karaktär som kommer att använda dessa mycket. Nu dessa stjärnor kan defineras med vilken färg man vill (av 8), i vilken orning de skjuts, och från vilken åbekallelsering som man vill. Heller, dessa stjärnor sjuter inte bara rakt up, utan de skjuter lite diagonalt. Jag kan definera och har full kontroll över vilken vinkel de avfyras i. För övrigt, jag är uppe i 23 filer som ansvarar alla för varsin del."
         },
         {
             "dag": "11",
             "datum": "3-21",
             "tidSpenderad": "2:00",
             "titel": "En inladdningsgrafik",
-            "logg": "Stor trötthet slog mig idag, venne varför. Lite arbete kom till, men en grundläggande startknapp samt en inladdningsskärm har lagits till. Temporärt använder jag en annan bild för att hålla testa, för grafiken är ganska stor och jag är osäker på temat på inladdningsbilden ska vara (även om man bara ser den i 2s, kanske 5s på en slö enhet)"
+            "logg": "Stor trötthet slog mig idag, venne varför. Lite arbete kom till, men en grundläggande startknapp samt en inladdningsskärm har lagits till. Temporärt använder jag en annan bild för att hålla testa, för grafiken är ganska stor och jag är osäker på temat på inladdningsbilden ska vara (även om man bara ser den i 2s, kanske 5s på en slö enhet)."
         },
         {
             "dag": "12",
             "datum": "3-22",
             "tidSpenderad": "10:00",
             "titel": "Menyer och stormodularisering",
-            "logg": "Dagens arbete har ledat till att jag laggt till en massa menyer, som en startmeny, en meny för pausskärnm sant har jag refaktorerat i förberedelse till att lägga till en massa nivåer. Grafikritning har tagit ett bra tag, då jag ritat in mer till bakgrund. Statsboxen vid sidan har fått en hel makeover och har nu det mesta som den slutliga versionen har, även räknare för saker som inte kommer att finnas på ett bra tag. Jag har även gort en total refaktorering av musikspelaren. Menyerna har så himlans många problem och buggar, jobbiga att rensa och fixa, och sedan så visar det sig att fixen gav 3 nya buggar, suck. Hopsan, nu paja jag laserstrålarna. Få fixa det imorg-... fan klockan är ett nästa dag redan. Glömde nämna jag gjorde en GitHub repo för projektet"
+            "logg": "Dagens arbete har ledat till att jag laggt till en massa menyer, som en startmeny, en meny för pausskärnm sant har jag refaktorerat i förberedelse till att lägga till en massa nivåer. Grafikritning har tagit ett bra tag, då jag ritat in mer till bakgrund. Statsboxen vid sidan har fått en hel makeover och har nu det mesta som den slutliga versionen har, även räknare för saker som inte kommer att finnas på ett bra tag. Jag har även gort en total refaktorering av musikspelaren. Menyerna har så himlans många problem och buggar, jobbiga att rensa och fixa, och sedan så visar det sig att fixen gav 3 nya buggar, suck. Hopsan, nu paja jag laserstrålarna. Få fixa det imorg-... fan klockan är ett nästa dag redan. Glömde nämna jag gjorde en GitHub repo för projektet."
         },
         {
             "dag": "13",
             "datum": "3-23",
             "tidSpenderad": "11:00",
             "titel": "Laserstrul och centraliserad grafikinladdning",
-            "logg": "Laser trollkorten har haft ett sånt himlans jobbigt strul. Över timmar har jag individuellt kammat ut nästan alla. Först var det att de renderas fel igen, så den gamla metoden slet vi ut och byggde om. Nu är den korrekt typ men oj slutbitarna är inverterade i när de vill renderas. Sen slutar kollitionschecken fungera, och där försvann ljudet. Nog med laser, jag gjorde en centraliserad inladdning av grafik. I grunden innebär detta att alla funktioner för att ladda grafik har flyttats till en ny fil som hanterar det, istället för att det finns 6 olika sprida över typ 8 filer. När detta var implementerat var det bara att ta bort de äldre funktionerna och kolla i konsolen en efter en för alla inladdninsfel, kolla vilken fil som klagar och skriva om dem till att hämta grafiken från ett nyckelord de angivs när de laddas in och skickas till den centrala grafik-arrayen. Implementeringen var ganska snabb, och fixandet för all grafik tog inte mycket längre tid. Nu är det bara att lägga till ny grafik i inladdningsfilen, ge den ett nyckelord, sedan kalla bilden efter sitt nyckelord. Förinladdningen må ta några 4mb totalt (jag använder små pixelart bilder som grafik så inte så dyrt i lagring), men underlättar mycket för äldre/slöa datorer som inte kan snabbt ladda in filer. Märkte på skoldatorn att porträttbilderna (som innnan inte var förinladdade) kunde halta spelet i 0.2s medans den försöker hitta bilden mitt under spelgång. Borde nu ha fixats med denna nya updatering. UPPDATERING NÅGRA TIMMAR SENARE, det visar sig att under utvecklingen har trollkortshanteraren fallit bak så långt, samt med laser att jag valt att temporärt plocka bort dem från projektet och skriva om dem från grunden up. SUCK"
+            "logg": "Laser trollkorten har haft ett sånt himlans jobbigt strul. Över timmar har jag individuellt kammat ut nästan alla. Först var det att de renderas fel igen, så den gamla metoden slet vi ut och byggde om. Nu är den korrekt typ men oj slutbitarna är inverterade i när de vill renderas. Sen slutar kollitionschecken fungera, och där försvann ljudet. Nog med laser, jag gjorde en centraliserad inladdning av grafik. I grunden innebär detta att alla funktioner för att ladda grafik har flyttats till en ny fil som hanterar det, istället för att det finns 6 olika sprida över typ 8 filer. När detta var implementerat var det bara att ta bort de äldre funktionerna och kolla i konsolen en efter en för alla inladdninsfel, kolla vilken fil som klagar och skriva om dem till att hämta grafiken från ett nyckelord de angivs när de laddas in och skickas till den centrala grafik-arrayen. Implementeringen var ganska snabb, och fixandet för all grafik tog inte mycket längre tid. Nu är det bara att lägga till ny grafik i inladdningsfilen, ge den ett nyckelord, sedan kalla bilden efter sitt nyckelord. Förinladdningen må ta några 4mb totalt (jag använder små pixelart bilder som grafik så inte så dyrt i lagring), men underlättar mycket för äldre/slöa datorer som inte kan snabbt ladda in filer. Märkte på skoldatorn att porträttbilderna (som innnan inte var förinladdade) kunde halta spelet i 0.2s medans den försöker hitta bilden mitt under spelgång. Borde nu ha fixats med denna nya updatering. UPPDATERING NÅGRA TIMMAR SENARE, det visar sig att under utvecklingen har trollkortshanteraren fallit bak så långt, samt med laser att jag valt att temporärt plocka bort dem från projektet och skriva om dem från grunden up. SUCK!"
         },
         {
             "dag": "14",
             "datum": "3-24",
             "tidSpenderad": "2:00",
             "titel": "Mindre grafikritning och CSS test",
-            "logg": "Idag gjorde jag inte mycket. Dock hade jag lite tid att snygga till all text och grafik som visas vid sidomenyn. Att arbeta med CSS och testa gradienter tills jag fick den perfekta var ganska roligt, och att se resultatet att det var så fint var nästan magiskt. Den nya grafiken i grunden var stjärnorna som representerar olika saker, som antal liv och antall trollkort (bomber) som spelaren har. Ser mycket bättre ut än den nästan monofärgade innan"
+            "logg": "Idag gjorde jag inte mycket. Dock hade jag lite tid att snygga till all text och grafik som visas vid sidomenyn. Att arbeta med CSS och testa gradienter tills jag fick den perfekta var ganska roligt, och att se resultatet att det var så fint var nästan magiskt. Den nya grafiken i grunden var stjärnorna som representerar olika saker, som antal liv och antall trollkort (bomber) som spelaren har. Ser mycket bättre ut än den nästan monofärgade innan."
         },
         {
             "dag": "15",
             "datum": "3-25",
             "tidSpenderad": "7:00",
             "titel": "Storslagna menyer",
-            "logg": "En ful tidig meny har nu plockats bort: Den externa inställningsmenyn. Denna är nu integrerad i startmenyn. Jag har även experimenterat mer med HTML manipulerande javaScript, vilket var lite jobbigt att arbeta med, men senare visade sig vara mycket lättare än att göra saker med text och menyer på kanvas. Kanvasen är nu gömd tills spelet startar. Jag har även gort en större restrukturering så att rotmappen ser mycket finare ut, med endast index.html som fil i roten (och loggen). Har även experimenterat med att bygga en webview applikation i C#, men det gick inte så bra: EXE filen krashar direkt och loggen säger inget. Detta är vad 60% av dagen spenderades på. Tyvärr går det in i shitcode mappen med laserhanteraren, där jag sparar gammla/icke fungerande saker jag kastat :broken_heart"
+            "logg": "En ful tidig meny har nu plockats bort: Den externa inställningsmenyn. Denna är nu integrerad i startmenyn. Jag har även experimenterat mer med HTML manipulerande javaScript, vilket var lite jobbigt att arbeta med, men senare visade sig vara mycket lättare än att göra saker med text och menyer på kanvas. Kanvasen är nu gömd tills spelet startar. Jag har även gort en större restrukturering så att rotmappen ser mycket finare ut, med endast index.html som fil i roten (och loggen). Har även experimenterat med att bygga en webview applikation i C#, men det gick inte så bra: EXE filen krashar direkt och loggen säger inget. Detta är vad 60% av dagen spenderades på. Tyvärr går det in i shitcode mappen med laserhanteraren, där jag sparar gammla/icke fungerande saker jag kastat :broken_heart."
         },
         {
             "dag": "16",
@@ -111,6 +111,41 @@
             "tidSpenderad": "9:30",
             "titel": "CSS och mer menyer",
             "logg": "I början designa jag menyerna att bara existera, för jag trodde att javaScript skulle lösa alla mina problem med var allt skulle dyka upp. Nej, gick inte bra, så jag börja studera CSS. Nu ser de lite bättre, men sen upptäckte jag gradienterna, att jag kan inkludera div klasser för valda element separat från de andra för highlighting, och sen gick det som en snöboll ner för klippan. CSS hela dagen, och nu har jag en vacker vacker inställningsmeny, huvudmeny och musikrum. Startknappen har även uppdaterats från att skicka spelaren till spelet, till att låta spelaren välja karaktärer med en beskrivning av dem. Älskar nu CSS, inte visste jag att leka runt med gradientfärger kunde vara så kul. Nu saknas bara att jag manuellt ritar en bakgrundsbild. Har en placeholder. Jag rekommenderar verkligen att läsaren laddar ner dagens version (Uppdatering 2) och lyssnar på musiken i musikrummet. Kommentarerna där är relaterade till vad spelet kommer att bli för de som är nyfikna. På själva spelfronten: inget nytt för jag råka paja spelinitieringen och har inte löst det än, kanske imorgon."
+        },
+        {
+            "dag": "17",
+            "datum": "3-27",
+            "tidSpenderad": "7:00",
+            "titel": "Expansion av datafiler",
+            "logg": "Gjorde en grundläggande fil för hur spelets etapper må utspela sig. Detta tog ett bra tag att skriva, så lite riktig kod skrevs egentligen, men innan jag gick in för djupt, fick jag en bra idé: språkstöd. Jag visste att om jag ville ha detta, behöver jag skriva koden för det nu och inte senare, innan jag bakat in dialog och text direkt i filerna, något jag redan gjort för menyerna. Som tur hade jag det simpelt för mig, för det var bara ett fåtal ord. Att arbeta om koden att ladda från dessa låtsas JSON filerna var lite jobbigt i början, men när jag lyckats med en var det bara att klona över. Som test hade jag svenska och engelska, och det fungerade! Systemet fungerar även så simpelt att jag bara behöver byta ut <html lang='${lang}'> där lang är språkets kod, som en, sv, de, pt, fr, pl, fi, etc. Menyerna är nu översatta."
+        },
+        {
+            "dag": "18",
+            "datum": "3-28",
+            "tidSpenderad": "2:00",
+            "titel": "Utveckling av språk",
+            "logg": "Fortsättande från igår, har jag nu flyttat alla strängar av text som för närvarande finns i projektet in i dess språkfil. Jag spenderade inte mycket tid idag, för jag råkade somna när jag kom hem från skolan. Det jag han göra dock var att transformera koden för musiken som drog datan från en musikdatafil, till att fråga musikdata filen efter en nyckel, och baserat på språket kommer den gå in till 'lang/${lang}/music.js' och dra låtens namn, titel (var den spelas), och storyn/kommentaren. När jag postade mina utvecklingar av detta i en tysk gruppchat, kom en tysk fram till mig och erbjöd sig att översätta allt jag skickar honom från det engelska, vilket jag tacka ja till. Eftersom det var sent, kommer han bli färdig imorgon. För övrigt, dessa tyskar som sett mitt projekt är väldigt interreserade. En har frågat om jag kan låta de testa, men jag svarar med 'om 5 veckor', vilket är ungefärliga inlämningsdatumet. Oroa inte, ingen annan än jag kommer att skriva koden (litar inte på andra och vill inte ha formateringskonflikter), medhjälpare kommer endast hjälpa med grafik, översättningar eller förslag om vad som kan läggas till. Kommer uppdatera min GitHub så snart som min tyskaöversättare har språkfilerna redo. För övrogt, 'kanske imorgon' från dag 16 var en lögn för jag råkade fastna i standardisering av data innan jag råkar hårdbaka in saker och få mina modulariseringsförsök att haverera."
+        },
+        {
+            "dag": "19",
+            "datum": "3-29",
+            "tidSpenderad": "4:00",
+            "titel": "Äntligen funkar speldelen igen",
+            "logg": "Tja, halvt. Spelet kan åt minstånde ladda in nu korrekt. Det går att skjuta kort också igen, men inga trollkort än, mestadels för de kommer ha sin egna AI (målsökande, advancerad matte med en spelare som flyttar på sig, och att jag inte vet vad det ska göra). Nu fungerar även kraft igen, då det definerar hur mycket skada starterkorten gör. Shottypes har för övrigt separerats från korten, eftersom alla karaktärer kommer ha korten, men deras shottype aktiveras efter ett litet tag. Nu har jag även fått in de Rysska översättningarna, vilket jag är väldigt glad över. Testet om det klarar icke latinska teckensnitt verkade gå utmärkt, och krylliska bokstäver går utmärkt att använda. Nu, dags att rita en massa, vilket jag inte kommer ha riktigt sådär kul med. För övrigt, jag har ett citat jag tagit från melodiernas kommentar som jag har modifierat lite. Den passar för vad jag nu känner: 'På siståne har konsolen hojtat ut saker som \"GET /lang/pl/spells.js net::ERR_ABORTED 404 (Not Found)\" eller \"ReferenceError: startGameLoop is not defined\". Siket trist tillstånd vi är i'. Eftesom jag skriver om så får jag lite konflikter med de gamla sakerna."
+        },
+        {
+            "dag": "20",
+            "datum": "3-30",
+            "tidSpenderad": "6:00",
+            "titel": "Menyövergångar",
+            "logg": "Okej så Polacken blev färdig med hälften av översättningarna klockan 3:30 på morgonen och kallade mig för att hämta dem. Nu, musiken saknar dess kommentarer men de får vi leva med för närvarande. Så, menyövergångar... Jag har försökt att leka med CSS och @keyframe, och det har gått sådär. Jag har lyckats animera titelingång, men jag har problem med att CSS bråkar med att försöka få menyn att rendera om 60ggr/s. Efter en liten fix slutade menyn visa vilken knapp man hade valt, men fungera fortfarande. Så jag bytte till att den uppdaterar endast om man rör upp/ner pilen, vilket gjorde att om man var snabb, frös den och gick kaputt eftersom hela containern (där den också finns i) rendrades om. Lösning? Lås tangenttryck tills animationen är över. Detta fungerar väl, och har en sekundär effekt att visa osynliga 'ingen deklaration att animationen är över' problem, eftersom att tangenttrycken förblir evigt låsta."
+        },
+        {
+            "dag": "11",
+            "datum": "3-31",
+            "tidSpenderad": "3:30",
+            "titel": "De flockar till mig",
+            "logg": "Inte längre behöver jag fråga; De kommer direkt till mig. Det dök upp en rumän, som hört att jag gör detta projekt, och erbjöd översätta vilket jag tackade ja till. Såklart fler språk skadar inte, men jag borde börja be andra som kan det språket kolla över och granska att det står fel. Detta hände nästan med tyskan, där de råkade översätta 'kvarblivet spöke från skeppsvraket' till 'efterblivet spöke från skeppsvraket', vilket hastigt korrigerades av andra som såg. Nu kollas de tyska översättningarna även över av 2 granskare för verifikation. Okej så medans jag skrev detta, kom en Nederlänning och erbjöd sina översättningar med. Rakt in i credits.txt går han"
         }
     ]
 }

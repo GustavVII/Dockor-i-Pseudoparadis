@@ -4,6 +4,9 @@ let playerLives = 3;
 let bombs = 3;
 let power = 0;
 let graze = 0;
+const POWER_LEVELS = [32, 64, 96, 128];
+const MAX_POWER = 128;
+let powerLevel = 0;
 
 // Få nummer att starta med 0
 function padNumber(number, length) {
@@ -47,7 +50,7 @@ function updatePlayerStatsDisplay() {
                 <br>
                 <div style="display: flex; justify-content: space-between;">
                     <span class="power-text">Power</span>
-                    <span class="power-data">${power}</span>
+                    <span class="power-data">${power}/${MAX_POWER} (Lv.${powerLevel})</span>
                 </div>
                 <div style="display: flex; justify-content: space-between;">
                     <span class="graze-text">Graze</span>
@@ -81,8 +84,19 @@ function updateBombs(bombCount) {
 }
 
 // Uppdatera antal power
-function updatePower(powerLevel) {
-    power = powerLevel;
+function updatePower(points) {
+    power = Math.min(power + points, 128);
+    if (window.shotTypeManager) {
+        window.shotTypeManager.setPower(power);
+    }
+    updatePlayerStatsDisplay();
+}
+
+function decreasePower(points) {
+    power = Math.max(power - points, 0);
+    if (window.shotTypeManager) {
+        window.shotTypeManager.setPower(power);
+    }
     updatePlayerStatsDisplay();
 }
 

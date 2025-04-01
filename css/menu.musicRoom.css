@@ -4,6 +4,9 @@
     height: 100%;
     width: 100%;
     position: relative;
+    transition: opacity 0.5s ease-out;
+    will-change: opacity;
+    animation: fadeIn 0.5s ease-out forwards;
 }
 
 .music-room-header {
@@ -12,13 +15,13 @@
     display: flex;
     align-items: center;
     justify-content: left;
+    margin-top: 25px;
     margin-left: 50px;
     position: relative;
     z-index: 1;
 }
 
 .music-room-content {
-    flex: 1;
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -38,7 +41,7 @@
 
 .track-list-container {
     min-height: 0;
-    width: 70%;
+    width: 75%;
     height: 300px;
     margin-left: 50px;
     margin-right: 150px;
@@ -83,6 +86,7 @@
     font-size: 22px;
     border-radius: 5px;
     scroll-snap-align: start;
+    transition: all 0.2s ease;
 }
 
 .track-item.selected {
@@ -124,7 +128,7 @@
 .track-title {
     font-size: 28px;
     font-weight: bold;
-    background: -webkit-linear-gradient(palegoldenrod, palegoldenrod, goldenrod, black);
+    background: -webkit-linear-gradient(palegoldenrod, palegoldenrod, goldenrod, dimgrey);
     background-clip: text;
     -webkit-text-fill-color: transparent;
     text-shadow: 0 0 20px #ffff00cc;
@@ -149,12 +153,12 @@
 .music-room-instructions {
     font-weight: bold;
     flex-shrink: 0;
-    margin-bottom: 30px;
+    margin-bottom: 25px;
     font-size: 16px;
     text-align: center;
     position: absolute;
     bottom: 0;
-    margin-left: 300px;
+    margin-left: 50px;
     padding: 10px;
     color: #aaa;
     z-index: 2;

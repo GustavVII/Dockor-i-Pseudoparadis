@@ -1,19 +1,52 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Event listener for the start button
+    // Startknapp
     document.getElementById('startButton').addEventListener('click', () => {
-        // Hide the start screen
+        // Göm startskärmen
         document.getElementById('startScreen').style.display = 'none';
         init();
     });
 });
+if (localStorage.getItem('clearedGame') === null) {
+    localStorage.setItem('clearedGame', 'false');
+}
+
+function renderMainMenu() {
+    const menuBox = document.getElementById('menuBox');
+    if (!menuBox) return;
+    
+    const existingTitle = menuBox.querySelector('.main-menu-title');
+    
+    menuBox.innerHTML = '';
+    if (existingTitle) {
+        menuBox.appendChild(existingTitle);
+    }
+    
+    const menuItems = [
+        'start', 'extraStart', 'practiseStart', 'score', 'musicRoom', 'options', 'quit'
+    ];
+    
+    menuItems.forEach((item, index) => {
+        const buttonElement = document.createElement('div');
+        buttonElement.className = `menu-button ${selectedButton === index ? 'selected' : ''}`;
+        
+        if (item === 'extraStart') {
+            buttonElement.classList.add('extra-start');
+            if (clearedGame) {
+                buttonElement.classList.add('cleared');
+            }
+        }
+        
+        buttonElement.textContent = languageManager.getText(`mainMenu.${item}`);
+        menuBox.appendChild(buttonElement);
+    });
+}
 
 async function init() {
-    // Show loading screen
+    // Visa inladdningsskärmen
     const loadingScreen = document.getElementById('loadingScreen');
     loadingScreen.style.display = 'flex';
     const settings = loadSettings();
 
-    // If parsing failed or values are invalid, use defaults
     if (isNaN(sfxVolume) || sfxVolume < 0 || sfxVolume > 1) {
         sfxVolume = 0.8;
     }
@@ -24,7 +57,6 @@ async function init() {
     musicVolume = settings.music / 100;
     sfxVolume = settings.sound / 100;
 
-    // Hide other elements
     document.getElementById('canvas').style.display = 'none';
     document.getElementById('menuBox').style.display = 'none';
     document.getElementById('playerStatsDisplay').style.display = 'none';
@@ -32,17 +64,13 @@ async function init() {
     
     console.log("Adding event listeners");
     
-    // Initialize sound effects
     await initializeSoundEffects();
 
     
     await languageManager.init();
-    // Declare and initialize all managers
     await declareManagers();
-    // Load all assets
     await loadAllAssets();
 
-    // Assign preloaded images to managers
     shotTypeManager.laserImages = {
         start: assetLoader.getImage('laser1'),
         middle: assetLoader.getImage('laser2'),
@@ -77,40 +105,49 @@ async function init() {
         }
     });
 
-    // Temporary delay to ensure assets are loaded
-    setTimeout(() => {
+    setTimeout(async () => {
         loadingScreen.style.display = 'none';
         stopGameMusic();
-        startMainMenu(); // Go to the main menu
+        
+        const menuBox = document.getElementById('menuBox');
+        menuBox.appendChild(titleManager.createTitle());
+        await titleManager.animateTitleEnter();
+        
+        startMainMenu();
+        
+        menuBox.style.display = 'flex';
+        
+        setTimeout(() => {
+            titleManager.animateTitle();
+            //transition.classList.add('hidden');
+            
+            setTimeout(() => {
+                //transition.remove();
+            }, 1000);
+        }, 50);
+        
+        startMainMenu();
     }, 0);
 }
 
-// Function to start the game
-function startGame() {
-    // Set menu to inactive
+async function startGame(characterId) {
     menuActive = false;
-
-    characterManager.initializeCursor(characterName);
-    if (!characterName) {
-        console.error("No character name provided to startGame()");
-        characterName = 'Murasa'; // Default fallback
-    }
-
-    if (window.characterManager) {
-        window.characterManager.initializeCursor();
-    }
+    gameRunning = true;
     
-    // Initialize Level 1
-    initializeLevel(level1Data);
-
-    // Hide menu and show game elements
-    hideMenu();
+    document.getElementById('menuBox').style.display = 'none';
+    document.getElementById('canvas').style.display = 'block';
+    document.getElementById('playerStatsDisplay').style.display = 'flex';
     
+    stopMenuMusic();
     
+    characterManager.setCharacter(characterId);
     
-    // Start the game loop
-    requestAnimationFrame(gameLoop);
+    lastFrameTime = performance.now();
+    accumulatedTime = 0;
+    
+    gameLoop();
+    
+    console.log("Game started with character:", characterId);
 }
 
-// Expose the startGame function to the global scope
 window.startGame = startGame;

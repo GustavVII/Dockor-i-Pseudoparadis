@@ -88,26 +88,20 @@ class CharacterSelect {
         
         container.innerHTML = '';
         
-        // Portrait from assetLoader using character ID
         const portrait = document.createElement('img');
         portrait.className = 'character-portrait';
         const portraitImage = window.assetLoader.getImage(`portrait${character.id}`);
-        if (portraitImage) {
-            portrait.src = portraitImage.src;
-        } else {
-            console.error(`Portrait image not found for character ID: ${character.id}`);
-        }
+        if (portraitImage) portrait.src = portraitImage.src;
         container.appendChild(portrait);
         
-        // Character name and title
         const nameElement = document.createElement('div');
         nameElement.className = 'character-name';
-        nameElement.textContent = character.name;
+        nameElement.textContent = languageManager.getText(`characters.${character.id}.name`);
         container.appendChild(nameElement);
         
         const titleElement = document.createElement('div');
         titleElement.className = 'character-title';
-        titleElement.textContent = character.title;
+        titleElement.textContent = languageManager.getText(`characters.${character.id}.title`);
         container.appendChild(titleElement);
         
         // Stats container
@@ -131,7 +125,7 @@ class CharacterSelect {
         shotTypeElement.className = 'character-ability';
         shotTypeElement.innerHTML = `
             <span>${languageManager.getText('startMenu.shotType')}:</span> 
-            ${languageManager.getText(`shotTypes.${character.shotType}`) || character.shotType}
+            ${languageManager.getText(`shotTypes.${character.shotTypeId}`)}
         `;
         container.appendChild(shotTypeElement);
         
@@ -139,7 +133,7 @@ class CharacterSelect {
         spellcardElement.className = 'character-ability';
         spellcardElement.innerHTML = `
             <span>${languageManager.getText('startMenu.spellcard')}:</span> 
-            ${languageManager.getText(`spellcards.${character.spellcard}`) || character.spellcard}
+            ${languageManager.getText(`spellcards.${character.spellcardId}`)}
         `;
         container.appendChild(spellcardElement);
     }
@@ -164,14 +158,11 @@ class CharacterSelect {
                 window.playSoundEffect(window.soundEffects.ok);
             }
             
-            // Get the selected character name
-            const selectedCharacter = this.characters[this.currentCharacterIndex].name;
+            // Get the selected character ID instead of name
+            const selectedCharacterId = this.characters[this.currentCharacterIndex].id;
             
-            // Debug log
-            console.log("Starting game with character:", selectedCharacter);
-            
-            // Call startGame with the character name
-            window.startGame(selectedCharacter);
+            // Call startGame with the character ID
+            window.startGame(selectedCharacterId);
             
             window.menuInputHandler.keys.z = false;
             window.menuInputHandler.keys.Z = false;
@@ -180,9 +171,9 @@ class CharacterSelect {
         
         if (window.menuInputHandler.keys.x || window.menuInputHandler.keys.X) {
             if (window.soundEffects && window.soundEffects.cancel && window.playSoundEffect) {
-                window.playSoundEffect(window.soundEffects.cancel);
+                playSoundEffect(soundEffects.cancel);
             }
-            window.transitionToMenu(window.MENU_STATES.MAIN);
+            transitionToMenu(MENU_STATES.MAIN);
             window.menuInputHandler.keys.x = false;
             window.menuInputHandler.keys.X = false;
             return true;
