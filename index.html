@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -6,46 +6,35 @@
     <title>Dolls in Pseudo Paradise</title>
     <link rel="icon" type="image/x-icon" href="assets/graphics/favicon.ico">
     <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/loading.css">
     <link rel="stylesheet" href="css/playerStatsDisplay.css">
     <link rel="stylesheet" href="css/menu.css">
+    <link rel="stylesheet" href="css/menu.difficulty.css">
     <link rel="stylesheet" href="css/menu.characterSelect.css">
     <link rel="stylesheet" href="css/menu.musicRoom.css">
     <link rel="stylesheet" href="css/menu.options.css">
+    <link rel="stylesheet" href="css/menu.title.css">
     <link rel="stylesheet" href="css/canvas.css">
     <link rel="stylesheet" href="css/background.css">
-    <link rel="stylesheet" href="css/loading-transition.css">
 </head>
 <body>
-    <div class="container" width="960" height="720">
-        <div id="background"></div>
-    
-        <div id="startScreen">
-            <button id="startButton">Start Game</button>
-        </div>
-    
-        <div id="loadingScreen">
-            <img src="assets/graphics/loadingBackground.png" alt="Loading...">
-        </div>
-    
-        <div id="menuBox"></div>
-        
-        <div class="canvas-container">
-            <canvas id="canvas" width="574" height="670" style="display: none;"></canvas>
-        </div>
-
-        <div id="optionsMenuContainer" class="menu-container" style="display: none;"></div>
-        
-        <div id="playerStatsDisplay"></div>
-    </div>
+    <div class="container" width="960" height="720"></div>
 
     <!--skript för hyperglobala konstanter och variablar-->
     <script>
         const targetFPS = 60;
         const frameTime = 1000 / targetFPS;
 
-        let shouldExitToMainMenu = false;
         let gameRunning = false;
         let menuActive = true;
+        let pauseMenuActive = false;
+
+        const MENU_STATES = {
+            MAIN: 0,
+            OPTIONS: 1,
+            CHARACTER_SELECT: 2,
+            MUSIC_ROOM: 3
+        };
 
         let lastTime = 0;
         let deltaTime = 0;
@@ -58,30 +47,56 @@
         let musicAudio = null;
     </script>
 
-    <script src="lang/en/menus.js"></script>
-    <script src="lang/en/characters.js"></script>
-    <script src="lang/en/music.js"></script>
-    <script src="lang/en/spells.js"></script>
-    
-    <script src="lang/sv/menus.js"></script>
-    <script src="lang/sv/characters.js"></script>
-    <script src="lang/sv/music.js"></script>
-    <script src="lang/sv/spells.js"></script>
-    
-    <script src="lang/de/menus.js"></script>
-    <script src="lang/de/characters.js"></script>
-    <script src="lang/de/music.js"></script>
-    <script src="lang/de/spells.js"></script>
+    <script>
+        // Create a persistent error handler object
+        const errorHandler = {
+            lastErrorTime: 0,
+            cooldown: 5000, // 5 seconds in milliseconds
+            
+            handleError: function(error) {
+                console.error(error); // Always log the error
+                
+                const now = Date.now();
+                if (now - this.lastErrorTime > this.cooldown) {
+                    this.lastErrorTime = now;
+                    try {
+                        // Play error sound if available
+                        window.playSoundEffect(soundEffects.invalid);
+                        
+                        // Visual feedback
+                        const errorIndicator = document.createElement('div');
+                        errorIndicator.style.position = 'fixed';
+                        errorIndicator.style.bottom = '10px';
+                        errorIndicator.style.right = '10px';
+                        errorIndicator.style.background = 'red';
+                        errorIndicator.style.color = 'white';
+                        errorIndicator.style.padding = '10px';
+                        errorIndicator.style.borderRadius = '5px';
+                        errorIndicator.style.zIndex = '9999';
+                        errorIndicator.textContent = '⚠️ Error occurred (check console)';
+                        document.body.appendChild(errorIndicator);
+                        setTimeout(() => errorIndicator.remove(), 3000);
+                    } catch (soundError) {
+                        console.error('Failed to handle error:', soundError);
+                    }
+                }
+            }
+        };
 
-    <script src="lang/ru/menus.js"></script>
-    <script src="lang/ru/characters.js"></script>
-    <script src="lang/ru/music.js"></script>
-    <script src="lang/ru/spells.js"></script>
+        // Set up global error handlers
+        window.addEventListener('error', (event) => {
+            errorHandler.handleError(event.error || event.message);
+            return false; // Prevent default browser error handling
+        });
+        
+        window.addEventListener('unhandledrejection', (event) => {
+            errorHandler.handleError(event.reason);
+        });
 
-    <script src="lang/pl/menus.js"></script>
-    <script src="lang/pl/characters.js"></script>
-    <script src="lang/pl/music.js"></script>
-    <script src="lang/pl/spells.js"></script>
+        // Expose globally for manual error reporting
+        window.errorHandler = errorHandler;
+        
+    </script>
 
     <script src="data/characterData.js"></script>
     <script src="data/shottypeData.js"></script>
@@ -99,13 +114,15 @@
     <script src="js/backgroundHandlers/spellcardHandler.js"></script>
     
     <script src="js/menus/playerStatsDisplay.js"></script>
+    <script src="js/menus/mainMenu.js"></script>
+    <script src="js/menus/difficulty.js"></script>
     <script src="js/menus/characterSelect.js"></script>
     <script src="js/menus/musicRoom.js"></script>
     <script src="js/menus/optionsMenu.js"></script>
-    <script src="js/menus/pauseMenu.js"></script>
     <script src="js/menus/menuHandler.js"></script>
     <script src="js/menus/menuInputHandler.js"></script>
     <script src="js/menus/title.js"></script>
+    <script src="js/menus/pauseMenu.js"></script>
     
     <script src="js/rendering/card.js"></script>
     <script src="js/rendering/spawners.js"></script>

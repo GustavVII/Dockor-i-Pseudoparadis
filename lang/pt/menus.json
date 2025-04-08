@@ -1,0 +1,39 @@
+{
+    "mainMenu": {
+        "start": "Iniciar",
+        "extraStart": "Modo Extra",
+        "practiseStart": "Praticar",
+        "score": "Resultados",
+        "musicRoom": "Sala de Música",
+        "options": "Opções",
+        "quit": "Sair"
+    },
+    "startMenu": {
+        "movementRating": "Velocidade",
+        "attackRangeRating": "Alcance",
+        "attackPowerRating": "Força",
+        "shotType": "Disparo",
+        "spellcard": "Spell Card",
+        "instructions": {
+            "Z": "Pressione Z para escolher personagem",
+            "X": "Pressione X para retornar ao menu"
+        }
+    },
+    "musicRoomMenu": {
+        "title": "Sala de Música",
+        "instructions": {
+            "Z": "Pressione Z para tocar a faixa selecionada",
+            "X": "Pressione X para retornar ao menu"
+        }
+    },
+    "optionsMenu": {
+        "title": "OPÇÕES",
+        "player": "Jogador",
+        "bomb": "Bomba",
+        "music": "Música",
+        "sound": "Som",
+        "language": "Idioma",
+        "restoreDefault": "Restaurar Padrões",
+        "quit": "Voltar"
+    }
+}

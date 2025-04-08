@@ -4,8 +4,8 @@ class CharacterManager {
         this.currentCharacter = null;
         this.cursorImage = null;
         this.cursor = {
-            x: (canvas.width / 2),
-            y: (canvas.height - 64),
+            x: 0,
+            y: 0,
             width: 48,
             height: 48,
             speed: 2.5,
@@ -18,12 +18,21 @@ class CharacterManager {
             ArrowLeft: false,
             ArrowRight: false,
             z: false,
-            ' ': false, // Space
+            ' ': false,
             x: false,
         };
         this.focusMode = false;
         this.originalSpeed = this.cursor.speed;
         this.isSpellcardActive = false;
+        this.canvas = null;
+        this.ctx = null;
+    }
+
+    init(canvas) {
+        this.canvas = canvas;
+        this.ctx = canvas.getContext('2d');
+        this.cursor.x = canvas.width / 2;
+        this.cursor.y = canvas.height - 64;
     }
 
     setCharacter(characterId) {
@@ -170,11 +179,3 @@ class CharacterManager {
         }
     }
 }
-
-// Create an instance of CharacterManager
-const characterManager = new CharacterManager();
-window.characterManager = characterManager;
-
-// Add event listeners for key handling
-window.addEventListener('keydown', (e) => characterManager.handleKeyDown(e));
-window.addEventListener('keyup', (e) => characterManager.handleKeyUp(e));

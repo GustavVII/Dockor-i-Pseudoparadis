@@ -27,7 +27,7 @@ class GameInputHandler {
         const key = e.key;
 
         if (key === 'Escape') {
-            if (pauseMenuActive) {
+            if (window.pauseMenuActive) {
                 resumeGame();
             } else {
                 pauseGame();
@@ -140,3 +140,38 @@ class GameInputHandler {
 }
 const gameInputHandler = new GameInputHandler();
     window.gameInputHandler = gameInputHandler;
+
+    function pauseGame() {
+        if (!gameRunning || window.pauseMenuActive) return;
+        
+        window.pauseMenuActive = true;
+        gameRunning = false;
+        
+        // Pause audio
+        if (window.musicAudio) {
+            window.musicAudio.pause();
+        }
+        
+        // Create and show pause menu
+        window.pauseMenu.create();
+        playSoundEffect(soundEffects.pause);
+    }
+    
+    function resumeGame() {
+        if (!window.pauseMenuActive) return;
+        
+        window.pauseMenuActive = false;
+        gameRunning = true;
+        
+        // Resume audio
+        if (window.musicAudio) {
+            window.musicAudio.play();
+        }
+        
+        // Resume game loop
+        lastFrameTime = performance.now();
+        requestAnimationFrame(gameLoop);
+    }
+    
+    window.pauseGame = pauseGame;
+    window.resumeGame = resumeGame;

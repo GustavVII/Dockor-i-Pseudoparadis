@@ -1,0 +1,67 @@
+{
+    "01": {
+        "name": "Legend of Hourai",
+        "title": "El tema del titulo",
+        "comment": "Dicen que ni siquiera los sirvientes del Emperador Qin Shi Huang<br>pudieron encontrar el elixir de la inmortalidad, sin embargo...<br>¿Qué estará pensando la Princesa Kaguya?<br>...¿Realmente cree que podemos encontrar cosas como la Rama Joya de Hourai?"
+    },
+    "02": {
+        "name": "Lovely Mound of Cherry Blossoms",
+        "title": "Tema de la fase 1",
+        "comment": "Me pregunto si ### sigue durmiendo bajo ese cerezo.<br>Los pétalos de las flores solían ser tan carmesíes,<br>pero se van volviendo más pálidos año tras año.<br>Puede que ya no quede nada bajo el suelo."
+    },
+    "03": {
+        "name": "Strange Oriental Discourse",
+        "title": "Tema de ###",
+        "comment": "¿Youkai? Hoy en día, eso es bastante irracional.<br>Pero, lo sé. Que los youkai vivirían en paz si los humanos creyeran que lo hacen.<br>Los youkai son más pacíficos y pragmáticos que los humanos."
+    },
+    "04": {
+        "name": "Circus Reverie",
+        "title": "Tema de la fase 2",
+        "comment": "Bien, el siguiente en el escenario es una persona-pájaro.<br>Esta persona-pájaro nació de alguna manera de la unión de un humano y<br>un raro pájaro del paraíso que solo vive en una tierra al sur.<br>Sus padres habían muerto hacía mucho tiempo, así que sentimos lástima por el<br>pobre huérfano y lo trajimos a nuestra troupe. ¿No somos amables?"
+    },
+    "05": {
+        "name": "Shanghai Alice of Meiji 17",
+        "title": "Tema de ###",
+        "comment": "El humo de opio permanece sobre la ciudad en una nube,<br>fluyendo hacia cada rincón y grieta.<br>Estoy en el asentamiento. La gente baila un vals con ropas<br>de los colores más brillantes.<br>La magia no llegará hasta aquí."
+    },
+    "06": {
+        "name": "Witch of Love Potion",
+        "title": "Tema de la fase 3",
+        "comment": "No hay forma. No soy tonto, ¿sabes?<br>Mis amigos solo se reirían de mí si les dijera.<br>No creerían que venden una poción de amor en esa tienda.<br>Así que rompí mi hucha sin decirle a nadie."
+    },
+    "07": {
+        "name": "U.N Owen Was Her?",
+        "title": "Tema de Flandre",
+        "comment": "Te falta imaginación. Definitivamente caerías en su trampa.<br>Un criminal con tanta imaginación como U.N. Owen<br>podría tener una cuerda alrededor de tu cuello antes del desayuno."
+    },
+    "08": {
+        "name": "Forest of Dolls",
+        "title": "Tema de la fase 4",
+        "comment": "No deja de llover.<br>No he visto el sol ni una sola vez desde que entré en esta casa.<br>Me pregunto cuántos días han pasado.<br>La muñeca me habla incansablemente.<br>Corté la cabeza de la muñeca. Parece que la lluvia ha parado."
+    },
+    "09": {
+        "name": "Enigmatic Doll",
+        "title": "El tema de Doll",
+        "comment": "Ah, y quería deshacerme de esta muñeca lo antes posible también.<br>Pero, esos ojos azules. A veces, un cuervo negro los lleva y se los come.<br>Esos son ojos reales. Porque siempre pongo ojos nuevos."
+    },
+    "10": {
+        "name": "Reincarnation",
+        "title": "Tema de la fase 5",
+        "comment": "Es extraño que haya una casa de estilo occidental en medio<br>de un bosque sin caminos, para empezar.<br>La chica que vivía allí casi nunca venía al pueblo.<br>Pero, últimamente, he visto a una chica que se parece a su hija.<br>¿Cómo sé que tenía una hija?<br>Bueno, es porque la chica se parece a ella cuando era joven..."
+    },
+    "11": {
+        "name": "Dichromatic Lotus Butterfly ~ Red and White",
+        "title": "El tema del sin nombre",
+        "comment": "Parece que algún extraño se ha colado de nuevo.<br>Será mejor que haga algo antes de que llegue al santuario...<br>Oh, esa chica... no parece ni humana ni youkai."
+    },
+    "12": {
+        "name": "Eternal Shrine Maiden",
+        "title": "Tema del final malo",
+        "comment": "Hoy no pasó nada en absoluto.<br>Me prometieron que no pasaría nada mañana.<br>Aquí no viene nadie. Ni humanos, ni dioses.<br>¿Youkai? Oh, ellos vienen todos los días."
+    },
+    "13": {
+        "name": "The Strange Everyday Life of the Flying Shrine Maiden",
+        "title": "Tema del final bueno",
+        "comment": "Últimamente, mucha más gente está tirando ignorante de cosas como<br> \"es magia\" o \"es un Youkai\".<br>Qué triste situación."
+    }
+}

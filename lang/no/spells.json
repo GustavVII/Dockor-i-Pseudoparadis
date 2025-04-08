@@ -1,0 +1,14 @@
+{
+    "shotTypes": {
+        "01": "Målsøkende kort",
+        "02": "Stjernestråle",
+        "03": "Dyp senking",
+        "04": "Spiddende Trefork"
+    },
+    "spellcards": {
+        "01": "Åndstegn: Fantasi segl",
+        "02": "Kjærlighetstegn: Mestergnisten",
+        "03": "Kantring: Synkende Anker",
+        "04": "Uidentifisert: Redselsfylt UFO-Invasjon"
+    }
+}

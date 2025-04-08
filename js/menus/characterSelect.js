@@ -5,9 +5,11 @@ class CharacterSelect {
         this.transitionState = {
             active: false,
             direction: null,
-            progress: 0,
             nextIndex: 0
         };
+        this.container = null;
+        this.isAnimatingIn = false;
+        this.isAnimatingOut = false;
     }
 
     createStatRow = (container, label, rating) => {
@@ -35,52 +37,117 @@ class CharacterSelect {
     }
 
     render() {
-        const menuBox = document.getElementById('menuBox');
-        if (!menuBox) return;
+        const container = this.ensureContainer();
+        // Create container if it doesn't exist
+        if (!this.container) {
+            this.container = document.createElement('div');
+            this.container.id = 'characterSelectContainer';
+            this.container.className = 'character-select-container';
+            document.querySelector('.container').appendChild(this.container);
+            
+            // Set initial position for entrance animation
+            this.container.style.transform = 'translateX(100%)';
+            this.container.style.opacity = '0';
+        }
+
+        // Only clear container if not animating
+        if (!this.transitionState.active && !this.isAnimatingIn) {
+            container.innerHTML = '';
+        }
         
         const currentCharacter = this.characters[this.currentCharacterIndex];
         if (!currentCharacter) return;
         
-        menuBox.innerHTML = '';
-        
-        // Instructions using translations
-        const instructions = document.createElement('div');
-        instructions.className = 'character-select-instructions';
-        instructions.innerHTML = `
-            <div>${languageManager.getText('startMenu.instructions.Z')}</div>
-            <div>${languageManager.getText('startMenu.instructions.X')}</div>
-        `;
-        menuBox.appendChild(instructions);
+        // Add instructions if not in transition
+        if (!this.transitionState.active && !this.isAnimatingIn) {
+            const instructions = document.createElement('div');
+            instructions.className = 'character-select-instructions';
+            instructions.innerHTML = `
+                <div>${languageManager.getText('menus.startMenu.instructions.Z')}</div>
+                <div>${languageManager.getText('menus.startMenu.instructions.X')}</div>
+            `;
+            this.container.appendChild(instructions);
+        }
     
         if (this.transitionState.active) {
-            // Render both characters during transition
-            const currentContainer = document.createElement('div');
-            currentContainer.className = 'character-container current';
-            
-            const nextContainer = document.createElement('div');
-            nextContainer.className = 'character-container next';
-            
-            if (this.transitionState.direction === 'right') {
-                currentContainer.style.transform = `translateX(${-100 * this.transitionState.progress}%)`;
-                nextContainer.style.transform = `translateX(${100 - (100 * this.transitionState.progress)}%)`;
-            } else { // left
-                currentContainer.style.transform = `translateX(${100 * this.transitionState.progress}%)`;
-                nextContainer.style.transform = `translateX(${-100 + (100 * this.transitionState.progress)}%)`;
-            }
-            
-            this.populateCharacterData(currentContainer, currentCharacter);
-            this.populateCharacterData(nextContainer, 
-                this.characters[this.transitionState.nextIndex]);
-                
-            menuBox.appendChild(currentContainer);
-            menuBox.appendChild(nextContainer);
+            // ... (keep existing transition logic)
+        } else if (this.isAnimatingIn) {
+            // During entrance animation, just create character container
+            const container = this.createCharacterContainer(currentCharacter);
+            this.container.appendChild(container);
         } else {
             // Normal view - just show current character
-            const container = document.createElement('div');
-            container.className = 'character-container';
-            this.populateCharacterData(container, currentCharacter);
-            menuBox.appendChild(container);
+            const container = this.createCharacterContainer(currentCharacter);
+            this.container.appendChild(container);
         }
+        
+        this.container.style.display = 'flex';
+    }
+
+    ensureContainer() {
+        if (!this.container) {
+            this.container = document.createElement('div');
+            this.container.id = 'characterSelectContainer';
+            this.container.className = 'character-select-container';
+            document.querySelector('.container').appendChild(this.container);
+            
+            // Set initial position for entrance animation
+            this.container.style.transform = 'translateX(100%)';
+            this.container.style.opacity = '0';
+            this.container.style.display = 'none'; // Start hidden
+        }
+        return this.container;
+    }
+
+    async animateIn() {
+        if (this.isAnimatingIn) return;
+        this.isAnimatingIn = true;
+        
+        const container = this.ensureContainer();
+        container.style.display = 'flex';
+        
+        // Force reflow - now safe because container exists
+        container.offsetHeight;
+        
+        // Animate in from right
+        container.style.transition = 'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s ease';
+        container.style.transform = 'translateX(0)';
+        container.style.opacity = '1';
+        
+        await new Promise(resolve => {
+            setTimeout(resolve, 500);
+        });
+        
+        this.isAnimatingIn = false;
+    }
+
+    async animateOut() {
+        if (this.isAnimatingOut || !this.container) return;
+        this.isAnimatingOut = true;
+        window.menuHandler.inputLocked = true;
+    
+        return new Promise((resolve) => {
+            // Set up transition
+            this.container.style.transition = 'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s ease';
+            
+            // Force reflow
+            this.container.offsetHeight;
+            
+            // Animate out
+            this.container.style.transform = 'translateX(100%)';
+            this.container.style.opacity = '0';
+            
+            // Clean up after animation completes
+            const onComplete = () => {
+                this.container.removeEventListener('transitionend', onComplete);
+                this.cleanup();
+                this.isAnimatingOut = false;
+                window.menuHandler.inputLocked = false;
+                resolve();
+            };
+            this.container.addEventListener('transitionend', onComplete);
+            setTimeout(onComplete, 500); // Fallback
+        });
     }
     
     populateCharacterData(container, character) {
@@ -97,6 +164,7 @@ class CharacterSelect {
         const nameElement = document.createElement('div');
         nameElement.className = 'character-name';
         nameElement.textContent = languageManager.getText(`characters.${character.id}.name`);
+
         container.appendChild(nameElement);
         
         const titleElement = document.createElement('div');
@@ -108,15 +176,9 @@ class CharacterSelect {
         const statsContainer = document.createElement('div');
         statsContainer.className = 'character-stats';
         
-        this.createStatRow(statsContainer, 
-            languageManager.getText('startMenu.movementRating'), 
-            character.speedRating);
-        this.createStatRow(statsContainer, 
-            languageManager.getText('startMenu.attackRangeRating'), 
-            character.attackRangeRating);
-        this.createStatRow(statsContainer, 
-            languageManager.getText('startMenu.attackPowerRating'), 
-            character.attackPowerRating);
+        this.createStatRow(statsContainer, languageManager.getText('menus.startMenu.movementRating'), character.speedRating);
+        this.createStatRow(statsContainer, languageManager.getText('menus.startMenu.attackRangeRating'), character.attackRangeRating);
+        this.createStatRow(statsContainer, languageManager.getText('menus.startMenu.attackPowerRating'), character.attackPowerRating);
         
         container.appendChild(statsContainer);
         
@@ -124,103 +186,169 @@ class CharacterSelect {
         const shotTypeElement = document.createElement('div');
         shotTypeElement.className = 'character-ability';
         shotTypeElement.innerHTML = `
-            <span>${languageManager.getText('startMenu.shotType')}:</span> 
-            ${languageManager.getText(`shotTypes.${character.shotTypeId}`)}
+            <span>${languageManager.getText('menus.startMenu.shotType')}:</span> 
+            ${languageManager.getText(`spells.shotTypes.${character.shotTypeId}`)}
         `;
         container.appendChild(shotTypeElement);
         
         const spellcardElement = document.createElement('div');
         spellcardElement.className = 'character-ability';
         spellcardElement.innerHTML = `
-            <span>${languageManager.getText('startMenu.spellcard')}:</span> 
-            ${languageManager.getText(`spellcards.${character.spellcardId}`)}
+            <span>${languageManager.getText('menus.startMenu.spellcard')}:</span> 
+            ${languageManager.getText(`spells.spellcards.${character.spellcardId}`)}
         `;
         container.appendChild(spellcardElement);
     }
 
     handleInput() {
-        if (this.transitionState.active) return false;
+        if (this.transitionState.active || window.menuHandler.inputLocked) return false;
         
-        if (window.menuInputHandler.keys.ArrowLeft) {
+        if (window.menuInputHandler.isKeyPressed('ArrowLeft')) {
             this.startTransition('left');
-            window.menuInputHandler.keys.ArrowLeft = false;
             return false;
         }
         
-        if (window.menuInputHandler.keys.ArrowRight) {
+        if (window.menuInputHandler.isKeyPressed('ArrowRight')) {
             this.startTransition('right');
-            window.menuInputHandler.keys.ArrowRight = false;
             return false;
         }
         
-        if (window.menuInputHandler.keys.z || window.menuInputHandler.keys.Z) {
-            if (window.soundEffects?.ok && window.playSoundEffect) {
-                window.playSoundEffect(window.soundEffects.ok);
+        if (window.menuInputHandler.isKeyPressed('z') || window.menuInputHandler.isKeyPressed('Z')) {
+            playSoundEffect(soundEffects.ok);
+            
+            // Hide both menu containers before starting game
+            if (this.container) {
+                this.container.style.display = 'none';
+            }
+            if (window.menuHandler.difficultySelect?.container) {
+                window.menuHandler.difficultySelect.container.style.display = 'none';
             }
             
-            // Get the selected character ID instead of name
             const selectedCharacterId = this.characters[this.currentCharacterIndex].id;
-            
-            // Call startGame with the character ID
             window.startGame(selectedCharacterId);
             
-            window.menuInputHandler.keys.z = false;
-            window.menuInputHandler.keys.Z = false;
             return true;
         }
         
-        if (window.menuInputHandler.keys.x || window.menuInputHandler.keys.X) {
-            if (window.soundEffects && window.soundEffects.cancel && window.playSoundEffect) {
-                playSoundEffect(soundEffects.cancel);
+        if (window.menuInputHandler.isKeyPressed('x') || window.menuInputHandler.isKeyPressed('X')) {
+            // Reset difficulty selection
+            if (window.menuHandler.difficultySelect) {
+                window.menuHandler.difficultySelect.resetSelection();
             }
-            transitionToMenu(MENU_STATES.MAIN);
-            window.menuInputHandler.keys.x = false;
-            window.menuInputHandler.keys.X = false;
-            return true;
+            //this.container.style.display = 'none';
+            playSoundEffect(soundEffects.cancel);
+            return false;
         }
         
         return false;
     }
 
     startTransition(direction) {
-        // Add safety check for sound effects
-        if (window.soundEffects && window.soundEffects.select && window.playSoundEffect) {
-            window.playSoundEffect(window.soundEffects.select);
-        }
-        
-        // Rest of the method remains the same...
+        if (this.transitionState.active) return;
+                
+        playSoundEffect(soundEffects.select);
+
         let nextIndex;
         if (direction === 'right') {
             nextIndex = (this.currentCharacterIndex + 1) % this.characters.length;
-        } else { // left
+        } else {
             nextIndex = (this.currentCharacterIndex - 1 + this.characters.length) % this.characters.length;
         }
+
+        // Get current container
+        const currentContainer = this.container.querySelector('.character-container');
+        if (!currentContainer) {
+            console.error('Current character container not found');
+            return;
+        }
+
+        // Create next container
+        const nextContainer = this.createCharacterContainer(this.characters[nextIndex]);
         
+        // Set initial state for next container
+        nextContainer.style.position = 'absolute';
+        nextContainer.style.top = '0';
+        nextContainer.style.opacity = '0';
+        
+        if (direction === 'right') {
+            nextContainer.style.transform = 'rotateY(-90deg)';
+            nextContainer.style.left = '0';
+            nextContainer.style.transformOrigin = 'right center';
+        } else {
+            nextContainer.style.transform = 'rotateY(90deg)';
+            nextContainer.style.right = '0';
+            nextContainer.style.transformOrigin = 'left center';
+        }
+        
+        // Add next container
+        this.container.appendChild(nextContainer);
+        
+        // Force reflow
+        currentContainer.offsetHeight;
+        nextContainer.offsetHeight;
+        
+        // Start transition
         this.transitionState = {
             active: true,
             direction,
-            progress: 0,
             nextIndex
         };
         
-        const transitionDuration = 300;
-        const startTime = Date.now();
+        // Apply animation classes - IMPORTANT: Remove any existing first
+        currentContainer.classList.remove('fold-out-right', 'fold-out-left');
+        nextContainer.classList.remove('fold-in-right', 'fold-in-left');
         
-        const animateTransition = () => {
-            const elapsed = Date.now() - startTime;
-            this.transitionState.progress = Math.min(elapsed / transitionDuration, 1);
-            
-            this.render();
-            
-            if (this.transitionState.progress < 1) {
-                requestAnimationFrame(animateTransition);
-            } else {
-                this.currentCharacterIndex = this.transitionState.nextIndex;
-                this.transitionState.active = false;
-                this.render();
-            }
-        };
+        if (direction === 'right') {
+            currentContainer.classList.add('fold-out-left');
+            nextContainer.classList.add('fold-in-right');
+        } else if (direction === 'left') {
+            currentContainer.classList.add('fold-out-right');
+            nextContainer.classList.add('fold-in-left');
+        }
         
-        animateTransition();
+        // After animation completes
+        setTimeout(() => {
+            currentContainer.remove();
+            this.currentCharacterIndex = nextIndex;
+            this.transitionState.active = false;
+            
+            // Reset next container styles
+            nextContainer.style.position = '';
+            nextContainer.style.top = '';
+            nextContainer.style.left = '';
+            nextContainer.style.right = '';
+            nextContainer.style.transform = '';
+            nextContainer.style.transformOrigin = '';
+            nextContainer.style.opacity = '';
+            
+            // Remove animation classes
+            nextContainer.classList.remove('fold-in-right', 'fold-in-left');
+        }, 500);
+    }
+    
+    createCharacterContainer(character) {
+        const container = document.createElement('div');
+        container.className = 'character-container';
+        
+        // Populate character data
+        const portrait = document.createElement('img');
+        portrait.className = 'character-portrait';
+        const portraitImage = window.assetLoader.getImage(`portrait${character.id}`);
+        if (portraitImage) portrait.src = portraitImage.src;
+        container.appendChild(portrait);
+        
+        const nameElement = document.createElement('div');
+        nameElement.className = 'character-name';
+        nameElement.textContent = languageManager.getText(`characters.${character.id}.name`);
+        container.appendChild(nameElement);
+        this.populateCharacterData(container, character);
+        return container;
+    }
+
+    cleanup() {
+        if (this.container && this.container.parentNode) {
+            this.container.remove();
+        }
+        this.container = null;
     }
 }

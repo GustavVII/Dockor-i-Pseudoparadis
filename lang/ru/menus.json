@@ -1,0 +1,39 @@
+{
+    "mainMenu": {
+        "start": "Начать игру",
+        "extraStart": "Экстра",
+        "practiseStart": "Практика",
+        "score": "Рекорды",
+        "musicRoom": "Муз. комната",
+        "options": "Настройки",
+        "quit": "Выход"
+    },
+    "startMenu": {
+        "movementRating": "Скорость движения",
+        "attackRangeRating": "Дальности атаки",
+        "attackPowerRating": "Сила атаки",
+        "shotType": "Вид выстрела",
+        "spellcard": "Спеллкарта",
+        "instructions": {
+            "Z": "Нажмите Z чтобы выбрать персонажа",
+            "X": "Нажмите X чтобы вернуться в главное меню"
+        }
+    },
+    "musicRoomMenu": {
+        "title": "Музыкальная комната",
+        "instructions": {
+            "Z": "Нажмите Z чтобы прослушать выбранный трек",
+            "X": "Нажмите X чтобы вернуться в главное меню"
+        }
+    },
+    "optionsMenu": {
+        "title": "Настройки",
+        "player": "Игрок",
+        "bomb": "Бомба",
+        "music": "Музыка",
+        "sound": "Звуки",
+        "language": "Язык",
+        "restoreDefault": "По-умолчанию",
+        "quit": "Выход"
+    }
+}

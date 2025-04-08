@@ -1,11 +1,16 @@
 A thanks to all contributors to this project:
 
-Gustav VII - Game Creator, programmer, artist, Lang: En & Sv
+Gustav VII - Game Creator, programmer, Lang: En & Sv
 
 Ayayaya "Legless_debil" - Graphics: Menu background
 Einzeilhandery - Graphics: Character sprite
+EarthBunNashi - Graphics: Loading screen
 
 Moonshield - Lang: De
 parsee rug - Lang: Ru
 Pawelr98 - Lang: Pl
 CatboyVampy - Lang: Nl
+fanofcats - Lang: Ro
+Crossroads1946 / Fenix 1991 - Lang: Es
+raonoodle - Lang: Pt
+Azer - Lang: No

@@ -1,7 +1,3 @@
-// Skaffa kontexter
-const canvas = document.getElementById('canvas');
-const ctx = canvas.getContext('2d');
-
 // Definera korten
 const suits = ['H', 'S', 'D', 'C'];
 const startNumber = 1;

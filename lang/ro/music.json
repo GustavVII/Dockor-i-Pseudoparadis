@@ -1,0 +1,67 @@
+{
+    "01": {
+        "name": "Legenda Hourai",
+        "title": "Piesa de titlu",
+        "comment": "Se zice că nici servitorii Împăratului Qin Shi Huang<br>nu au putut găsi elixirul vieții veșnice, dar totuși...<br>La ce se gândește Prințesa Kaguya?<br>...Chiar crede că putem găsi chesti precum Ramura cu Bijuteri Hourai?"
+    },
+    "02": {
+        "name": "Colină Minunată de Flori de Cireș",
+        "title": "Piesa nivelului 1",
+        "comment": "Mă gândesc dacă ### încă doarme sub acel cireș.<br>Petalele erau atât de roșii-purpurii înainte, dar an de an devin mai palide.<br>Posibil să nu mai rămână nimic sub sol."
+    },
+    "03": {
+        "name": "Discurs Oriental Straniu",
+        "title": "Piesa ###ei",
+        "comment": "Youkai? În zilele astea, destul de irațional.<br>Dar, știu că youkai vor trăi în pace dacă oamenii ar crede că vor.<br>Youkai sunt mai pașnici și mai pragmatici decât oamenii."
+    },
+    "04": {
+        "name": "Reverie de Circ",
+        "title": "Piesa nivelului 2",
+        "comment": "În regulă, următoarea pe scenă e o persoană-pasăre.<br>Această persoană-pasăre a fost concepută cumva din uniunea unui om<br>și a unei rare păsări a paradisului care trăiește numai într-o țară la sud îndepărtată.<br>Părinții ei au murit acum mult timp, așa că ne-a fost milă de<br>biata orfană și am introdus-o în trupa noastră. Nu-i frumos din partea noastră?"
+    },
+    "05": {
+        "name": "Shanghai Alice of Meiji 17",
+        "title": "Piesa ####ei",
+        "comment": "Fum de opiu stă peste oraș într-un nor, acoperind fiecare colțișor.<br>Sunt în adăpost. Oamenii dansează vals în ținute strălucitor colorate.<br>Magia nu mă va ajunge aici."
+    },
+    "06": {
+        "name": "Vrăjitoarea Poțiunii de Dragoste",
+        "title": "Piesa nivelului 3",
+        "comment": "Nici gând. Nu sunt prost, știi.<br>Prietenii mei ar râde de mine dacă le-aș spune.<br>Nu ar crede că vând o poțiune a dragostei la magazin.<br>Așadar, mi-am spart pușculiță fără a spune nimănui."
+    },
+    "07": {
+        "name": "U.N Owen era Ea?",
+        "title": "Piesa Flandrei",
+        "comment": "Demonstrezi lipsă de imaginație. Garantat ai cădea în capcana lor.<br>Un criminal cu la fel de multă imaginație ca U.N. Owen<br>te-ar spânzura de dimineață."
+    },
+    "08": {
+        "name": "Pădurea Păpușilor",
+        "title": "Piesa nivelului 4",
+        "comment": "Nu mai încetinește ploaia.<br>Nu am mai văzut soarele de când am intrat în casa asta.<br>Oare câte zile au trecut.<br>Păpușa îmi vorbește neîncetat.<br>Am tăiat capul păpușii. Se pare că ploaia a încetat."
+    },
+    "09": {
+        "name": "Păpușă Enigmatică",
+        "title": "Piesa păpușii",
+        "comment": "O, mai și voiam să scap de păpușa asta cu cât mai repede posibil.<br>Dar, acei ochi albaștri. Uneori o cioară neagră le duce departe și le mănâncă.<br>Aceia sunt ochi reali. Mereu îi înlocuiesc cu unii noi."
+    },
+    "10": {
+        "name": "Reîncarnare",
+        "title": "Piesa nivelului 5",
+        "comment": "Mai ales, e ciudat cum există o casă în stil occidental în mijlocul<br>unei păduri lipsite de drumuri.<br>Fata care locuia acolo rareori venea la oraș.<br>Dar, mai recent, am ochit o fată care arată ca fiica sa.<br>Cum am aflat că are o fiică?<br>Păi, deoarece fata arată ca ea când era tânără..."
+    },
+    "11": {
+        "name": "Fluture Dicromatic de Lotus ~ Roșu și Alb",
+        "title": "Piesa celor fără nume",
+        "comment": "Se pare că o persoană stranie s-a strecurat din nou.<br>Ar trebui să fac ceva înainte să ajungă la altar...<br>O, acea fată... nu arată a om sau a youkai."
+    },
+    "12": {
+        "name": "Fecioara Eternă",
+        "title": "Piesa sfârșitului prost",
+        "comment": "Nimic nu s-a întâmplat astăzi.<br>Mi s-a promis că nimic nu se va întâmpla mâine.<br>Nimeni nu vine aici. Niciun om, niciun zeu.<br>Youkai? O, ei vin în fiecare zi."
+    },
+    "13": {
+        "name": "Strania Viață Cotidiană a Fecioarei Zburătoare",
+        "title": "Piesa sfârșitului bun",
+        "comment": "În ultima vreme, din ce în ce mai multe persoane spun ignorant<br>bazaconii precum \"E magie\" sau \"E un youkai\".<br>Ce realitate dezamăgitoare."
+    }
+}

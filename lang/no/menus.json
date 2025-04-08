@@ -1,0 +1,64 @@
+{
+    "mainMenu": {
+        "start": "Start",
+        "extraStart": "Ekstra Start",
+        "practiseStart": "Øvelses Start",
+        "score": "Poengsum",
+        "musicRoom": "Musikkrom",
+        "options": "Alternativer",
+        "quit": "Avslutt"
+    },
+    "difficultySelect": {
+        "title": "Velg en modus",
+        "difficulties": {
+            "easy": {
+                "name": "Lett",
+                "description": "Egner seg for folk som ikke er veldig flinke til å spille skytespill"
+            },
+            "normal": {
+                "name": "Normal",
+                "description": "Rettet mot folk flest"
+            },
+            "hard": {
+                "name": "Vanskelig", 
+                "description": "Vanskelighetsgrad til et gjennomsnittlig skyttespill på en arkade"
+            },
+            "lunatic": {
+                "name": "Galning",
+                "description": "For de som er merkelig verdig (uten 'elig ')"
+            },
+            "extra": {
+                "name": "Ekstra",
+                "description": "Kødder du? Du er enestående (og kanskje lit sprø...)"
+            }
+        }
+    },
+    "startMenu": {
+        "movementRating": "Bevegelses hastighet",
+        "attackRangeRating": "Angrepsrekkevidde",
+        "attackPowerRating": "Angrepsstyrke",
+        "shotType": "Skuddtype",
+        "spellcard": "trolldomskort",
+        "instructions": {
+            "Z": "Trykk Z for å velge karakter",
+            "X": "Trykk X for å gå tilbake til menyen"
+        }
+    },
+    "musicRoomMenu": {
+        "title": "Musikkrom",
+        "instructions": {
+            "Z": "Trykk Z for å spille av valgt lydspor",
+            "X": "Trykk X for å gå tilbake til menyen"
+        }
+    },
+    "optionsMenu": {
+        "title": "ALTERNATIVER",
+        "player": "Spiller",
+        "bomb": "Bombe",
+        "music": "Musikk",
+        "sound": "Lyd",
+        "language": "Språk",
+        "restoreDefault": "Gjenopprett standardalternativer",
+        "quit": "Avslutt"
+    }
+}

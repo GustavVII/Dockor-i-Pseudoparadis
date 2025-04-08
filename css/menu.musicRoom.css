@@ -4,9 +4,6 @@
     height: 100%;
     width: 100%;
     position: relative;
-    transition: opacity 0.5s ease-out;
-    will-change: opacity;
-    animation: fadeIn 0.5s ease-out forwards;
 }
 
 .music-room-header {
@@ -29,7 +26,7 @@
 }
 
 .music-room-title {
-    background: -webkit-linear-gradient(crimson, salmon, silver, dimgrey);
+    background: -webkit-linear-gradient(saddlebrown, sienna, darkorange, orange, dimgrey);
     background-clip: text;
     -webkit-text-fill-color: transparent;
     font-size: 48px;
@@ -45,9 +42,8 @@
     height: 300px;
     margin-left: 50px;
     margin-right: 150px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 5px;
-    background-color: rgba(0, 0, 0, 0.6);
+    background-color: rgba(0, 0, 0, 0.3);
     padding-right: 5px;
     pointer-events: none;
     overflow-y: auto; /* Göm skrollbar för browsers */
@@ -76,21 +72,19 @@
 
 .track-item {
     font-weight: bold;
-    display: flex;
     align-items: center;
     padding: 10px 15px;
     margin: 5px 0;
-    background: -webkit-linear-gradient(maroon, darkred, brown, dimgrey, black);
+    background: -webkit-linear-gradient(maroon, saddlebrown, sienna, chocolate, black);
     background-clip: text;
     -webkit-text-fill-color: transparent;
     font-size: 22px;
     border-radius: 5px;
     scroll-snap-align: start;
-    transition: all 0.2s ease;
 }
 
 .track-item.selected {
-    background: -webkit-linear-gradient(darkred, crimson, indianred, dimgrey, black);
+    background: -webkit-linear-gradient(darkred, chocolate, darkorange, orange, black);
     background-clip: text;
     -webkit-text-fill-color: transparent;
     text-shadow: 0px 0px 20px #b0c4deaa;
@@ -98,7 +92,7 @@
 
 .track-number {
     width: 30px;
-    margin-right: 15px;
+    margin-right: 5px;
     text-align: right;
     background: -webkit-linear-gradient(lightblue, grey, dimgrey, darkslategrey, black);
     background-clip: text;
@@ -115,7 +109,7 @@
 .now-playing {
     flex-shrink: 0;
     width: 70%;
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.2);
     border-radius: 5px;
     min-height: 200px;
     max-height: 200px;
@@ -162,5 +156,5 @@
     padding: 10px;
     color: #aaa;
     z-index: 2;
-    background-color: rgba(0, 0, 0, 0.8);
+    background-color: rgba(0, 0, 0, 0.3);
 }

@@ -123,10 +123,6 @@ async function loadAllAssets() {
             console.info(`Spawner${i} loaded`)
         }
 
-        // Load background image
-        await assetLoader.loadImage('gameBackground', 'assets/graphics/gameBackground.png');
-        console.info(`loaded backgrounds`)
-
         console.log("All assets loaded");
 
        
@@ -139,8 +135,6 @@ async function loadAllAssets() {
         console.error("Failed to load background images:", error);
     }
 
-        // Initialize spawner images in SpawnerManager after all assets are loaded
-        spawnerManager.loadSpawnerImages();
     } catch (error) {
         console.error("Failed to load assets:", error);
     }

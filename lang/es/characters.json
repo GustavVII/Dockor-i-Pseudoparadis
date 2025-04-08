@@ -1,0 +1,22 @@
+{
+    "Reimu": {
+        "name": "Reimu Hakurei",
+        "title": "Doncella del santuario del paraiso",
+        "description": "Un personaje lento pero balanceado con un ataque teledirigido débil y una carta de hechizo más débil"
+    },
+    "Marisa": {
+        "name": "Marisa Kirisame",
+        "title": "Maga Ordinaria",
+        "description": "Un personaje de corto alcance con gran velocidad y un ataque poderoso para compensarlo"
+    },
+    "Murasa": {
+        "name": "Minamitsu Murasa",
+        "title": "Espíritu abandonado tras el accidente del naufragio",
+        "description": "Un personaje medio con estadísticas bastante balanceadas"
+    },
+    "Nue": {
+        "name": "Nue Houjuu",
+        "title": "Alienígena Volador Fantástico No Identificado",
+        "description": "Un personaje con un poderoso ataque cuerpo a cuerpo, si te atreves a acercarte, claro. Es ágil para compensarlo"
+    }
+}

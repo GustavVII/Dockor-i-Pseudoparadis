@@ -1,0 +1,23 @@
+
+{
+    "Reimu": {
+        "name": "Reimu Hakurei",
+        "title": "Alterpike av Paradis",
+        "description": "En treg, men balansert, karakter som benytter svake målsøkende angrep og trolldomskort"
+    },
+    "Marisa": {
+        "name": "Marisa Kirisame",
+        "title": "Magiker av the alminnelige",
+        "description": "En nærsynt karakter, men kompenserer med høy fart og kraftige angrep"
+    },
+    "Murasa": {
+        "name": "Minamitsu Murasa",
+        "title": "Spøkelse etter forliset",
+        "description": "En middels karakter med ganske balanserte statestikk"
+    },
+    "Nue": {
+        "name": "Nue Houjuu",
+        "title": "Uidentifisert fantastisk flygande romvesen",
+        "description": "Ein karakter som er kraftig i nærkamp, om du tør å komma tett innpå. gjer opp for dette med å vera smidig"
+    }
+}

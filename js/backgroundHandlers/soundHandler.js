@@ -50,6 +50,9 @@ async function initializeSoundEffects() {
         soundEffects.ok = await loadSoundEffect('assets/sfx/ok.wav');
         soundEffects.cancel = await loadSoundEffect('assets/sfx/cancel.wav');
         soundEffects.timeout = await loadSoundEffect(`assets/sfx/timeout.wav`)
+        soundEffects.invalid = await loadSoundEffect(`assets/sfx/invalid.wav`)
+        soundEffects.extend = await loadSoundEffect(`assets/sfx/extend.wav`)
+        soundEffects.destroy = await loadSoundEffect(`assets/sfx/destroy.wav`)
         console.log('All sound effects loaded successfully:', soundEffects);
     } catch (error) {
         console.error('Failed to load sound effects:', error);
@@ -167,6 +170,7 @@ function loadSettings() {
 
 // Update the exports at the bottom
 window.playMusic = playMusic;
+window.playSoundEffect = playSoundEffect;
 window.getSfxVolume = getSfxVolume;
 window.getMusicVolume = getMusicVolume;
 window.saveAudioSettings = saveAudioSettings;

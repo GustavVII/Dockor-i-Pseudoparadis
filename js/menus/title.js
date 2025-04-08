@@ -1,181 +1,163 @@
-// titleManager.js
-class TitleManager {
+class Title {
     constructor() {
-        this.titleContainer = null;
-        this.animationTimeout = null;
-        this.isVisible = false;
+        this.container = null;
+        this.isActive = false;
+        this.hasTransitioned = false;
     }
 
-    async animateTitle() {
-        if (this.animationTimeout) {
-            clearTimeout(this.animationTimeout);
-            this.animationTimeout = null;
+    create() {
+        if (this.container) return this.container;
+        
+        // Ensure title container exists
+        const titleContainer = document.getElementById('titleContainer') || document.createElement('div');
+        titleContainer.id = 'titleContainer';
+        if (!document.getElementById('titleContainer')) {
+            document.querySelector('.container').appendChild(titleContainer);
         }
         
-        inputLocked = true; // Lock inputs during animation
+        this.container = document.createElement('div');
+        this.container.className = 'main-menu-title';
         
-        const characters = this.titleContainer?.querySelectorAll('.series-title, .game-title');
-        if (!characters) return;
-        
-        // Initial delay
-        await new Promise(resolve => setTimeout(resolve, 500));
-        
-        // Animate each character sequentially
-        for (let i = 0; i < characters.length; i++) {
-            characters[i].classList.add('animate-in');
-            
-            // Remove animation class after completion
-            setTimeout(() => {
-                characters[i].classList.remove('animate-in');
-                characters[i].style.opacity = '1';
-                characters[i].style.transform = 'translate(0, 0)';
-            }, 300);
-            
-            if (i < characters.length - 1) {
-                await new Promise(resolve => setTimeout(resolve, 200));
-            }
-        }
-        
-        inputLocked = false; // Unlock inputs after animation
-    }
-
-    async animateTitleExit() {
-        if (!this.isVisible) return;
-        
-        const characters = this.titleContainer.querySelectorAll('.series-title, .game-title');
-        await Promise.all(
-            Array.from(characters).map(char => {
-                return new Promise(resolve => {
-                    char.style.transition = 'all 0.5s ease-out';
-                    char.style.opacity = '0';
-                    char.style.transform = `translate(${char.style.getPropertyValue('--start-x')}, ${char.style.getPropertyValue('--start-y')})`;
-                    setTimeout(resolve, 500);
-                });
-            })
-        );
-        this.isVisible = false;
-    }
-
-    async animateTitleEnter() {
-        if (this.isVisible) return;
-        
-        const container = this.createTitle();
-        const characters = container.querySelectorAll('.series-title, .game-title');
-        
-        // Set initial state
-        characters.forEach(char => {
-            char.style.opacity = '0';
-            char.style.transform = `translate(${char.style.getPropertyValue('--start-x')}, ${char.style.getPropertyValue('--start-y')})`;
-        });
-        
-        // Animate in with delay
-        for (let i = 0; i < characters.length; i++) {
-            setTimeout(() => {
-                characters[i].style.transition = 'all 0.5s ease-out';
-                characters[i].style.opacity = '1';
-                characters[i].style.transform = 'translate(0, 0)';
-            }, i * 200);
-        }
-        
-        this.isVisible = true;
-        return new Promise(resolve => setTimeout(resolve, characters.length * 200));
-    }
-
-    animateMenuTransition() {
-        // Don't lock inputs for this animation
-        const characters = this.titleContainer?.querySelectorAll('.series-title, .game-title');
-        if (!characters) return;
-        
-        // Reset all characters to initial state
-        characters.forEach(char => {
-            char.style.opacity = '0';
-            char.style.transform = `translate(${char.style.getPropertyValue('--start-x')}, ${char.style.getPropertyValue('--start-y')})`;
-        });
-        
-        // Animate each character sequentially
-        for (let i = 0; i < characters.length; i++) {
-            setTimeout(() => {
-                characters[i].classList.add('animate-in');
-                setTimeout(() => {
-                    characters[i].classList.remove('animate-in');
-                    characters[i].style.opacity = '1';
-                    characters[i].style.transform = 'translate(0, 0)';
-                }, 300);
-            }, i * 200);
-        }
-    }
-
-    createTitle() {
-        if (this.titleContainer && this.isVisible) return this.titleContainer;
-        
-        // Create new title if needed
-        const container = document.createElement('div');
-        container.className = 'main-menu-title';
-        
-        // Series title (東 方)
-        const seriesTitle1 = document.createElement('div');
-        seriesTitle1.className = 'series-title';
-        seriesTitle1.textContent = '東';
-        seriesTitle1.style.setProperty('--start-x', '0');
-        seriesTitle1.style.setProperty('--start-y', '-300%');
-        
-        const seriesTitle2 = document.createElement('div');
-        seriesTitle2.className = 'series-title';
-        seriesTitle2.textContent = '方';
-        seriesTitle2.style.setProperty('--start-x', '1500%');
-        seriesTitle2.style.setProperty('--start-y', '0');
+        // Create title elements (same as before)
+        const seriesTitle1 = this.createTitleElement('東', 'series-title', '0', '-500%');
+        const seriesTitle2 = this.createTitleElement('方', 'series-title', '3000%', '0');
         
         // Game title (蓬 莱 人 形)
-        const gameTitle1 = document.createElement('div');
-        gameTitle1.className = 'game-title';
-        gameTitle1.textContent = '蓬';
-        gameTitle1.style.setProperty('--start-x', '-400%');
-        gameTitle1.style.setProperty('--start-y', '-400%');
+        const gameTitle1 = this.createTitleElement('蓬', 'game-title', '-750%', '-750%');
+        const gameTitle2 = this.createTitleElement('莱', 'game-title', '750%', '750%');
+        const gameTitle3 = this.createTitleElement('人', 'game-title', '-1000%', '0');
+        const gameTitle4 = this.createTitleElement('形', 'game-title', '0', '250%');
         
-        const gameTitle2 = document.createElement('div');
-        gameTitle2.className = 'game-title';
-        gameTitle2.textContent = '莱';
-        gameTitle2.style.setProperty('--start-x', '400%');
-        gameTitle2.style.setProperty('--start-y', '400%');
+        this.container.append(seriesTitle1, seriesTitle2, gameTitle1, gameTitle2, gameTitle3, gameTitle4);
         
-        const gameTitle3 = document.createElement('div');
-        gameTitle3.className = 'game-title';
-        gameTitle3.textContent = '人';
-        gameTitle3.style.setProperty('--start-x', '-400%');
-        gameTitle3.style.setProperty('--start-y', '0');
+        this.resetToCenter();
         
-        const gameTitle4 = document.createElement('div');
-        gameTitle4.className = 'game-title';
-        gameTitle4.textContent = '形';
-        gameTitle4.style.setProperty('--start-x', '0');
-        gameTitle4.style.setProperty('--start-y', '300%');
+        if (titleContainer) {
+            titleContainer.appendChild(this.container);
+        }
         
-        container.append(seriesTitle1, seriesTitle2, gameTitle1, gameTitle2, gameTitle3, gameTitle4);
-        this.titleContainer = container;
-        this.isVisible = true;
-        return container;
+        this.isActive = true;
+        return this.container;
     }
 
-    async animateMenuButtonsExit() {
-        const menuButtons = document.querySelectorAll('.menu-button');
+    createTitleElement(text, className, startX, startY) {
+        const element = document.createElement('div');
+        element.className = className;
+        element.textContent = text;
+        element.style.setProperty('--start-x', startX);
+        element.style.setProperty('--start-y', startY);
+        return element;
+    }
+
+    resetToCenter() {
+        if (!this.container) return;
+        
+        this.container.style.left = '50%';
+        this.container.style.top = '50%';
+        this.container.style.transform = 'translate(-50%, -50%)';
+        
+        const elements = this.container.querySelectorAll('div');
+        elements.forEach(el => {
+            el.style.opacity = '1';
+            el.style.transform = `translate(${el.style.getPropertyValue('--start-x')}, ${el.style.getPropertyValue('--start-y')})`;
+        });
+    }
+
+    async animateIn() {
+        if (!this.container || !this.isActive) return;
+        
+        // Store the animation promise
+        this.animationPromise = new Promise(async (resolve) => {
+            const elements = Array.from(this.container.querySelectorAll('div'));
+            for (let i = 0; i < elements.length; i++) {
+                await new Promise(resolve => {
+                    setTimeout(() => {
+                        elements[i].style.transition = 'all 0.5s ease-out';
+                        elements[i].style.opacity = '1';
+                        elements[i].style.transform = 'translate(0, 0)';
+                        setTimeout(resolve, 75);
+                    }, i * 50);
+                });
+            }
+            resolve();
+        });
+        
+        return this.animationPromise;
+    }
+
+    async moveToSide() {
+        if (!this.container || !this.isActive || this.hasTransitioned) return;
+        
+        this.hasTransitioned = true;
+        
+        // Apply the new position with transition
+        this.container.style.transition = 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
+        this.container.style.left = '5%';
+        this.container.style.transform = 'translateY(-50%)';
+        
+        return new Promise(resolve => {
+            // Wait for transition to complete
+            const onTransitionEnd = () => {
+                this.container.removeEventListener('transitionend', onTransitionEnd);
+                resolve();
+            };
+            this.container.addEventListener('transitionend', onTransitionEnd);
+            
+            // Fallback timeout
+            setTimeout(resolve, 500);
+        });
+    }
+
+    async animateOut() {
+        if (!this.container || !this.isActive) return;
+        
+        const elements = Array.from(this.container.querySelectorAll('div'));
         const animations = [];
         
-        menuButtons.forEach(button => {
-            button.style.transition = 'all 0.5s ease-out';
-            button.style.opacity = '0';
-            button.style.transform = 'translateX(100%)';
-            animations.push(button.animate([
-                { opacity: 1, transform: 'translateX(0)' },
-                { opacity: 0, transform: 'translateX(100%)' }
-            ], {
-                duration: 500,
-                easing: 'ease-out'
-            }).finished);
+        // Animate all elements simultaneously back to starting positions
+        elements.forEach(el => {
+            el.style.transition = 'all 1s ease-out';
+            el.style.transform = `translate(${el.style.getPropertyValue('--start-x')}, ${el.style.getPropertyValue('--start-y')})`;
+            
+            animations.push(new Promise(resolve => {
+                el.addEventListener('transitionend', resolve, { once: true });
+            }));
         });
         
         await Promise.all(animations);
+        this.cleanup(); // Remove the title after animation
+    }
+
+    async animateToLeft() {
+        if (!this.container) return;
+                
+        this.container.style.transition = 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
+        this.container.style.left = '-15%';
+        
+        // Nödvändigt för inställningarnas animation, venne varför
+        // Rör iaf inte
+        return new Promise(resolve => {
+            setTimeout(resolve, 0);
+        });
+    }
+
+    async animateFromLeft() {
+        if (!this.container) return;
+        
+        this.container.style.transition = 'all 0.5s cubic-bezier(0.25, 0.1, 0.25, 1)';
+        this.container.style.left = '5%';
+        
+        return new Promise(resolve => {
+            setTimeout(resolve, 500);
+        });
+    }
+
+    cleanup() {
+        if (this.container && this.container.parentNode) {
+            this.container.parentNode.removeChild(this.container);
+        }
+        this.container = null;
+        this.isActive = false;
+        this.hasTransitioned = false;
     }
 }
-
-const titleManager = new TitleManager();
-window.titleManager = titleManager;

@@ -5,12 +5,7 @@ class MusicRoom {
         this.currentlyPlaying = 0;
         this.loadTrackData();
         this.forceShowComment = true;
-        this.MENU_STATES = {
-            MAIN: 0,
-            OPTIONS: 1,
-            CHARACTER_SELECT: 2,
-            MUSIC_ROOM: 3
-        };
+        this.container = null;
     }
 
     loadTrackData() {
@@ -27,13 +22,13 @@ class MusicRoom {
     }
 
     render() {
-        const menuBox = document.getElementById('menuBox');
-        if (!menuBox) return;
-        
-        menuBox.innerHTML = `
-            <div class="music-room-container">
+        // Create container if it doesn't exist
+        if (!this.container) {
+            this.container = document.createElement('div');
+            this.container.className = 'music-room-container';
+            this.container.innerHTML = `
                 <div class="music-room-header">
-                    <div class="music-room-title">${languageManager.getText('musicRoomMenu.title')}</div>
+                    <div class="music-room-title">${languageManager.getText('menus.musicRoomMenu.title')}</div>
                 </div>
                 <div class="music-room-content">
                     <div class="track-list-container">
@@ -42,42 +37,48 @@ class MusicRoom {
                     <div class="now-playing"></div>
                 </div>
                 <div class="music-room-instructions">
-                    <div>${languageManager.getText('musicRoomMenu.instructions.Z')}</div>
-                    <div>${languageManager.getText('musicRoomMenu.instructions.X')}</div>
+                    <div>${languageManager.getText('menus.musicRoomMenu.instructions.Z')}</div>
+                    <div>${languageManager.getText('menus.musicRoomMenu.instructions.X')}</div>
                 </div>
-            </div>
-        `;
-
-        // Populate track list
-        const trackList = document.querySelector('.track-list');
-        this.tracks.forEach((track, index) => {
-            const trackElement = document.createElement('div');
-            trackElement.className = `track-item ${this.selectedTrack === index ? 'selected' : ''}`;
-            trackElement.innerHTML = `
-                <span class="track-number">${track.id}</span>
-                <span class="track-name">${track.name}</span>
             `;
-            trackList.appendChild(trackElement);
-        });
+            
+            // Populate track list
+            const trackList = this.container.querySelector('.track-list');
+            this.tracks.forEach((track, index) => {
+                const trackElement = document.createElement('div');
+                trackElement.className = `track-item ${this.selectedTrack === index ? 'selected' : ''}`;
+                trackElement.innerHTML = `
+                    <span class="track-number">${track.id}</span>
+                    <span class="track-name">${track.name}</span>
+                `;
+                trackList.appendChild(trackElement);
+            });
 
-        // Always show comment for first track (menu music)
-        const nowPlaying = document.querySelector('.now-playing');
-        const currentTrack = this.tracks[this.currentlyPlaying];
-        const commentLines = currentTrack.comment ? currentTrack.comment.split('<br>') : [];
-        const commentHTML = commentLines.map(line => 
-            `<div class="comment-line">${line}</div>`
-        ).join('');
-        
-        nowPlaying.innerHTML = `
-            <div class="track-title">${currentTrack.title || currentTrack.name}</div>
-            <div class="track-comment">${commentHTML}</div>
-        `;
-        
-        // Auto-scroll to selected item
+            // Add to menu box
+            const menuBox = document.getElementById('menuBox');
+            if (menuBox) {
+                menuBox.innerHTML = '';
+                menuBox.appendChild(this.container);
+            }
+        }
+
+        // Update now-playing section
+        const nowPlaying = this.container.querySelector('.now-playing');
+        if (nowPlaying) {
+            const currentTrack = this.tracks[this.currentlyPlaying];
+            const commentLines = currentTrack.comment ? currentTrack.comment.split('<br>') : [];
+            const commentHTML = commentLines.map(line => 
+                `<div class="comment-line">${line}</div>`
+            ).join('');
+            
+            nowPlaying.innerHTML = `
+                <div class="track-title">${currentTrack.title || currentTrack.name}</div>
+                <div class="track-comment">${commentHTML}</div>
+            `;
+        }
+
+        this.updateTrackSelection();
         this.scrollToSelected();
-        
-        // Reset flag after first render
-        this.forceShowComment = false;
     }
 
     scrollToSelected() {
@@ -91,56 +92,46 @@ class MusicRoom {
     }
 
     handleInput() {
-        if (inputLocked) return false;
+        if (window.menuHandler.inputLocked) return false;
         
-        const now = Date.now();
-        if (now - lastMenuInput < 100) {
-            return false;
-        }
-        lastMenuInput = now;
-    
-        if (menuInputHandler.keys.ArrowUp) {
+        // Handle up arrow
+        if (window.menuInputHandler.isKeyPressed('ArrowUp')) {
             if (this.selectedTrack === 0) {
                 this.selectedTrack = this.tracks.length - 1;
             } else {
                 this.selectedTrack--;
             }
-            menuInputHandler.keys.ArrowUp = false;
             playSoundEffect(soundEffects.select);
-            this.scrollToSelected();
             this.updateTrackSelection();
+            this.scrollToSelected();
         }
         
-        if (menuInputHandler.keys.ArrowDown) {
+        // Handle down arrow
+        if (window.menuInputHandler.isKeyPressed('ArrowDown')) {
             if (this.selectedTrack === this.tracks.length - 1) {
                 this.selectedTrack = 0;
             } else {
                 this.selectedTrack++;
             }
-            menuInputHandler.keys.ArrowDown = false;
             playSoundEffect(soundEffects.select);
-            this.scrollToSelected();
             this.updateTrackSelection();
+            this.scrollToSelected();
         }
     
-        if (menuInputHandler.keys.z || menuInputHandler.keys.Z) {
+        // Handle Z button (single press)
+        if (window.menuInputHandler.isKeyPressed('z') || window.menuInputHandler.isKeyPressed('Z')) {
             playSoundEffect(soundEffects.ok);
             this.playSelectedTrack();
-            menuInputHandler.keys.z = false;
-            menuInputHandler.keys.Z = false;
+            return false;
         }
     
-        if (menuInputHandler.keys.x || menuInputHandler.keys.X) {
+        // Handle X button (single press)
+        if (window.menuInputHandler.isKeyPressed('x') || window.menuInputHandler.isKeyPressed('X')) {
             playSoundEffect(soundEffects.cancel);
             this.stopCurrentTrack();
             window.playMusic("assets/music/DiPP_01.mp3");
             this.selectedTrack = 0;
-            menuInputHandler.keys.x = false;
-            menuInputHandler.keys.X = false;
-            transitionToMenu(MENU_STATES.MAIN);
-            document.getElementById('menuBox').style.display = 'flex';
-            renderMainMenu();
-            menuBox.appendChild(titleManager.createTitle());
+            window.menuHandler.switchMenu(MENU_STATES.MAIN);
             return true;
         }
     
@@ -156,8 +147,9 @@ class MusicRoom {
         // Play the track
         window.playMusic(track.audioPath);
         
-        // Update the display
-        this.render();
+        // Update the display without full re-render
+        this.updateNowPlaying();
+        this.updateTrackSelection();
     }
 
     stopCurrentTrack() {

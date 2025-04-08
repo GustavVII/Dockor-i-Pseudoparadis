@@ -1,0 +1,14 @@
+{
+    "shotTypes": {
+        "01": "Carta guiada",
+        "02": "Láser Estelar",
+        "03": "Plomada profunda",
+        "04": "Tridente empalador"
+    },
+    "spellcards": {
+        "01": "Sello Espiritual: Sello Fantasía",
+        "02": "Signo de Amor: Master Spark",
+        "03": "Vuelco: Ancla Hundida",
+        "04": "No Identificado: OVNIs del Terror"
+    }
+}

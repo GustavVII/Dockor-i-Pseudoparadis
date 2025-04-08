@@ -141,11 +141,46 @@
             "logg": "Okej så Polacken blev färdig med hälften av översättningarna klockan 3:30 på morgonen och kallade mig för att hämta dem. Nu, musiken saknar dess kommentarer men de får vi leva med för närvarande. Så, menyövergångar... Jag har försökt att leka med CSS och @keyframe, och det har gått sådär. Jag har lyckats animera titelingång, men jag har problem med att CSS bråkar med att försöka få menyn att rendera om 60ggr/s. Efter en liten fix slutade menyn visa vilken knapp man hade valt, men fungera fortfarande. Så jag bytte till att den uppdaterar endast om man rör upp/ner pilen, vilket gjorde att om man var snabb, frös den och gick kaputt eftersom hela containern (där den också finns i) rendrades om. Lösning? Lås tangenttryck tills animationen är över. Detta fungerar väl, och har en sekundär effekt att visa osynliga 'ingen deklaration att animationen är över' problem, eftersom att tangenttrycken förblir evigt låsta."
         },
         {
-            "dag": "11",
+            "dag": "21",
             "datum": "3-31",
             "tidSpenderad": "3:30",
             "titel": "De flockar till mig",
             "logg": "Inte längre behöver jag fråga; De kommer direkt till mig. Det dök upp en rumän, som hört att jag gör detta projekt, och erbjöd översätta vilket jag tackade ja till. Såklart fler språk skadar inte, men jag borde börja be andra som kan det språket kolla över och granska att det står fel. Detta hände nästan med tyskan, där de råkade översätta 'kvarblivet spöke från skeppsvraket' till 'efterblivet spöke från skeppsvraket', vilket hastigt korrigerades av andra som såg. Nu kollas de tyska översättningarna även över av 2 granskare för verifikation. Okej så medans jag skrev detta, kom en Nederlänning och erbjöd sina översättningar med. Rakt in i credits.txt går han"
+        },
+        {
+            "dag": "22",
+            "datum": "4-01",
+            "tidSpenderad": "",
+            "titel": "",
+            "logg": ""
+        },
+        {
+            "dag": "23",
+            "datum": "4-02",
+            "tidSpenderad": "",
+            "titel": "",
+            "logg": ""
+        },
+        {
+            "dag": "24",
+            "datum": "4-03",
+            "tidSpenderad": "",
+            "titel": "",
+            "logg": ""
+        },
+        {
+            "dag": "25",
+            "datum": "4-04",
+            "tidSpenderad": "",
+            "titel": "",
+            "logg": ""
+        },
+        {
+            "dag": "26",
+            "datum": "4-05",
+            "tidSpenderad": "",
+            "titel": "",
+            "logg": ""
         }
     ]
 }

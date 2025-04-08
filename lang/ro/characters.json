@@ -1,0 +1,22 @@
+{
+    "Reimu": {
+        "name": "Reimu Hakurei",
+        "title": "Fecioară Paradisiacă",
+        "description": "Un personaj echilibrat cu un atac și spellcard slab, teleghidat"
+    },
+    "Marisa": {
+        "name": "Marisa Kirisame",
+        "title": "Magician Ordinar",
+        "description": "Un personaj de rază scurtă care compensează printr-un atac puternic și rapid"
+    },
+    "Murasa": {
+        "name": "Minamitsu Murasa",
+        "title": "Fantoma de la Naufragiu",
+        "description": "Un personaj mediu cu statistici echilibrate"
+    },
+    "Nue": {
+        "name": "Nue Houjuu",
+        "title": "Extraterestru Fantastic Neidentificat",
+        "description": "Un personaj cu un melee puternic, bună la apropiere; posedă agilitate ridicată"
+    }
+}

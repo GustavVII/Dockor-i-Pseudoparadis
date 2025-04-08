@@ -1,0 +1,14 @@
+{
+    "shotTypes": {
+        "01": "Talismã Guiado",
+        "02": "Laser Estelar",
+        "03": "Chumbada Profunda",
+        "04": "Tridente Empalador"
+    },
+    "spellcards": {
+        "01": "Sinal de Espirito: Selo Fantasioso",
+        "02": "Sinal de Amor: Faísca Mestra",
+        "03": "Soçobro: Âncora Afundadora",
+        "04": "Incompreensível: Aterrorizante Invasão de OVNIs"
+    }
+}

@@ -1,0 +1,39 @@
+{
+    "mainMenu": {
+        "start": "Start",
+        "extraStart": "Start Extra",
+        "practiseStart": "Start Antrenament",
+        "score": "Scor",
+        "musicRoom": "Fonotecă",
+        "options": "Opțiuni",
+        "quit": "Ieși"
+    },
+    "startMenu": {
+        "movementRating": "Viteză",
+        "attackRangeRating": "Rază Atac",
+        "attackPowerRating": "Putere Atac",
+        "shotType": "Tip de Atac",
+        "spellcard": "Spellcard",
+        "instructions": {
+            "Z": "Press Z to select character",
+            "X": "Press X to return to main menu"
+        }
+    },
+    "musicRoomMenu": {
+        "title": "Fonotecă",
+        "instructions": {
+            "Z": "Apasă Z pentru a reda piesa",
+            "X": "Apasă X pentru a ieși"
+        }
+    },
+    "optionsMenu": {
+        "title": "OPȚIUNI",
+        "player": "Jucător",
+        "bomb": "Bombe",
+        "music": "Muzică",
+        "sound": "Efecte sonore",
+        "language": "Limbă",
+        "restoreDefault": "Resetează valorile",
+        "quit": "Ieși"
+    }
+}

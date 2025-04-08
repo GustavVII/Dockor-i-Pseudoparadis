@@ -1,0 +1,64 @@
+{
+    "mainMenu": {
+        "start": "Start",
+        "extraStart": "Extra Start",
+        "practiseStart": "Übungsstart",
+        "score": "Anzeigetafel",
+        "musicRoom": "Musikzimmer",
+        "options": "Einstellungen",
+        "quit": "Beenden"
+    },
+    "difficultySelect": {
+        "title": "Wähle einen Modus aus",
+        "difficulties": {
+            "easy": {
+                "name": "Einfach",
+                "description": "Für die, die nicht so erfahren in Schießspielen sind"
+            },
+            "normal": {
+                "name": "Normal",
+                "description": "Richtet sich an die meisten Menschen "
+            },
+            "hard": {
+                "name": "Schwer", 
+                "description": "Schwierigkeit eines durchsch-nittlichen Arcade Schießspiel"
+            },
+            "lunatic": {
+                "name": "Wahnsinnig",
+                "description": "Eine Schwierigkeit die sich an etwas merkwürdige Spieler richtet"
+            },
+            "extra": {
+                "name": "Extra",
+                "description": "Gib endlich auf, Bist du verrückt?"
+            }
+        }
+    },
+    "startMenu": {
+        "movementRating": "Bewegungsgeschwindigkeit",
+        "attackRangeRating": "Angriffsreichweite",
+        "attackPowerRating": "Angriffsschaden",
+        "shotType": "Schusstyp",
+        "spellcard": "Zauberkarten",
+        "instructions": {
+            "Z": "Drücken Sie Z um das Zeichen auszuwählen",
+            "X": "Drücken Sie X um zum Hauptmenü zurückzukehren."
+        }
+    },
+    "musicRoomMenu": {
+        "title": "Das Musikzimmer",
+        "instructions": {
+            "Z": "Drücken Sie Z, um den ausgewählten Audiotitel abzuspielen",
+            "X": "Drücken Sie X um zum Hauptmenü zurückzukehren."
+        }
+    },
+    "optionsMenu": {
+        "title": "EINSTELLUNGEN",
+        "player": "Spieler",
+        "bomb": "Bomben",
+        "music": "Musik",
+        "sound": "Soundeffekte",
+        "language": "Sprache",
+        "restoreDefault": "Standardwerte wiederherstellen",
+        "quit": "Zurückkehren"
+    }
+}

@@ -1,52 +1,25 @@
+// init.js
 document.addEventListener('DOMContentLoaded', () => {
-    // Startknapp
-    document.getElementById('startButton').addEventListener('click', () => {
-        // Göm startskärmen
-        document.getElementById('startScreen').style.display = 'none';
-        init();
-    });
+    initializeStartScreen();
 });
+
 if (localStorage.getItem('clearedGame') === null) {
     localStorage.setItem('clearedGame', 'false');
 }
 
-function renderMainMenu() {
-    const menuBox = document.getElementById('menuBox');
-    if (!menuBox) return;
-    
-    const existingTitle = menuBox.querySelector('.main-menu-title');
-    
-    menuBox.innerHTML = '';
-    if (existingTitle) {
-        menuBox.appendChild(existingTitle);
-    }
-    
-    const menuItems = [
-        'start', 'extraStart', 'practiseStart', 'score', 'musicRoom', 'options', 'quit'
-    ];
-    
-    menuItems.forEach((item, index) => {
-        const buttonElement = document.createElement('div');
-        buttonElement.className = `menu-button ${selectedButton === index ? 'selected' : ''}`;
-        
-        if (item === 'extraStart') {
-            buttonElement.classList.add('extra-start');
-            if (clearedGame) {
-                buttonElement.classList.add('cleared');
-            }
-        }
-        
-        buttonElement.textContent = languageManager.getText(`mainMenu.${item}`);
-        menuBox.appendChild(buttonElement);
-    });
-}
-
 async function init() {
-    // Visa inladdningsskärmen
+    // Create all necessary elements
+    createLoadingScreen();
+    createBackground();
+    createGameElements();
+    
+    
+    // Show loading screen
     const loadingScreen = document.getElementById('loadingScreen');
     loadingScreen.style.display = 'flex';
     const settings = loadSettings();
 
+    // Set volume defaults if invalid
     if (isNaN(sfxVolume) || sfxVolume < 0 || sfxVolume > 1) {
         sfxVolume = 0.8;
     }
@@ -54,91 +27,222 @@ async function init() {
         musicVolume = 0.6;
     }
 
+    // Apply settings
     musicVolume = settings.music / 100;
     sfxVolume = settings.sound / 100;
 
-    document.getElementById('canvas').style.display = 'none';
-    document.getElementById('menuBox').style.display = 'none';
-    document.getElementById('playerStatsDisplay').style.display = 'none';
+    // Hide game elements initially
+    const canvas = document.getElementById('canvas');
+    if (canvas) canvas.style.display = 'none';
+    const menuBox = document.getElementById('menuBox');
+    if (menuBox) menuBox.style.display = 'none';
+    const statsDisplay = document.getElementById('playerStatsDisplay');
+    if (statsDisplay) statsDisplay.style.display = 'none';
 
-    
-    console.log("Adding event listeners");
-    
+    // Initialize systems
+    console.log("Initializing game systems...");
     await initializeSoundEffects();
-
-    
     await languageManager.init();
-    await declareManagers();
+    await declareMenuManagers();
     await loadAllAssets();
 
-    shotTypeManager.laserImages = {
-        start: assetLoader.getImage('laser1'),
-        middle: assetLoader.getImage('laser2'),
-        end: assetLoader.getImage('laser3'),
-    };
-    shotTypeManager.starImages = [
-        assetLoader.getImage('star1'),
-        assetLoader.getImage('star2'),
-        assetLoader.getImage('star3'),
-        assetLoader.getImage('star4'),
-        assetLoader.getImage('star5'),
-        assetLoader.getImage('star6'),
-        assetLoader.getImage('star7'),
-        assetLoader.getImage('star8'),
-    ];
-
+    // Initial UI update
     updatePlayerStatsDisplay();
 
+    // Set up input handlers
     window.addEventListener('keydown', (e) => {
         if (menuActive) {
-            handleMenuKeyDown(e);
+            if (typeof handleMenuKeyDown === 'function') {
+                handleMenuKeyDown(e);
+            }
         } else {
-            handleKeyDown(e);
+            if (typeof handleKeyDown === 'function') {
+                handleKeyDown(e);
+            }
         }
     });
     
     window.addEventListener('keyup', (e) => {
         if (menuActive) {
-            handleMenuKeyUp(e);
+            if (typeof handleMenuKeyUp === 'function') {
+                handleMenuKeyUp(e);
+            }
         } else {
-            handleKeyUp(e);
+            if (typeof handleKeyUp === 'function') {
+                handleKeyUp(e);
+            }
         }
     });
 
+    // Complete initialization
     setTimeout(async () => {
         loadingScreen.style.display = 'none';
-        stopGameMusic();
+        playMusic('assets/music/DiPP_01.mp3');
         
-        const menuBox = document.getElementById('menuBox');
-        menuBox.appendChild(titleManager.createTitle());
-        await titleManager.animateTitleEnter();
+        window.menuHandler.showMenu();
+        window.menuHandler.switchMenu(MENU_STATES.MAIN);
         
-        startMainMenu();
-        
-        menuBox.style.display = 'flex';
-        
-        setTimeout(() => {
-            titleManager.animateTitle();
-            //transition.classList.add('hidden');
-            
-            setTimeout(() => {
-                //transition.remove();
-            }, 1000);
-        }, 50);
-        
-        startMainMenu();
+        // Start the menu loop
+        startMenuLoop();
     }, 0);
 }
 
+function initializeStartScreen() {
+    const container = document.querySelector('.container');
+    if (!container) return;
+
+    // Create start screen if it doesn't exist
+    if (!container.querySelector('#startScreen')) {
+        const startScreen = document.createElement('div');
+        startScreen.id = 'startScreen';
+        startScreen.style.display = 'flex';
+        startScreen.style.flexDirection = 'column';
+        startScreen.style.alignItems = 'center';
+        startScreen.style.justifyContent = 'center';
+        startScreen.style.position = 'absolute';
+        startScreen.style.top = '0';
+        startScreen.style.left = '0';
+        startScreen.style.width = '100%';
+        startScreen.style.height = '100%';
+        startScreen.style.zIndex = '2000';
+
+        const startButton = document.createElement('button');
+        startButton.id = 'startButton';
+        startButton.textContent = 'Start Game';
+        startButton.style.padding = '10px 20px';
+        startButton.style.fontSize = '20px';
+        startButton.style.cursor = 'pointer';
+        startButton.style.margin = '0';
+
+        startButton.addEventListener('click', () => {
+            startScreen.style.display = 'none';
+            init();
+        });
+
+        startScreen.appendChild(startButton);
+        container.appendChild(startScreen);
+    }
+}
+
+function createLoadingScreen() {
+    const container = document.querySelector('.container');
+    if (!container || container.querySelector('#loadingScreen')) return;
+
+    const loadingScreen = document.createElement('div');
+    loadingScreen.id = 'loadingScreen';
+    loadingScreen.style.position = 'absolute';
+    loadingScreen.style.top = '0';
+    loadingScreen.style.left = '0';
+    loadingScreen.style.width = '100%';
+    loadingScreen.style.height = '100%';
+    loadingScreen.style.display = 'none';
+    loadingScreen.style.flexDirection = 'column';
+    loadingScreen.style.alignItems = 'center';
+    loadingScreen.style.justifyContent = 'center';
+    loadingScreen.style.zIndex = '2000';
+    loadingScreen.style.boxSizing = 'border-box';
+    loadingScreen.style.margin = '0';
+    loadingScreen.style.padding = '0';
+    loadingScreen.style.overflow = 'hidden';
+
+    const img = document.createElement('img');
+    img.src = 'assets/graphics/backgrounds/loadingBackground.png';
+    img.alt = 'Loading...';
+    img.style.width = '100%';
+    img.style.height = '100%';
+    img.style.objectFit = 'cover';
+    img.style.display = 'block';
+    img.style.margin = '0';
+    img.style.padding = '0';
+    img.style.pointerEvents = 'none';
+
+    loadingScreen.appendChild(img);
+    container.appendChild(loadingScreen);
+}
+
+function createBackground() {
+    const container = document.querySelector('.container');
+    if (!container || container.querySelector('#background')) return;
+
+    const background = document.createElement('div');
+    background.id = 'background';
+    container.appendChild(background);
+}
+
+function createGameElements() {
+    const container = document.querySelector('.container');
+    if (!container) return;
+    
+    // Create player stats display if it doesn't exist
+    if (!container.querySelector('#playerStatsDisplay')) {
+        const statsDisplay = document.createElement('div');
+        statsDisplay.id = 'playerStatsDisplay';
+        statsDisplay.style.display = 'none';
+        // ... (keep rest of stats display styling)
+        container.appendChild(statsDisplay);
+    }
+    
+    // Create title container if it doesn't exist
+    if (!container.querySelector('#titleContainer')) {
+        const titleContainer = document.createElement('div');
+        titleContainer.id = 'titleContainer';
+        container.appendChild(titleContainer);
+    }
+    
+    // Create menu box if it doesn't exist
+    if (!container.querySelector('#menuBox')) {
+        const menuBox = document.createElement('div');
+        menuBox.id = 'menuBox';
+        container.appendChild(menuBox);
+    }
+}
+
+
 async function startGame(characterId) {
+    if (window.menuHandler.inputLocked) return;
+    
+    // Create canvas and container here
+    const container = document.querySelector('.container');
+    if (!container.querySelector('.canvas-container')) {
+        const canvasContainer = document.createElement('div');
+        canvasContainer.className = 'canvas-container';
+        canvasContainer.style.position = 'absolute';
+
+        const canvas = document.createElement('canvas');
+        canvas.id = 'canvas';
+        canvas.width = 574;
+        canvas.height = 670;
+        canvas.style.display = 'block';
+
+        canvasContainer.appendChild(canvas);
+        container.appendChild(canvasContainer);
+    }
+
+    window.canvas = document.getElementById('canvas');
+    window.ctx = canvas.getContext('2d');
+    
     menuActive = false;
     gameRunning = true;
+    window.pauseMenuActive = false;
+    
+    // Clean up menu elements
+    if (window.menuHandler.difficultySelect) {
+        window.menuHandler.difficultySelect.cleanup();
+        window.menuHandler.difficultySelect = null;
+    }
+    if (window.menuHandler.characterSelect) {
+        window.menuHandler.characterSelect.cleanup();
+        window.menuHandler.characterSelect = null;
+    }
+
+    await declareGameManagers();
     
     document.getElementById('menuBox').style.display = 'none';
     document.getElementById('canvas').style.display = 'block';
     document.getElementById('playerStatsDisplay').style.display = 'flex';
     
-    stopMenuMusic();
+    // Initialize game systems that need canvas
+    await initializeGameSystems();
     
     characterManager.setCharacter(characterId);
     
@@ -149,5 +253,18 @@ async function startGame(characterId) {
     
     console.log("Game started with character:", characterId);
 }
+
+function setMenuBackground(backgroundName) {
+    const bgElement = document.getElementById('background');
+    if (bgElement) {
+        bgElement.style.setProperty(
+            '--menu-bg',
+            `url('../assets/graphics/backgrounds/${backgroundName}.png')`
+        );
+    }
+}
+
+// Set default background
+setMenuBackground('mainMenu');
 
 window.startGame = startGame;

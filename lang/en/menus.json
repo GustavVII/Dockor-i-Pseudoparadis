@@ -1,0 +1,64 @@
+{
+    "mainMenu": {
+        "start": "Start",
+        "extraStart": "Extra Start",
+        "practiseStart": "Practice Start",
+        "score": "Score",
+        "musicRoom": "Music Room",
+        "options": "Options",
+        "quit": "Quit"
+    },
+    "difficultySelect": {
+        "title": "Select a mode",
+        "difficulties": {
+            "easy": {
+                "name": "Easy",
+                "description": "Aimed at those who aren't very good at shooting games"
+            },
+            "normal": {
+                "name": "Normal",
+                "description": "Generally aimed at most people"
+            },
+            "hard": {
+                "name": "Hard", 
+                "description": "Difficulty of an average arcade shooting game"
+            },
+            "lunatic": {
+                "name": "Lunatic",
+                "description": "A difficulty for those who are a bit strange"
+            },
+            "extra": {
+                "name": "Extra",
+                "description": "Give up already! Are you crazy?"
+            }
+        }
+    },
+    "startMenu": {
+        "movementRating": "Movement Speed",
+        "attackRangeRating": "Attack Range",
+        "attackPowerRating": "Attack Power",
+        "shotType": "Shot Type",
+        "spellcard": "Spellcard",
+        "instructions": {
+            "Z": "Press Z to select character",
+            "X": "Press X to return to main menu"
+        }
+    },
+    "musicRoomMenu": {
+        "title": "Music Room",
+        "instructions": {
+            "Z": "Press Z to play selected track",
+            "X": "Press X to return to main menu"
+        }
+    },
+    "optionsMenu": {
+        "title": "OPTIONS",
+        "player": "Player",
+        "bomb": "Bomb",
+        "music": "Music",
+        "sound": "Sound",
+        "language": "Language",
+        "restoreDefault": "Restore default",
+        "quit": "Quit"
+    }
+}

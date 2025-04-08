@@ -1,0 +1,14 @@
+{
+    "shotTypes": {
+        "01": "Card Teleghidat",
+        "02": "Laser Înstelat",
+        "03": "Sinker Adânc",
+        "04": "Trident Împunsător"
+    },
+    "spellcards": {
+        "01": "Semn Spiritual: Sigiliu Fantastic",
+        "02": "Semn de Dragoste: Master Spark",
+        "03": "Răsturnare: Ancoră Scufundată",
+        "04": "Neidentificat: Invazie Teroristă OZN"
+    }
+}

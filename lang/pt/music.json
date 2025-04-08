@@ -1,0 +1,67 @@
+{
+    "01": {
+        "name": "Lenda de Hourai",
+        "title": "Música Tema",
+        "comment": "É dito que até mesmo os serviçais do Imperador Emperor Qin Shi Huang<br>não conseguiram encontrar o elixir da imortalidade até agora...<br>Pois o que a Princesa Kaguya está pensando?<br>...Ela realmente acha que nós conseguiremos encontrar algo como o Ramo de Joias de Hourai?"
+    },
+    "02": {
+        "name": "Amável Colina das Cerejeiras",
+        "title": "Tema da Fase 1",
+        "comment": "Me pergunto se ### ainda dorme debaixo daquela cerejeira.<br>Essas pétalas um dia foram tão vermelhas, porém ficam cada vez mais pálidas com o passar dos anos.<br>É provavel que já nada mais resta sob este solo."
+    },
+    "03": {
+        "name": "Estranha Papo Oriental",
+        "title": "Tema da ###",
+        "comment": "Youkai? Esses dias, tal coisa é irracional.<br>Mas, eu sei. Sei que os youkai viveriam em paz se os humanos acreditassem neles.<br>Afinal, youkai são mais pacíficos e pragmáticos que humanos."
+    },
+    "04": {
+        "name": "Devaneios Circenses",
+        "title": "Tema da Fase 2",
+        "comment": "Tá certo, a próxima à subir ao palco é a pessoa-pássaro.<br>Essa pessoa-pássaro, de alguma maneira, nasceu da união entre um humano e<br>um pássaro raro que vive somente em uma terra paradisíaca no sul distante.<br>Seus pais morreram um bom tempo atrás. Nós tivemos pena da<br>pequena órfã e a trouxemos à nossa pequena trupe. Gentil da nossa parte, não?"
+    },
+    "05": {
+        "name": "Alice de Shanghai, Meiji 17",
+        "title": "####'s theme",
+        "comment": "Fumaça de ópio paira sobre a cidade como uma núvem, esgueirando-se dentre cantos e recantos.<br>Estou no assentamento. As pessoas dançam valças em roupas das mais brilhantes cores.<br>A magia não irá me alcançar aqui."
+    },
+    "06": {
+        "name": "Bruxa das Poções de Amor",
+        "title": "Tema da Fase 3",
+        "comment": "Não tem como! Eu não sou estúpida.<br>Minhas amigas simplesmente ririam de mim se eu às contasse.<br>Não acreditariam que vendem poções de amor naquela loja.<br>Eu só quebrei meu cofrinho e não falei pra ninguém."
+    },
+    "07": {
+        "name": "U.N. Era Ela?",
+        "title": "Tema da Flandre",
+        "comment": "Te falta imaginação. Você definitivamente cairia na armadilha dela.<br>Uma criminosa com tanta imaginação quanto U.N. Owen<br>Ela colocaria uma corda no seu pescoço antes mesmo que percebesse."
+    },
+    "08": {
+        "name": "Floresta das Bonecas",
+        "title": "Tema da Fase 4",
+        "comment": "Não vai parar de chover.<br>Não vi o sol uma única vez desde que entrei nesta casa.<br>Me pergunto quantos dias fazem.<br>A boneca fala comigo incessantemente. <br>Cortei-lhe a cabeça fora. Parece que a chuva passou."
+    },
+    "09": {
+        "name": "Boneca Enigmática",
+        "title": "Tema da Boneca",
+        "comment": "Ah, eu queria me livrar dessa boneca o quanto antes, também.<br>Mas aqueles olhos azuis... Algumas vezes um corvo negro os arranca e come.<br>Esses são olhos reais. Eu sei, porque eu sempre ponho os novos."
+    },
+    "10": {
+        "name": "Reincarnação",
+        "title": "Tema da Fase 5",
+        "comment": "É bem estranho que há uma casa ocidental no meio<br>de uma floresta sem estradas, pra começo de conversa.<br>A garota que vivia aqui quase nunca ia pra vila.<br>No entanto, ultimamente tenho visto uma menina que se parece com sua filha.<br>Como sei que ela tem uma filha?<br>Bem, acontece que se parece demais com ela quando era mais jovem..."
+    },
+    "11": {
+        "name": "Borboleta do Lótus Dicromata ~ Vermelho e Branco",
+        "title": "Tema da Sem Nome",
+        "comment": "Parece que uma estrangeira adentrou pela barreira.<br>Melhor eu fazer algo antes que ela chegue ao templo...<br>Oh, aquela garota... não parece nem humana, nem youkai."
+    },
+    "12": {
+        "name": "A Sacerdotiza Eternal",
+        "title": "Tema do Final Ruim",
+        "comment": "Nada aconteceu hoje.<br>Me prometeram que nada aconteceria amanhã.<br>Ninguém vem aqui. Nem humanos, nem deuses.<br>Agora os youkai? Ah, esses vêm todo dia."
+    },
+    "13": {
+        "name": "O Estranho Dia à Dia da Sacerdotiza Voadora",
+        "title": "Tema do Final Bom",
+        "comment": "Recentemente, tem muita gente ignorantemente dizendo<br>coisas como \"É magia\" ou \"É um youkai\" pra qualquer coisa.<br>É decepcionante."
+    }
+}

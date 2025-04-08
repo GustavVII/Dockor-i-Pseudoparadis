@@ -1,0 +1,46 @@
+/* Loading indicator styles */
+.loading-indicator-container {
+    position: absolute;
+    bottom: 25px;
+    left: 50px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    z-index: 10000;
+}
+
+.loading-spinner {
+    width: 48px;
+    height: 48px;
+    animation: spin 0.5s linear infinite;
+}
+
+.loading-text {
+    margin-left: 20px;
+    color: black;
+    font-family: 'Arial', sans-serif;
+    font-size: 30px;
+    font-weight: bold;
+    animation: pulse 0.8s ease-in-out infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 0.4;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0.4;
+    }
+}

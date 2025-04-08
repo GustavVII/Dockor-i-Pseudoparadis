@@ -1,0 +1,22 @@
+{
+    "Reimu": {
+        "name": "Reimu Hakurei",
+        "title": "Sacerdotiza do Paraiso",
+        "description": "Uma personagem lenta, porém balanceada. Seu ataque base é guiado, mas seu Spell Card é mais fraco."
+    },
+    "Marisa": {
+        "name": "Marisa Kirisame",
+        "title": "Maga Ordinária",
+        "description": "Uma personagem cujo curto alcance é compensado por sua alta velocidade e Spell Card poderoso."
+    },
+    "Murasa": {
+        "name": "Minamitsu Murasa",
+        "title": "Uma Fantasma Proveniente de um Naufrágio",
+        "description": "Uma persónagem de alcance e Spell Card medianos"
+    },
+    "Nue": {
+        "name": "Nue Houjuu",
+        "title": "Fantastico Objeto Voador Não Identificado",
+        "description": "Uma personágem altamente ágil, com Spell Card de curto alcance forte."
+    }
+}
