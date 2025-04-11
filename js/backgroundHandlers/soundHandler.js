@@ -53,6 +53,7 @@ async function initializeSoundEffects() {
         soundEffects.invalid = await loadSoundEffect(`assets/sfx/invalid.wav`)
         soundEffects.extend = await loadSoundEffect(`assets/sfx/extend.wav`)
         soundEffects.destroy = await loadSoundEffect(`assets/sfx/destroy.wav`)
+        soundEffects.pause = await loadSoundEffect(`assets/sfx/pause.wav`)
         console.log('All sound effects loaded successfully:', soundEffects);
     } catch (error) {
         console.error('Failed to load sound effects:', error);
@@ -85,7 +86,6 @@ function stopGameMusic() {
         musicAudio.pause();
         musicAudio.currentTime = 0;
     }
-    // Don't set musicAudio to null here - we want to keep the reference
 }
 
 

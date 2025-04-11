@@ -8,6 +8,34 @@
         "options": "Opcje",
         "quit": "Wyjście" 
     },
+    "difficultySelect": {
+        "title": "Select a mode",
+        "difficulties": {
+            "easy": {
+                "name": "TranslateMe",
+                "description": "Aimed at those who aren't very good at shooting games"
+            },
+            "normal": {
+                "name": "TranslateMe",
+                "description": "Generally aimed at most people"
+            },
+            "hard": {
+                "name": "TranslateMe", 
+                "description": "Difficulty of an average arcade shooting game"
+            },
+            "lunatic": {
+                "name": "TranslateMe",
+                "description": "A difficulty for those who are a bit strange"
+            },
+            "extra": {
+                "name": "TranslateMe",
+                "description": "Give up already! Are you crazy?"
+            }
+        }
+    },
+    "practice": {
+        "selectStage": "Select Stage"
+    },
     "startMenu": {
         "movementRating": "Prędkość ruchu",
         "attackRangeRating": "Zasięg ataku",

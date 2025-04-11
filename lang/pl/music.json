@@ -1,0 +1,67 @@
+{
+    "01": {
+        "name": "Legenda Hourai",
+        "title": "Motyw tytułowy",
+        "comment": "Mawiają, że nawet słudzy cesarza Qin Shi Huang nie byli w stanie<br>odnaleźć eliksiru nieśmiertelności, a jednak,<br>O czym w ogóle myśli księżniczka Kaguya? Czy księżniczka Kaguya naprawdę uważa,<br>że możliwe jest znalezienie rzeczy takich jak gałązka Hourai pokryta klejnotami?" 
+    },
+    "02": {
+        "name": "Piękny Kopiec Kwitnącej Wiśni",
+        "title": "Motyw 1 poziomu",
+        "comment": "Zastanawia mnie czy ### nadal drzemie pod tym drzewem wiśni.<br>Płatki kwiatów były niegdyś tak czerwone, lecz z roku na rok robią się coraz bladsze.<br>Być może pod ziemią nie zostało już nic."
+    },
+    "03": {
+        "name": "Dziwna Orientalna Dyskusja",
+        "title": "Motyw ###",
+        "comment": "Youkai? Ostatnimi czasy nikt w to nie wierzy.<br>Gdyby ludzie tylko chcieli nadal wierzyć, to Youkai mogłyby żyć w spokoju.<br>Są bardziej spokojne i racjonalne niż ludzie."
+    },
+    "04": {
+        "name": "Zaduma Cyrku",
+        "title": "Motyw 2 poziomu",
+        "comment": "W porządku, następny na scenie pojawi się człowiek-ptak.<br>Człowiek ptak powstał jakimś cudem w wyniku związku człowieka<br>z rzadkim rajskim ptakiem, spotykanym tylko w dalekich południowych krainach.<br>Jego rodzice od dawna nie żyją, więc zlitowaliśmy się nad<br>sierotą i przygarnęliśmy do naszej trupy, czyż to nie wspaniale z naszej strony?"
+    }, 
+    "05": {
+        "name": "Shanghai Alice Ery Meiji 17",
+        "title": "Motyw #### ",
+        "comment": "Dym opiumowy unosi się nad miastem w postaci chmury,<br>wdzierajac się we wszystkie zakamarki.<br>Znajduję się w osadzie. Ludzie tańczą walca w niesamowicie barwnych strojach.<br>Magia mnie tu nie dosięgnie."
+    }, 
+    "06": {
+        "name": "Czarownica Miłosnego Napoju",
+        "title": "Motyw 3 poziomu",
+        "comment": "--Nie ma mowy<br>Nie jestem głupia.<br>Moi przyjaciele by się ze mnie śmiali, jakbym im o tym powiedziała.<br>Nie uwierzyli by, że w tym sklepie można zakupić eliksir miłości.<br>Zbiłam więc po kryjomu świnkę-skarbonkę."
+    }, 
+    "07": {
+        "name": "To Ona Była U.N.Owen?",
+        "title": "Motyw Flandre",
+        "comment": "Brakuje ci wyobraźni. Na pewno wpadłabyś w ich pułapkę.<br>Tak pomysłowy przestępca jak U.N.owen,<br>mógłby ci owinąć sznur wokół szyi zanim się obejrzysz."
+    },
+    "08": {
+        "name": "Las Lalek",
+        "title": "Motyw 4 poziomu",
+        "comment": "Ciągle pada. Nie widziałam słońca odkąd wkroczyłam do tego domu.<br>Nawet nie wiem ile czasu minęło.<br>Lalka bez przerwy mnie zagaduje.<br>Odcięłam jej głowę, wygląda na to, że w końcu przestało padać."
+    },
+    "09": {
+        "name": "Enigmatyczna Lalka",
+        "title": "Motyw Lalki",
+        "comment": "Chciałam pozbyć się tej lalki najszybciej jak to możliwe.<br>Ale te oczy, te niebieskie oczy.<br>Czasami pojawia się czarna wrona i zjada jej oczy.<br>Te oczy są prawdziwe. A wiem to dlatego, że za każdym razem wkładam jej nowe."
+    },
+    "10": {
+        "name": "Reinkarnacja",
+        "title": "Motyw 5 poziomu",
+        "comment": "To zastanawiające, skąd wziął się europejski dom pośrodku bezdrożnego lasu.<br>Dziewczyna która tu żyła, bardzo rzadko pojawiała się w mieście.<br>Natomiast ostatnio widziałam dziewczynę która była jej córką.<br>Skąd wiem że jest jej córką? Wygląda tak samo jak ona, kiedy jeszcze była młoda."
+    },
+    "11": {
+        "name": "Dwubarwny Motyl Lotosu ~ Czerwień i Biel",
+        "title": "Motyw Unnameds",
+        "comment": "Wygląda na to, że znowu wślizgnęła się tu jakaś podejrzana osoba.<br>Chyba lepiej się tym zająć zanim dotrze do świątyni.<br>Ta dziewczyna.... Nie przypomina ani Youkai ani człowieka."
+    },
+    "12": {
+        "name": "Wieczna kapłanka",
+        "title": "Motyw złego zakończenia",
+        "comment": "Nic się dziś nie wydarzyło.<br>Obiecano mi także, że jutro też nic się nie wydarzy.<br>Nikt tu nie przychodzi. Ani ludzie, ani bogowie.<br>Youkai? A oni akurat przychodzą codziennie"
+    },
+    "13": {
+        "name": "Dziwne, codzienne życie latającej kapłanki", 
+        "title": "Motyw Dobrego Zakończenia",
+        "comment": "Ostatnimi czasy, mnóstwo ludzi narzeka \"To przez tę Magię\"<br>albo \"To przez te Youkaie\" zupełnie bezpodstawnie.<br>Cóż za przykre okoliczności."
+    } 
+}

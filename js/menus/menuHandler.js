@@ -9,6 +9,7 @@ class MenuHandler {
         this.characterSelect = null;
         this.musicRoom = null;
         this.optionsMenu = null;
+        this.stageSelect = null;
         this.isSubmenuActive = false;
         this.ensureMenuElements();
     }
@@ -50,9 +51,14 @@ class MenuHandler {
         if (statsBox) statsBox.style.display = 'flex';
     }
 
-    async switchMenu(newState, gameMode = 'normal') {
+    async switchMenu(newState, gameMode) {
         if (this.inputLocked) return;
-
+    
+        // Activate menu input handler
+        if (window.menuInputHandler) {
+            window.menuInputHandler.activate();
+        }
+    
         // Clean up previous menu
         if (this.currentMenuState === MENU_STATES.MAIN && this.mainMenu?.title) {
             this.mainMenu.title.cleanup();
@@ -72,6 +78,10 @@ class MenuHandler {
         if (this.characterSelect) {
             this.characterSelect.cleanup();
             this.characterSelect = null;
+        }
+        if (this.stageSelect) {
+            this.stageSelect.cleanup();
+            this.stageSelect = null;
         }
                 
         // Prevent re-entrancy during transitions
@@ -102,14 +112,16 @@ class MenuHandler {
                 case MENU_STATES.CHARACTER_SELECT:
                     setMenuBackground('characterSelect');
                     this.difficultySelect = new DifficultySelect(gameMode);
-                    this.characterSelect = new CharacterSelect();
+                    this.characterSelect = new CharacterSelect(gameMode);
+                    if(gameMode === 'practice') {this.stageSelect = new StageSelect();}
+                    await this.characterSelect.ensureDataLoaded(); // Ensure data is loaded
                     await this.difficultySelect.animateIn();
                     break;
                     
                 case MENU_STATES.MUSIC_ROOM:
                     setMenuBackground('musicRoom');
                     this.musicRoom = new MusicRoom();
-                    this.musicRoom.render();
+                    await this.musicRoom.render();
                     break;
     
                 case MENU_STATES.OPTIONS:
@@ -120,6 +132,7 @@ class MenuHandler {
             
         } catch (error) {
             console.error('Menu switch error:', error);
+            errorHandler.handleError(error);
         } finally {
             this.transitioning = false;
             this.inputLocked = false; // Unlock when transition is complete
@@ -142,6 +155,11 @@ class MenuHandler {
                 case MENU_STATES.CHARACTER_SELECT:
                     if (this.difficultySelect && !this.difficultySelect.difficultySelected) {
                         return this.difficultySelect.handleInput();
+                    }
+                    if(this.stageSelect) {
+                        if (this.stageSelect.isActive) {
+                            return this.stageSelect.handleInput();
+                        }
                     }
                     return this.characterSelect?.handleInput?.() || false;
                 case MENU_STATES.MUSIC_ROOM:

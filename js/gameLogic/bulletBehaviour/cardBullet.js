@@ -1,25 +1,60 @@
 class CardBullet {
+    static patterns = {
+        single: [{ xOffset: 0, yOffset: 0 }],
+        double: [
+            { xOffset: -16, yOffset: 0 },
+            { xOffset: 16, yOffset: 0 }
+        ],
+        triple: [
+            { xOffset: -24, yOffset: 0 },
+            { xOffset: 0, yOffset: -10 },
+            { xOffset: 24, yOffset: 0 }
+        ],
+        quad: [
+            { xOffset: -32, yOffset: 0 },
+            { xOffset: -12, yOffset: -10 },
+            { xOffset: 12, yOffset: -10 },
+            { xOffset: 32, yOffset: 0 }
+        ]
+    };
+
     static create(x, y, damage = 10) {
         const suits = ['H', 'D', 'C', 'S'];
         const numbers = Array.from({length: 13}, (_, i) => i + 1);
-        const card = {
-            suit: suits[Math.floor(Math.random() * suits.length)],
-            number: numbers[Math.floor(Math.random() * numbers.length)]
-        };
-        return new CardBullet(x - 16, y - 16, 15, card, damage, 0.4);
+        return new CardBullet({
+            x: x - 16,
+            y: y - 16,
+            speed: 15,
+            card: {
+                suit: suits[Math.floor(Math.random() * suits.length)],
+                number: numbers[Math.floor(Math.random() * numbers.length)]
+            },
+            damage: damage,
+            opacity: 0.4
+        });
     }
 
+    static createPattern(patternName, x, y, damage) {
+        const pattern = CardBullet.patterns[patternName];
+        return pattern ? pattern.map(pos => CardBullet.create(
+            x + pos.xOffset,
+            y + pos.yOffset,
+            damage
+        )) : [];
+    }
 
-    constructor(x, y, speed, card, damage = 10, opacity = 1.0) {
-        this.x = x;
-        this.y = y;
-        this.speed = speed;
-        this.card = card;
-        this.damage = damage;
-        this.opacity = opacity;
-        this.width = 32;
-        this.height = 32;
-        this.image = window.assetLoader?.getImage(`card${card.suit}${card.number}`);
+    constructor(config) {
+        Object.assign(this, {
+            x: config.x,
+            y: config.y,
+            speed: config.speed || 15,
+            card: config.card,
+            damage: config.damage || 10,
+            opacity: config.opacity || 1.0,
+            width: 32,
+            height: 32
+        });
+        this.image = window.assetLoader?.getImage(`card${this.card.suit}${this.card.number}`);
     }
 
     update() {

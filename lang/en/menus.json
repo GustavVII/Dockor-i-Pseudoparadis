@@ -33,6 +33,9 @@
             }
         }
     },
+    "practice": {
+        "selectStage": "Select Stage"
+    },
     "startMenu": {
         "movementRating": "Movement Speed",
         "attackRangeRating": "Attack Range",

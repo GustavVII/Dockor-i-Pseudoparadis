@@ -1,0 +1,14 @@
+{
+    "shotTypes": {
+        "01": "Homing Card",
+        "02": "Star Laser",
+        "03": "Deep Sinker",
+        "04": "Impaling Trident"
+    },
+    "spellcards": {
+        "01": "Spirit Sign: Fantasy Seal",
+        "02": "Love Sign: Master Spark",
+        "03": "Capsize: Sinking Anchor",
+        "04": "Unidentified: UFO Invasion of Terror"
+    }
+}

@@ -8,6 +8,31 @@
         "options": "Opciónes",
         "quit": "Salir"
     },
+    "difficultySelect": {
+    "title": "Selecciona un modo",
+    "difficulties": {
+        "easy": {
+            "name": "Fácil",
+            "description": "Dirigido a los que no son muy buenos en los juegos de disparos"
+        },
+        "normal": {
+            "name": "Normal",
+            "description": "Generalmente dirigido a la mayoría de la gente"
+        },
+        "hard": {
+            "name": "Difícil", 
+            "description": "Dificultad de un juego de disparos promedio"
+        },
+        "lunatic": {
+            "name": "Lunática",
+            "description": "Dificultad para los que son un poco raros"
+        },
+        "extra": {
+            "name": "Extra",
+            "description": "¡Ríndete ya! ¿Estás loco?"
+        }
+    }
+},
     "startMenu": {
         "movementRating": "índice de movimiento",
         "attackRangeRating": "Rango de ataque",

@@ -10,8 +10,9 @@ class GameInputHandler {
             'Z': false,  // Shoot
             'x': false,  // Bomb/Spellcard
             'X': false,  // Bomb/Spellcard
-            ' ': false,  // Alternative shoot
             'Shift': false,
+            'f': false,
+            'F': false,
             '1': false,
             '2': false,
             '3': false,
@@ -22,16 +23,24 @@ class GameInputHandler {
         };
     }
 
+    resetAllKeys() {
+        for (const key in this.keys) {
+            if (key === '+' || key === '-') {
+                this.keys[key] = { pressed: false, handled: false };
+            } else {
+                this.keys[key] = false;
+            }
+        }
+    }
+
     handleKeyDown(e) {
-        if (!gameRunning) return;
+        if (!gameRunning || window.pauseMenuActive) return;
         const key = e.key;
 
         if (key === 'Escape') {
-            if (window.pauseMenuActive) {
-                resumeGame();
-            } else {
-                pauseGame();
-            }
+            window.pauseGame();
+            this.resetAllKeys();
+            return;
         }
 
         if (key in this.keys) {
@@ -75,13 +84,15 @@ class GameInputHandler {
             key === 'z' ||
             key === 'Z' ||
             key === 'x' ||
-            key === 'X') {
+            key === 'X' ||
+            key === 'f' ||
+            key === 'F') {
             e.preventDefault();
         }
     }
 
     handleKeyUp(e) {
-        if (!gameRunning) return;
+        if (!gameRunning || window.pauseMenuActive) return;
         const key = e.key;
 
         if (key === 'Escape') {
@@ -129,6 +140,9 @@ class GameInputHandler {
             decreasePower(1);
             this.keys['-'].handled = true;
         }
+        if (this.keys.f || this.keys.F) {
+            enemyManager.spawnFairy(); // Spawn at random position with random color
+        }
     
         // Focus mode
         if (this.keys.Shift) {
@@ -137,41 +151,100 @@ class GameInputHandler {
             characterManager.setFocusMode(false);
         }
     }
-}
-const gameInputHandler = new GameInputHandler();
-    window.gameInputHandler = gameInputHandler;
 
-    function pauseGame() {
-        if (!gameRunning || window.pauseMenuActive) return;
-        
-        window.pauseMenuActive = true;
-        gameRunning = false;
-        
-        // Pause audio
-        if (window.musicAudio) {
-            window.musicAudio.pause();
+    cleanup() {
+        // Clear all key states
+        for (const key in this.keys) {
+            this.keys[key] = false;
+        }
+
+        // Remove DOM elements
+        if (this.container && this.container.parentNode) {
+            this.container.parentNode.removeChild(this.container);
         }
         
-        // Create and show pause menu
-        window.pauseMenu.create();
-        playSoundEffect(soundEffects.pause);
+        this.container = null;
+        this.isActive = false;
+    }
+}
+
+function pauseGame() {
+    if (!gameRunning || window.pauseMenu) return;
+    
+    window.pauseMenuActive = true;
+    gameRunning = false;
+    menuActive = false;
+    
+    // Pause audio
+    if (window.musicAudio) {
+        window.musicAudio.pause();
     }
     
-    function resumeGame() {
-        if (!window.pauseMenuActive) return;
-        
-        window.pauseMenuActive = false;
-        gameRunning = true;
-        
-        // Resume audio
-        if (window.musicAudio) {
-            window.musicAudio.play();
-        }
-        
-        // Resume game loop
-        lastFrameTime = performance.now();
-        requestAnimationFrame(gameLoop);
+    // Create new pause menu instance
+    window.pauseMenu = new PauseMenu();
+    window.pauseMenu.create();
+    playSoundEffect(soundEffects.pause);
+}
+
+function resumeGame() {
+    if (!window.pauseMenuActive || !window.pauseMenu) return;
+    
+    window.pauseMenuActive = false;
+    gameRunning = true;
+    menuActive = false;
+    
+    // Clean up pause menu
+    window.pauseMenu.cleanup();
+    window.pauseMenu = null;
+    
+    // Resume audio
+    if (window.musicAudio) {
+        window.musicAudio.play();
     }
     
-    window.pauseGame = pauseGame;
-    window.resumeGame = resumeGame;
+    // Resume game loop
+    lastFrameTime = performance.now();
+    requestAnimationFrame(gameLoop);
+}
+
+function quitToMenu() {
+    // Clean up pause menu first
+    if (window.pauseMenu) {
+        window.pauseMenu.cleanup();
+        window.pauseMenu = null;
+    }
+
+    // Reset states
+    window.pauseMenuActive = false;
+    gameRunning = false;
+    window.menuActive = true;
+
+    // Clean up game elements
+    const canvasContainer = document.querySelector('.canvas-container');
+    if (canvasContainer) canvasContainer.remove();
+    
+    const statsDisplay = document.getElementById('playerStatsDisplay');
+    if (statsDisplay) statsDisplay.remove();
+    
+    // Reset input states
+    if (window.gameInputHandler && typeof window.gameInputHandler.resetAllKeys === 'function') {
+        window.gameInputHandler.resetAllKeys();
+    }
+    if (window.menuInputHandler && typeof window.menuInputHandler.resetAllKeys === 'function') {
+        window.menuInputHandler.resetAllKeys();
+    }
+
+    // Return to main menu
+    if (window.menuHandler) {
+        window.menuHandler.showMenu();
+        window.menuHandler.switchMenu(MENU_STATES.MAIN);
+        undeclareGameManagers();
+        startMenuLoop();
+    }
+
+    menuActive = true
+}
+
+window.pauseGame = pauseGame;
+window.resumeGame = resumeGame;
+window.quitToMenu = quitToMenu;

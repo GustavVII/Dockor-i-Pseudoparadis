@@ -1,0 +1,60 @@
+.stage-select-container {
+    position: absolute;
+    top: 10%;
+    right: 0;
+    width: 45%;
+    height: 100%;
+    display: none;
+    flex-direction: column;
+    padding: 20px;
+    box-sizing: border-box;
+    overflow-y: auto;
+    z-index: 20;
+    transform: translateX(100%);
+    transition: transform 0.5s ease;
+}
+
+.stage-select-button {
+    background: -webkit-linear-gradient(lightblue, white, LightSteelBlue, dimgrey, black);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-family: monospace;
+    font-size: 30px;
+    font-weight: bold;
+    padding: 8px 16px;
+    margin: 5px 0;
+    text-align: center;
+    transition: all 0.2s ease;
+    opacity: 0.5;
+}
+
+.stage-select-button.selected {
+    opacity: 1;
+}
+
+.stage-select-button:not(.locked) {
+    cursor: pointer;
+}
+
+.stage-select-button:not(.locked):hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: #666;
+}
+
+.stage-select-button.locked {
+    color: #555;
+}
+
+.stage-select-cancel {
+    color: #f88;
+    margin-top: 20px;
+    padding: 8px 16px;
+    border: 1px solid #f88;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: center;
+}
+
+.stage-select-cancel:hover {
+    background: rgba(255, 100, 100, 0.1);
+}

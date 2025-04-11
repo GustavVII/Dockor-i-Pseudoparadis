@@ -1,24 +1,26 @@
 class MusicRoom {
     constructor() {
-        this.tracks = [];
+        this.tracks = this.generateTrackData();
         this.selectedTrack = 0;
         this.currentlyPlaying = 0;
-        this.loadTrackData();
         this.forceShowComment = true;
         this.container = null;
     }
 
-    loadTrackData() {
-        this.tracks = musicData.tracks.map(track => {
-            return {
-                id: track.ID,
-                name: languageManager.getText(`music.${track.ID}.name`) || `Track ${track.ID}`,
-                title: languageManager.getText(`music.${track.ID}.title`) || "",
-                comment: languageManager.getText(`music.${track.ID}.comment`) || "",
-                audioPath: `assets/music/DiPP_${track.ID}.mp3`
-            };
-        });
-        this.tracks.sort((a, b) => parseInt(a.id) - parseInt(b.id));
+    generateTrackData() {
+        const tracks = [];
+        // Assuming you have tracks from 01 to 13 based on your original JSON
+        for (let i = 1; i <= 13; i++) {
+            const trackId = i.toString().padStart(2, '0'); // Formats as '01', '02', etc.
+            tracks.push({
+                id: trackId,
+                name: languageManager.getText(`music.${trackId}.name`) || `Track ${trackId}`,
+                title: languageManager.getText(`music.${trackId}.title`) || "",
+                comment: languageManager.getText(`music.${trackId}.comment`) || "",
+                audioPath: `assets/music/DiPP_${trackId}.mp3`
+            });
+        }
+        return tracks;
     }
 
     render() {
@@ -35,10 +37,6 @@ class MusicRoom {
                         <div class="track-list"></div>
                     </div>
                     <div class="now-playing"></div>
-                </div>
-                <div class="music-room-instructions">
-                    <div>${languageManager.getText('menus.musicRoomMenu.instructions.Z')}</div>
-                    <div>${languageManager.getText('menus.musicRoomMenu.instructions.X')}</div>
                 </div>
             `;
             
@@ -139,15 +137,24 @@ class MusicRoom {
     }
 
     playSelectedTrack() {
+        if (this.tracks.length === 0) return;
+        
+        // Ensure selectedTrack is within bounds
+        if (this.selectedTrack < 0 || this.selectedTrack >= this.tracks.length) {
+            this.selectedTrack = 0;
+        }
+    
         this.stopCurrentTrack();
         
         const track = this.tracks[this.selectedTrack];
+        if (!track) return;
+        
         this.currentlyPlaying = this.selectedTrack;
         
         // Play the track
         window.playMusic(track.audioPath);
         
-        // Update the display without full re-render
+        // Update the display
         this.updateNowPlaying();
         this.updateTrackSelection();
     }
@@ -173,10 +180,19 @@ class MusicRoom {
 
     updateNowPlaying() {
         const nowPlaying = document.querySelector('.now-playing');
-        if (!nowPlaying) return;
+        if (!nowPlaying || this.tracks.length === 0) return;
         
+        // Ensure currentlyPlaying is within bounds
+        if (this.currentlyPlaying < 0 || this.currentlyPlaying >= this.tracks.length) {
+            this.currentlyPlaying = 0;
+        }
+    
         const currentTrack = this.tracks[this.currentlyPlaying];
-        const commentLines = currentTrack.comment ? currentTrack.comment.split('<br>') : [];
+        if (!currentTrack) return;
+    
+        // Safely handle comment
+        const comment = currentTrack.comment || "";
+        const commentLines = comment.split('<br>');
         const commentHTML = commentLines.map(line => 
             `<div class="comment-line">${line}</div>`
         ).join('');

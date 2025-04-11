@@ -1,7 +1,8 @@
 class CharacterSelect {
-    constructor() {
+    constructor(gameMode) {
+        this.gameMode = gameMode;
         this.currentCharacterIndex = 0;
-        this.characters = characterData.characters;
+        this.characters = []; // Initialize as empty array
         this.transitionState = {
             active: false,
             direction: null,
@@ -10,6 +11,34 @@ class CharacterSelect {
         this.container = null;
         this.isAnimatingIn = false;
         this.isAnimatingOut = false;
+        this.isLoading = false;
+        this.isInitialized = false;
+    }
+
+    async loadCharacterData() {
+        this.isLoading = true;
+        try {
+            // Load the JSON file
+            const response = await fetch('data/characters.json');
+            if (!response.ok) {
+                throw new Error('Failed to load character data');
+            }
+            const characterData = await response.json();
+            this.characters = characterData.characters;
+        } catch (error) {
+            console.error('Error loading character data:', error);
+            // Fallback to empty array if loading fails
+            this.characters = [];
+        } finally {
+            this.isLoading = false;
+        }
+    }
+
+    async ensureDataLoaded() {
+        if (this.characters.length === 0 && !this.isLoading && !this.isInitialized) {
+            await this.loadCharacterData();
+            this.isInitialized = true;
+        }
     }
 
     createStatRow = (container, label, rating) => {
@@ -36,20 +65,11 @@ class CharacterSelect {
         container.appendChild(row);
     }
 
-    render() {
+    async render() {
+        await this.ensureDataLoaded();
+        
         const container = this.ensureContainer();
-        // Create container if it doesn't exist
-        if (!this.container) {
-            this.container = document.createElement('div');
-            this.container.id = 'characterSelectContainer';
-            this.container.className = 'character-select-container';
-            document.querySelector('.container').appendChild(this.container);
-            
-            // Set initial position for entrance animation
-            this.container.style.transform = 'translateX(100%)';
-            this.container.style.opacity = '0';
-        }
-
+        
         // Only clear container if not animating
         if (!this.transitionState.active && !this.isAnimatingIn) {
             container.innerHTML = '';
@@ -58,17 +78,6 @@ class CharacterSelect {
         const currentCharacter = this.characters[this.currentCharacterIndex];
         if (!currentCharacter) return;
         
-        // Add instructions if not in transition
-        if (!this.transitionState.active && !this.isAnimatingIn) {
-            const instructions = document.createElement('div');
-            instructions.className = 'character-select-instructions';
-            instructions.innerHTML = `
-                <div>${languageManager.getText('menus.startMenu.instructions.Z')}</div>
-                <div>${languageManager.getText('menus.startMenu.instructions.X')}</div>
-            `;
-            this.container.appendChild(instructions);
-        }
-    
         if (this.transitionState.active) {
             // ... (keep existing transition logic)
         } else if (this.isAnimatingIn) {
@@ -214,20 +223,15 @@ class CharacterSelect {
         }
         
         if (window.menuInputHandler.isKeyPressed('z') || window.menuInputHandler.isKeyPressed('Z')) {
+            if (menuHandler.characterSelect.gameMode === 'practice') {
+                menuHandler.stageSelect.show();
+                this.animateToLeft();
+            } else {
+                const selectedCharacterId = this.characters[this.currentCharacterIndex].id;
+                window.startGame(selectedCharacterId);
+            }
             playSoundEffect(soundEffects.ok);
-            
-            // Hide both menu containers before starting game
-            if (this.container) {
-                this.container.style.display = 'none';
-            }
-            if (window.menuHandler.difficultySelect?.container) {
-                window.menuHandler.difficultySelect.container.style.display = 'none';
-            }
-            
-            const selectedCharacterId = this.characters[this.currentCharacterIndex].id;
-            window.startGame(selectedCharacterId);
-            
-            return true;
+            return false;
         }
         
         if (window.menuInputHandler.isKeyPressed('x') || window.menuInputHandler.isKeyPressed('X')) {
@@ -350,5 +354,25 @@ class CharacterSelect {
             this.container.remove();
         }
         this.container = null;
+    }
+
+    async animateToLeft() {
+        if (!this.container) return;
+        
+        return new Promise(resolve => {
+            this.container.style.transition = 'transform 0.5s ease';
+            this.container.style.transform = 'translateX(-70%)';
+            setTimeout(resolve, 500);
+        });
+    }
+
+    async animateFromLeft() {
+        if (!this.container) return;
+        
+        return new Promise(resolve => {
+            this.container.style.transition = 'transform 0.5s ease';
+            this.container.style.transform = 'translateX(0)';
+            setTimeout(resolve, 500);
+        });
     }
 }

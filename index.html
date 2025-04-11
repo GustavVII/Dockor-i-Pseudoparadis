@@ -1,150 +1,145 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dolls in Pseudo Paradise</title>
-    <link rel="icon" type="image/x-icon" href="assets/graphics/favicon.ico">
-    <link rel="stylesheet" href="css/common.css">
-    <link rel="stylesheet" href="css/loading.css">
-    <link rel="stylesheet" href="css/playerStatsDisplay.css">
-    <link rel="stylesheet" href="css/menu.css">
-    <link rel="stylesheet" href="css/menu.difficulty.css">
-    <link rel="stylesheet" href="css/menu.characterSelect.css">
-    <link rel="stylesheet" href="css/menu.musicRoom.css">
-    <link rel="stylesheet" href="css/menu.options.css">
-    <link rel="stylesheet" href="css/menu.title.css">
-    <link rel="stylesheet" href="css/canvas.css">
-    <link rel="stylesheet" href="css/background.css">
-</head>
-<body>
-    <div class="container" width="960" height="720"></div>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Dolls in Pseudo Paradise</title>
+        <link rel="icon" type="image/x-icon" href="assets/graphics/favicon.ico">
+        <link rel="stylesheet" href="css/common.css">
+        <link rel="stylesheet" href="css/loading.css">
+        <link rel="stylesheet" href="css/playerStatsDisplay.css">
+        <link rel="stylesheet" href="css/menu.css">
+        <link rel="stylesheet" href="css/menu.difficulty.css">
+        <link rel="stylesheet" href="css/menu.characterSelect.css">
+        <link rel="stylesheet" href="css/menu.musicRoom.css">
+        <link rel="stylesheet" href="css/menu.options.css">
+        <link rel="stylesheet" href="css/menu.title.css">
+        <link rel="stylesheet" href="css/menu.pause.css">
+        <link rel="stylesheet" href="css/menu.practice.css">
+        <link rel="stylesheet" href="css/canvas.css">
+        <link rel="stylesheet" href="css/background.css">
+    </head>
+    <body>
+        <div class="container" width="960" height="720"></div>
 
-    <!--skript för hyperglobala konstanter och variablar-->
-    <script>
-        const targetFPS = 60;
-        const frameTime = 1000 / targetFPS;
+        <!--skript för hyperglobala konstanter och variablar-->
+        <script>
+            const targetFPS = 60;
+            const frameTime = 1000 / targetFPS;
 
-        let gameRunning = false;
-        let menuActive = true;
-        let pauseMenuActive = false;
+            let gameRunning = false;
+            let menuActive = true;
+            let pauseMenuActive = false;
+            let pauseMenu = null;
+            window.pauseMenuActive = pauseMenuActive;
+            window.menuActive = menuActive;
 
-        const MENU_STATES = {
-            MAIN: 0,
-            OPTIONS: 1,
-            CHARACTER_SELECT: 2,
-            MUSIC_ROOM: 3
-        };
+            const MENU_STATES = {
+                MAIN: 0,
+                OPTIONS: 1,
+                CHARACTER_SELECT: 2,
+                MUSIC_ROOM: 3
+            };
 
-        let lastTime = 0;
-        let deltaTime = 0;
-        let lastFrameTime = Date.now();
-        let accumulatedTime = 0;
+            let lastTime = 0;
+            let deltaTime = 0;
+            let lastFrameTime = Date.now();
+            let accumulatedTime = 0;
 
-        let sfxVolume = parseFloat(localStorage.getItem('sfxVolume'));
-        let musicVolume = parseFloat(localStorage.getItem('musicVolume'));
+            let sfxVolume = parseFloat(localStorage.getItem('sfxVolume'));
+            let musicVolume = parseFloat(localStorage.getItem('musicVolume'));
 
-        let musicAudio = null;
-    </script>
+            let musicAudio = null;
+        </script>
 
-    <script>
-        // Create a persistent error handler object
-        const errorHandler = {
-            lastErrorTime: 0,
-            cooldown: 5000, // 5 seconds in milliseconds
-            
-            handleError: function(error) {
-                console.error(error); // Always log the error
+        <script>
+            // Create a persistent error handler object
+            const errorHandler = {
+                lastErrorTime: 0,
+                cooldown: 5000, // 5 seconds in milliseconds
                 
-                const now = Date.now();
-                if (now - this.lastErrorTime > this.cooldown) {
-                    this.lastErrorTime = now;
-                    try {
-                        // Play error sound if available
-                        window.playSoundEffect(soundEffects.invalid);
-                        
-                        // Visual feedback
-                        const errorIndicator = document.createElement('div');
-                        errorIndicator.style.position = 'fixed';
-                        errorIndicator.style.bottom = '10px';
-                        errorIndicator.style.right = '10px';
-                        errorIndicator.style.background = 'red';
-                        errorIndicator.style.color = 'white';
-                        errorIndicator.style.padding = '10px';
-                        errorIndicator.style.borderRadius = '5px';
-                        errorIndicator.style.zIndex = '9999';
-                        errorIndicator.textContent = '⚠️ Error occurred (check console)';
-                        document.body.appendChild(errorIndicator);
-                        setTimeout(() => errorIndicator.remove(), 3000);
-                    } catch (soundError) {
-                        console.error('Failed to handle error:', soundError);
+                handleError: function(error) {
+                    console.error(error); // Always log the error
+                    
+                    const now = Date.now();
+                    if (now - this.lastErrorTime > this.cooldown) {
+                        this.lastErrorTime = now;
+                        try {
+                            // Play error sound if available
+                            window.playSoundEffect(soundEffects.invalid);
+                            
+                            // Visual feedback
+                            const errorIndicator = document.createElement('div');
+                            errorIndicator.style.position = 'fixed';
+                            errorIndicator.style.bottom = '10px';
+                            errorIndicator.style.right = '10px';
+                            errorIndicator.style.background = 'red';
+                            errorIndicator.style.color = 'white';
+                            errorIndicator.style.padding = '10px';
+                            errorIndicator.style.borderRadius = '5px';
+                            errorIndicator.style.zIndex = '9999';
+                            errorIndicator.textContent = '⚠️ Error occurred (check console)';
+                            document.body.appendChild(errorIndicator);
+                            setTimeout(() => errorIndicator.remove(), 3000);
+                        } catch (soundError) {
+                            console.error('Failed to handle error:', soundError);
+                        }
                     }
                 }
-            }
-        };
+            };
 
-        // Set up global error handlers
-        window.addEventListener('error', (event) => {
-            errorHandler.handleError(event.error || event.message);
-            return false; // Prevent default browser error handling
-        });
+            // Set up global error handlers
+            window.addEventListener('error', (event) => {
+                errorHandler.handleError(event.error || event.message);
+                return false; // Prevent default browser error handling
+            });
+            
+            window.addEventListener('unhandledrejection', (event) => {
+                errorHandler.handleError(event.reason);
+            });
+
+            // Expose globally for manual error reporting
+            window.errorHandler = errorHandler;
+            
+        </script>
+
+        <script src="lang/languageManager.js"></script>
+
+        <script src="js/backgroundHandlers/gameInputHandler.js"></script>
+        <script src="js/backgroundHandlers/soundHandler.js"></script>
+        <script src="js/backgroundHandlers/spellcardHandler.js"></script>
         
-        window.addEventListener('unhandledrejection', (event) => {
-            errorHandler.handleError(event.reason);
-        });
+        <script src="js/menus/playerStatsDisplay.js"></script>
+        <script src="js/menus/mainMenu.js"></script>
+        <script src="js/menus/difficulty.js"></script>
+        <script src="js/menus/characterSelect.js"></script>
+        <script src="js/menus/musicRoom.js"></script>
+        <script src="js/menus/optionsMenu.js"></script>
+        <script src="js/menus/menuHandler.js"></script>
+        <script src="js/menus/menuInputHandler.js"></script>
+        <script src="js/menus/title.js"></script>
+        <script src="js/menus/pauseMenu.js"></script>
+        <script src="js/menus/stageSelect.js"></script>
 
-        // Expose globally for manual error reporting
-        window.errorHandler = errorHandler;
+        <script src="js/enemyManager.js"></script>
+        <script src="js/stageManager.js"></script>
+
+        <script src="js/enemies/fairy.js"></script>
         
-    </script>
-
-    <script src="data/characterData.js"></script>
-    <script src="data/shottypeData.js"></script>
-    <script src="data/spellcardData.js"></script>
-    <script src="data/musicData.js"></script>
-    
-    <script src="data/stages/stage1/stage1Data.js"></script>
-    <script src="data/stages/stage1/phases/stage1Phase1Data.js"></script>
-    
-    <script src="js/managers/languageManager.js"></script>
-
-    <script src="js/backgroundHandlers/gameInputHandler.js"></script>
-    <script src="js/backgroundHandlers/soundHandler.js"></script>
-    <script src="js/backgroundHandlers/stageHandler.js"></script>
-    <script src="js/backgroundHandlers/spellcardHandler.js"></script>
-    
-    <script src="js/menus/playerStatsDisplay.js"></script>
-    <script src="js/menus/mainMenu.js"></script>
-    <script src="js/menus/difficulty.js"></script>
-    <script src="js/menus/characterSelect.js"></script>
-    <script src="js/menus/musicRoom.js"></script>
-    <script src="js/menus/optionsMenu.js"></script>
-    <script src="js/menus/menuHandler.js"></script>
-    <script src="js/menus/menuInputHandler.js"></script>
-    <script src="js/menus/title.js"></script>
-    <script src="js/menus/pauseMenu.js"></script>
-    
-    <script src="js/rendering/card.js"></script>
-    <script src="js/rendering/spawners.js"></script>
-    <script src="js/rendering/portrait.js"></script>
-    <script src="js/rendering/textbar.js"></script>
-    <script src="js/rendering/bullet.js"></script>
-    <script src="js/rendering/laserRenderer.js"></script>
+        <script src="js/gameLogic/bulletBehaviour/cardBullet.js"></script>
+        <script src="js/gameLogic/bulletBehaviour/homingCardBullet.js"></script>
+        <script src="js/gameLogic/bulletBehaviour/starBullet.js"></script>
+        <script src="js/gameLogic/bulletBehaviour/bulletManager.js"></script>
         
-    <script src="js/gameLogic/bulletBehaviour/cardBullet.js"></script>
-    <script src="js/gameLogic/bulletBehaviour/starBullet.js"></script>
-    <script src="js/gameLogic/bulletBehaviour/laserBullet.js"></script>
-    <script src="js/gameLogic/bulletBehaviour/bulletManager.js"></script>
-    
-    <script src="js/gameLogic/characterManager.js"></script>
-    <script src="js/gameLogic/shottype.js"></script>
-    <script src="js/gameLogic/spellcard.js"></script>
+        <script src="js/gameLogic/characterManager.js"></script>
+        <script src="js/gameLogic/shottype.js"></script>
+        <script src="js/gameLogic/spellcard.js"></script>
 
-    <script src="js/loops/startMenuLoop.js"></script>
-    <script src="js/loops/gameloop.js"></script>
-    
-    <script src="js/loaders/assetLoad.js"></script>
-    <script src="js/loaders/declareManagers.js"></script>
-    <script src="js/loaders/init.js"></script>
-</body>
+        <script src="js/loops/startMenuLoop.js"></script>
+        <script src="js/loops/gameloop.js"></script>
+        
+        <script src="js/loaders/assetLoad.js"></script>
+        <script src="js/loaders/declareManagers.js"></script>
+        <script src="js/loaders/init.js"></script>
+    </body>
 </html>

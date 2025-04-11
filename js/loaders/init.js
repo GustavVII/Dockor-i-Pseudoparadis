@@ -11,8 +11,30 @@ async function init() {
     // Create all necessary elements
     createLoadingScreen();
     createBackground();
-    createGameElements();
+    createVignette();
+    setMenuBackground('loadingBackground');
     
+    const loadingContainer = document.createElement('div');
+    loadingContainer.className = 'loading-indicator-container';
+    
+    // Create spinner element
+    const spinner = document.createElement('img');
+    spinner.className = 'loading-spinner';
+    spinner.src = 'assets/graphics/loading.png';
+    spinner.alt = 'Loading';
+    
+    // Create text element
+    const text = document.createElement('div');
+    text.className = 'loading-text';
+    text.textContent = 'Loading...';
+    
+    // Add elements to container
+    loadingContainer.appendChild(spinner);
+    loadingContainer.appendChild(text);
+    
+    // Add container to the main container
+    const mainContainer = document.querySelector('.container');
+    mainContainer.appendChild(loadingContainer);
     
     // Show loading screen
     const loadingScreen = document.getElementById('loadingScreen');
@@ -45,37 +67,15 @@ async function init() {
     await languageManager.init();
     await declareMenuManagers();
     await loadAllAssets();
+    setupInputHandlers();
 
     // Initial UI update
     updatePlayerStatsDisplay();
 
-    // Set up input handlers
-    window.addEventListener('keydown', (e) => {
-        if (menuActive) {
-            if (typeof handleMenuKeyDown === 'function') {
-                handleMenuKeyDown(e);
-            }
-        } else {
-            if (typeof handleKeyDown === 'function') {
-                handleKeyDown(e);
-            }
-        }
-    });
-    
-    window.addEventListener('keyup', (e) => {
-        if (menuActive) {
-            if (typeof handleMenuKeyUp === 'function') {
-                handleMenuKeyUp(e);
-            }
-        } else {
-            if (typeof handleKeyUp === 'function') {
-                handleKeyUp(e);
-            }
-        }
-    });
-
     // Complete initialization
     setTimeout(async () => {
+        loadingContainer.remove();
+        
         loadingScreen.style.display = 'none';
         playMusic('assets/music/DiPP_01.mp3');
         
@@ -145,18 +145,6 @@ function createLoadingScreen() {
     loadingScreen.style.padding = '0';
     loadingScreen.style.overflow = 'hidden';
 
-    const img = document.createElement('img');
-    img.src = 'assets/graphics/backgrounds/loadingBackground.png';
-    img.alt = 'Loading...';
-    img.style.width = '100%';
-    img.style.height = '100%';
-    img.style.objectFit = 'cover';
-    img.style.display = 'block';
-    img.style.margin = '0';
-    img.style.padding = '0';
-    img.style.pointerEvents = 'none';
-
-    loadingScreen.appendChild(img);
     container.appendChild(loadingScreen);
 }
 
@@ -167,6 +155,15 @@ function createBackground() {
     const background = document.createElement('div');
     background.id = 'background';
     container.appendChild(background);
+}
+
+function createVignette() {
+    const container = document.querySelector('.container');
+    if (!container || container.querySelector('#vignette')) return;
+
+    const vignette = document.createElement('div');
+    vignette.id = 'vignette';
+    container.appendChild(vignette);
 }
 
 function createGameElements() {
@@ -197,9 +194,47 @@ function createGameElements() {
     }
 }
 
+// Set up input handlers
+function setupInputHandlers() {
+    window.addEventListener('keydown', (e) => {
+        if (window.pauseMenuActive && window.pauseMenu) {
+            window.pauseMenu.handleKeyDown(e);
+            // Prevent other handlers from processing
+            e.preventDefault();
+            e.stopPropagation();
+        } else if (menuActive) {
+            if (typeof handleMenuKeyDown === 'function') {
+                handleMenuKeyDown(e);
+            }
+        } else {
+            if (typeof handleKeyDown === 'function') {
+                handleKeyDown(e);
+            }
+        }
+    });
+    
+    window.addEventListener('keyup', (e) => {
+        if (window.pauseMenuActive && window.pauseMenu) {
+            window.pauseMenu.handleKeyUp(e);
+            // Prevent other handlers from processing
+            e.preventDefault();
+            e.stopPropagation();
+        } else if (menuActive) {
+            if (typeof handleMenuKeyUp === 'function') {
+                handleMenuKeyUp(e);
+            }
+        } else {
+            if (typeof handleKeyUp === 'function') {
+                handleKeyUp(e);
+            }
+        }
+    });
+}
 
 async function startGame(characterId) {
     if (window.menuHandler.inputLocked) return;
+
+    stopGameMusic()
     
     // Create canvas and container here
     const container = document.querySelector('.container');
@@ -224,6 +259,7 @@ async function startGame(characterId) {
     menuActive = false;
     gameRunning = true;
     window.pauseMenuActive = false;
+    window.pauseMenu = null;
     
     // Clean up menu elements
     if (window.menuHandler.difficultySelect) {
@@ -235,7 +271,9 @@ async function startGame(characterId) {
         window.menuHandler.characterSelect = null;
     }
 
+    createGameElements();
     await declareGameManagers();
+    await window.shotTypeManager.loadShotTypes();
     
     document.getElementById('menuBox').style.display = 'none';
     document.getElementById('canvas').style.display = 'block';
@@ -245,13 +283,56 @@ async function startGame(characterId) {
     await initializeGameSystems();
     
     characterManager.setCharacter(characterId);
-    
-    lastFrameTime = performance.now();
-    accumulatedTime = 0;
-    
-    gameLoop();
-    
-    console.log("Game started with character:", characterId);
+
+    const gameMode = window.menuHandler?.difficultySelect?.gameMode || 'normal';
+    const difficulty = window.menuHandler?.difficultySelect?.difficulties?.[
+        window.menuHandler.difficultySelect.selectedIndex
+    ]?.id || 'normal';
+
+    // Determine stage to load
+    let stageId;
+    if (gameMode === 'practice' || gameMode === 'extra') {
+        stageId = window.stageManager.selectedPracticeStage || 1;
+    } else {
+        stageId = 1; // Start from stage 1 in normal mode
+    }
+
+    // Hide menu elements
+    document.getElementById('menuBox').style.display = 'none';
+    document.getElementById('canvas').style.display = 'block';
+    document.getElementById('playerStatsDisplay').style.display = 'flex';
+
+    try {
+        // Load the stage
+        const loaded = await window.stageManager.loadStage(
+            stageId,
+            gameMode,
+            difficulty
+        );
+
+        if (!loaded) {
+            console.error('Failed to load stage');
+            return;
+        }
+
+        // Initialize game systems
+        await initializeGameSystems();
+
+        // Set character
+        characterManager.setCharacter(characterId);
+
+        // Start game loop
+        lastFrameTime = performance.now();
+        accumulatedTime = 0;
+        gameLoop();
+
+        console.log("Game started with character:", characterId);
+    } catch (error) {
+        console.error("Error starting game:", error);
+        errorHandler.handleError(error);
+        // Fallback to menu if game fails to start
+        window.quitToMenu();
+    }
 }
 
 function setMenuBackground(backgroundName) {

@@ -1,0 +1,42 @@
+[
+    {
+        "id": "1",
+        "name": "Phantasmagoria of Flower View",
+        "stageTheme": "02",
+        "bossTheme": "03",
+        "path": "stage1/stage1.json"
+    },
+    {
+        "id": "2", 
+        "name": "Ghostly Field Club",
+        "stageTheme": "02",
+        "bossTheme": "03",
+        "path": "stage2/stage2.json"
+    },
+    {
+        "id": "3",
+        "name": "Desire Drive",
+        "stageTheme": "02",
+        "bossTheme": "03",
+        "path": "stage3/stage3.json"
+    },
+    {
+        "id": "4",
+        "name": "Desire Drive",
+        "stageTheme": "02",
+        "bossTheme": "03",
+        "path": "stage3/stage3.json"
+    },
+    {
+        "id": "5",
+        "name": "Dichromatic Unnamed Pair",
+        "stageTheme": "02",
+        "bossTheme": "03",
+        "path": "stage3/stage3.json"
+    },
+    {
+        "id": "extra",
+        "name": "Extra Stage",
+        "path": "stageEx/stageEx.json"
+    }
+]

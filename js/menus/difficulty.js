@@ -1,5 +1,5 @@
 class DifficultySelect {
-    constructor(gameMode = 'normal') {
+    constructor(gameMode) {
         this.gameMode = gameMode;
         
         this.allDifficulties = [
@@ -174,9 +174,15 @@ class DifficultySelect {
         const title = this.container.querySelector('.difficulty-title');
         const selectedButton = this.buttons[this.selectedIndex];
         
+        // Add null check for selectedButton
         if (!selectedButton) {
             window.menuHandler.inputLocked = false;
             return;
+        }
+    
+        // Ensure character data is loaded before proceeding
+        if (window.menuHandler.characterSelect && !window.menuHandler.characterSelect.isInitialized) {
+            await window.menuHandler.characterSelect.ensureDataLoaded();
         }
     
         try {
@@ -211,7 +217,7 @@ class DifficultySelect {
             
             // 3. Prepare character select menu (hidden at first)
             if (window.menuHandler.characterSelect) {
-                window.menuHandler.characterSelect.render();
+                await window.menuHandler.characterSelect.render();
                 window.menuHandler.characterSelect.container.style.transform = 'translateX(100%)';
                 window.menuHandler.characterSelect.container.style.opacity = '0';
                 window.menuHandler.characterSelect.container.style.display = 'flex';
@@ -227,7 +233,7 @@ class DifficultySelect {
             await Promise.all([
                 // Animate clone to corner
                 new Promise(resolve => {
-                    this.clone.style.left = '30px';
+                    this.clone.style.left = '100px';
                     this.clone.style.top = `calc(100% - 150px)`;
                     this.clone.style.opacity = '0.8';
                     setTimeout(resolve, 500);
@@ -249,6 +255,9 @@ class DifficultySelect {
                 // Animate character select in
                 window.menuHandler.characterSelect?.animateIn()
             ]);
+        } catch (error) {
+            console.error('Error during animateSelection:', error);
+            errorHandler.handleError(error);
         } finally {
             window.menuHandler.inputLocked = false; // Unlock when done
         }
@@ -360,10 +369,61 @@ class DifficultySelect {
         
         if (window.menuInputHandler.isKeyPressed('x') || window.menuInputHandler.isKeyPressed('X')) {
             playSoundEffect(soundEffects.cancel);
-            await this.animateOut();
+            this.animateOut();
+            await this.fadeToBlack();
             window.menuHandler.switchMenu(MENU_STATES.MAIN);
             return false;
         }
+    }
+
+    async fadeToBlack() {
+        return new Promise((resolve) => {
+            // Create black overlay
+            this.blackOverlay = document.createElement('div');
+            Object.assign(this.blackOverlay.style, {
+                position: 'fixed',
+                top: '0',
+                left: '0',
+                width: '100%',
+                height: '100%',
+                backgroundColor: 'black',
+                zIndex: '9999',
+                opacity: '0',
+                pointerEvents: 'none',
+                transition: 'opacity 1s ease-out'
+            });
+
+            // Add to container
+            const container = document.querySelector('.container');
+            if (container) {
+                container.appendChild(this.blackOverlay);
+            } else {
+                document.body.appendChild(this.blackOverlay);
+            }
+
+            // Force layout
+            this.blackOverlay.getBoundingClientRect();
+
+            // Start fade in
+            this.blackOverlay.style.opacity = '1';
+
+            const overlayElement = this.blackOverlay;
+
+            // Remove after animation and resolve
+            const onComplete = () => {
+                if (overlayElement && overlayElement.parentNode) {
+                    overlayElement.removeEventListener('transitionend', onComplete);
+                    overlayElement.remove();
+                }
+                this.blackOverlay = null;
+                resolve();
+            };
+
+            this.blackOverlay.addEventListener('transitionend', onComplete);
+            
+            // Fallback
+            setTimeout(onComplete, 1100);
+        });
     }
 
     cleanup() {

@@ -1,6 +1,6 @@
 #background {
   position: absolute;
-  opacity: 0.4;
+  opacity: 0.6;
   top: 0;
   left: 0;
   width: 100%;
@@ -8,5 +8,18 @@
   background-image: var(--menu-bg, url(''));
   background-size: cover;
   background-position: center;
-  z-index: -1;
+  z-index: -2;
+}
+
+#vignette {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: var(--menu-bg, url('../assets/graphics/backgrounds/vignetteGrain.png'));
+  background-size: cover;
+  background-position: center;
+  mix-blend-mode: multiply;
+  z-index: 99999;
 }

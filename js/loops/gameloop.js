@@ -1,5 +1,5 @@
-function gameLoop(currentTime) {
-    if (window.pauseMenuActive) return; // Don't run game logic when paused
+async function gameLoop(currentTime) {
+    if (window.pauseMenuActive) return;
     
     deltaTime = currentTime - lastTime;
 
@@ -7,21 +7,25 @@ function gameLoop(currentTime) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
         // Update systems
-        if (!window.pauseMenuActive) { // Only handle input when not paused
-            gameInputHandler.handleInput();
-            characterManager.handleMovement();
-            characterManager.updateCursor();
-            shotTypeManager.update();
-            bulletManager.update();
-        }
+        gameInputHandler.handleInput();
+        characterManager.handleMovement();
+        characterManager.updateCursor();
+        shotTypeManager.update();
+        enemyManager.update(deltaTime);
+        bulletManager.update();
 
         // Render everything
-        characterManager.renderCursor();
+        //renderBackground();
+        enemyManager.render(ctx);
         bulletManager.render(ctx);
-        spawnerManager.renderSpawners(ctx, characterManager.cursor, shotTypeManager.power);
+        characterManager.renderCursor();
         updatePlayerStatsDisplay();
 
         lastTime = currentTime;
+
+        /*if (stageIsComplete) {
+            await window.stageManager.onStageComplete();
+        }*/
     }
 
     requestAnimationFrame(gameLoop);

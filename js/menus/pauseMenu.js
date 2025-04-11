@@ -5,6 +5,16 @@ class PauseMenu {
         this.selectedIndex = 0;
         this.confirmingQuit = false;
         this.isActive = false;
+        this.inputLocked = false;
+        this.keys = {
+            'ArrowUp': false,
+            'ArrowDown': false,
+            'z': false,
+            'Z': false,
+            'x': false,
+            'X': false,
+            'Escape': false
+        };
     }
 
     create() {
@@ -12,10 +22,6 @@ class PauseMenu {
         
         this.container = document.createElement('div');
         this.container.className = 'pause-menu-container';
-        
-        // Create overlay
-        const overlay = document.createElement('div');
-        overlay.className = 'pause-menu-overlay';
         
         // Create menu content
         const menuContent = document.createElement('div');
@@ -49,11 +55,23 @@ class PauseMenu {
         );
         
         menuContent.append(title, buttonContainer);
-        this.container.append(overlay, menuContent);
+        this.container.append(menuContent);
         
         document.querySelector('.container').appendChild(this.container);
         this.isActive = true;
         this.render();
+        
+        // Start pause menu loop
+        this.startPauseLoop();
+    }
+
+    startPauseLoop() {
+        const loop = (currentTime) => {
+            if(!window.pauseMenuActive) return;
+            this.handleInput();
+            requestAnimationFrame(loop);
+        };
+        requestAnimationFrame(loop);
     }
 
     createButton(text) {
@@ -135,6 +153,8 @@ class PauseMenu {
     }
 
     handleSelection() {
+        this.inputLocked = true;
+        
         const buttons = this.getActiveButtons();
         const selectedButton = buttons[this.selectedIndex];
         
@@ -155,43 +175,89 @@ class PauseMenu {
                 this.render();
             }
         }
+        
+        this.inputLocked = false;
     }
 
     resumeGame() {
         playSoundEffect(soundEffects.ok);
         this.cleanup();
-        resumeGame();
+        window.resumeGame();
+    }
+
+    cleanup() {
+        // Clear all key states
+        for (const key in this.keys) {
+            this.keys[key] = false;
+        }
+
+        // Remove DOM elements
+        if (this.container && this.container.parentNode) {
+            this.container.parentNode.removeChild(this.container);
+        }
+        
+        // Clear references
+        this.container = null;
+        this.isActive = false;
+        this.buttons = [];
     }
 
     quitGame() {
         playSoundEffect(soundEffects.cancel);
         this.cleanup();
-        
-        // Clean up game elements
-        const container = document.querySelector('.container');
-        const canvasContainer = container.querySelector('.canvas-container');
-        if (canvasContainer) canvasContainer.remove();
-        
-        const statsDisplay = container.querySelector('#playerStatsDisplay');
-        if (statsDisplay) statsDisplay.remove();
-        
-        // Reset game state
-        gameRunning = false;
-        menuActive = true;
-        
-        // Return to main menu
-        window.menuHandler.showMenu();
-        window.menuHandler.switchMenu(MENU_STATES.MAIN);
+        // Use window reference to ensure we're calling the global function
+        window.quitToMenu();
     }
 
-    cleanup() {
-        if (this.container && this.container.parentNode) {
-            this.container.parentNode.removeChild(this.container);
+    handleKeyDown(e) {
+        const key = e.key;
+        if (key in this.keys) {
+            this.keys[key] = true;
+            e.preventDefault();
         }
-        this.container = null;
-        this.isActive = false;
+        
+        // Directly handle pause menu input
+        this.processInput();
+    }
+
+    handleKeyUp(e) {
+        const key = e.key;
+        if (key in this.keys) {
+            this.keys[key] = false;
+        }
+    }
+
+    processInput() {
+        if (this.keys['Escape']) {
+            if (this.confirmingQuit) {
+                this.confirmingQuit = false;
+                this.render();
+            } else {
+                this.resumeGame();
+            }
+            this.keys['Escape'] = false;
+            return;
+        }
+
+        if (this.keys['ArrowUp']) {
+            this.selectedIndex = Math.max(0, this.selectedIndex - 1);
+            playSoundEffect(soundEffects.select);
+            this.updateButtonSelection();
+            this.keys['ArrowUp'] = false;
+        }
+
+        if (this.keys['ArrowDown']) {
+            const buttons = this.getActiveButtons();
+            this.selectedIndex = Math.min(buttons.length - 1, this.selectedIndex + 1);
+            playSoundEffect(soundEffects.select);
+            this.updateButtonSelection();
+            this.keys['ArrowDown'] = false;
+        }
+
+        if (this.keys['z'] || this.keys['Z']) {
+            this.handleSelection();
+            this.keys['z'] = false;
+            this.keys['Z'] = false;
+        }
     }
 }
-
-const pauseMenu = new PauseMenu();
-window.pauseMenu = pauseMenu;

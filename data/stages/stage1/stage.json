@@ -1,0 +1,86 @@
+{
+    "metadata": {
+      "id": "stage1",
+      "name": "Phantasmagoria of Flower View",
+      "music": "DiPP_01.mp3",
+      "difficulty": {
+        "easy": 0.8,
+        "normal": 1.0,
+        "hard": 1.3,
+        "lunatic": 1.8
+      }
+    },
+    "background": {
+      "layers": [
+        {
+          "image": "bg1.png",
+          "speed": 0.2,
+          "zIndex": 0,
+          "yOffset": 0
+        }
+      ],
+      "transitions": [
+        {
+          "time": 30,
+          "newBackground": "stage1_phase2",
+          "effect": "fade"
+        }
+      ]
+    },
+    "enemyWaves": [
+      {
+        "time": 5,
+        "enemies": [
+          {
+            "type": "fairy",
+            "count": 5,
+            "spawnPattern": "circle",
+            "health": 50,
+            "movement": {
+              "type": "bezier",
+              "points": [[100,50], [200,100], [300,50]],
+              "duration": 3
+            },
+            "shootingPatterns": [
+              {
+                "startTime": 1,
+                "type": "aimed",
+                "bullet": "small_red",
+                "frequency": 0.5,
+                "duration": 5
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "dialogue": [
+      {
+        "time": 0,
+        "speaker": "Reimu",
+        "text": "dialogue.stage1.intro",
+        "duration": 3,
+        "portrait": "reimu_normal"
+      }
+    ],
+    "boss": {
+      "appearTime": 60,
+      "type": "cirno",
+      "health": 1000,
+      "spellcards": [
+        {
+          "name": "spellcards.cirno.diamond_blizzard",
+          "duration": 30,
+          "movement": "circular",
+          "bulletPattern": "spiral",
+          "endCondition": "timeout",
+          "difficultyScaling": {
+            "easy": 0.7,
+            "normal": 1.0,
+            "hard": 1.3,
+            "lunatic": 1.8
+          }
+        }
+      ]
+    }
+  }

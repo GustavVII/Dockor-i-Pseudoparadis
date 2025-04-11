@@ -5,6 +5,10 @@ class MenuInputHandler {
         this.resetAllKeys();
     }
 
+    activate() {
+        this.resetAllKeys();
+    }
+
     resetAllKeys() {
         this.keys = {
             'ArrowUp': { 

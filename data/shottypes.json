@@ -1,0 +1,102 @@
+{
+    "shotTypes": {
+      "base": {
+        "powerStages": [
+          {
+            "minPower": 0,
+            "damage": 10,
+            "cooldown": 5,
+            "pattern": "single"
+          },
+          {
+            "minPower": 16,
+            "damage": 12,
+            "cooldown": 4,
+            "pattern": "single"
+          },
+          {
+            "minPower": 48,
+            "damage": 16,
+            "cooldown": 5,
+            "pattern": "double"
+          },
+          {
+            "minPower": 80,
+            "damage": 20,
+            "cooldown": 4,
+            "pattern": "triple"
+          },
+          {
+            "minPower": 112,
+            "damage": 20,
+            "cooldown": 5,
+            "pattern": "triple"
+          },
+          {
+            "minPower": 128,
+            "damage": 24,
+            "cooldown": 6,
+            "pattern": "quad"
+          }
+        ],
+        "patterns": {
+          "single": [{ "xOffset": 0, "yOffset": 0 }],
+          "double": [
+            { "xOffset": -16, "yOffset": 0 },
+            { "xOffset": 16, "yOffset": 0 }
+          ],
+          "triple": [
+            { "xOffset": -24, "yOffset": 0 },
+            { "xOffset": 0, "yOffset": -10 },
+            { "xOffset": 24, "yOffset": 0 }
+          ],
+          "quad": [
+            { "xOffset": -32, "yOffset": 0 },
+            { "xOffset": -12, "yOffset": -10 },
+            { "xOffset": 12, "yOffset": -10 },
+            { "xOffset": 32, "yOffset": 0 }
+          ]
+        }
+      },
+      "01": {
+        "name": "Homing Cards",
+        "powerStages": [
+          {
+            "minPower": 32,
+            "damage": 20,
+            "cooldown": 20,
+            "count": 2,
+            "angles": [-45, 45]
+          },
+          {
+            "minPower": 64,
+            "damage": 24,
+            "cooldown": 12,
+            "count": 2,
+            "angles": [-45, 45]
+          },
+          {
+            "minPower": 96,
+            "damage": 28,
+            "cooldown": 6,
+            "count": 2,
+            "angles": [-45, 45]
+          },
+          {
+            "minPower": 128,
+            "damage": 32,
+            "cooldown": 2,
+            "count": 2,
+            "angles": [-45, 45]
+          }
+        ],
+        "bulletConfig": {
+          "speed": 12,
+          "turnRate": 5,
+          "image": "cardBack",
+          "width": 32,
+          "height": 32
+        }
+      }
+    }
+  }

@@ -1,79 +1,146 @@
 class ShotTypeManager {
     constructor() {
         this.cooldownCounter = 0;
-        this.baseCooldown = 5;
-        this.currentCooldown = this.baseCooldown;
         this.power = 0;
+        this.shotTypes = {};
+        this.activeShotTypes = new Map();
+        this.currentCooldown = 5;
+        this.currentPattern = 'single';
         this.damage = 10;
-        this.currentSpawnPattern = this.singleCardPattern;
     }
 
-    singleCardPattern = () => [{ xOffset: 0, yOffset: 0 }];
-    doubleCardPattern = () => [
-        { xOffset: -16, yOffset: 0 },
-        { xOffset: 16, yOffset: 0 }
-    ];
-    tripleCardPattern = () => [
-        { xOffset: -24, yOffset: 0 },
-        { xOffset: 0, yOffset: -10 },
-        { xOffset: 24, yOffset: 0 }
-    ];
-    quadCardPattern = () => [
-        { xOffset: -32, yOffset: 0 },
-        { xOffset: -12, yOffset: -10 },
-        { xOffset: 12, yOffset: -10 },
-        { xOffset: 32, yOffset: 0 }
-    ];
-
-    setPower(power) {
-        this.power = Math.min(power, 128);
-        
-        if (power >= 128) {
-            this.damage = 24;
-            this.currentCooldown = this.baseCooldown + 1;
-            this.currentSpawnPattern = this.quadCardPattern;
-        } else if (power >= 112) {
-            this.damage = 20;
-            this.currentCooldown = this.baseCooldown;
-            this.currentSpawnPattern = this.tripleCardPattern;
-        } else if (power >= 80) {
-            this.damage = 20;
-            this.currentCooldown = this.baseCooldown - 1;
-            this.currentSpawnPattern = this.tripleCardPattern;
-        } else if (power >= 48) {
-            this.damage = 16;
-            this.currentCooldown = this.baseCooldown;
-            this.currentSpawnPattern = this.doubleCardPattern;
-        } else if (power >= 16) {
-            this.damage = 12;
-            this.currentCooldown = this.baseCooldown - 1;
-            this.currentSpawnPattern = this.singleCardPattern;
-        } else {
-            this.damage = 10;
-            this.currentCooldown = this.baseCooldown;
-            this.currentSpawnPattern = this.singleCardPattern;
+    async loadShotTypes() {
+        try {
+            const response = await fetch('data/shottypes.json');
+            this.shotTypes = await response.json();
+            this.initializeShotTypes();
+        } catch (error) {
+            console.error('Error loading shot types:', error);
+            this.shotTypes = { shotTypes: {} };
         }
     }
 
-    update() {
-        if (this.cooldownCounter > 0) this.cooldownCounter--;
+    initializeShotTypes() {
+        this.activeShotTypes.clear();
+        
+        // Always activate base shot
+        this.activeShotTypes.set('base', {
+            type: 'pattern',
+            cooldown: 0
+        });
+
+        // Activate other shot types based on power
+        for (const [id, config] of Object.entries(this.shotTypes.shotTypes || {})) {
+            if (id === 'base') continue;
+            
+            const stage = this.getCurrentPowerStage(config.powerStages);
+            if (stage) {
+                this.activeShotTypes.set(id, {
+                    type: config.type,
+                    cooldown: 0,
+                    config: stage
+                });
+            }
+        }
+    }
+
+    setPower(power) {
+        this.power = Math.min(Math.max(power, 0), 128);
+        this.updateShotProperties();
+        this.initializeShotTypes(); // Re-evaluate active shot types
+    }
+
+    updateShotProperties() {
+        const baseConfig = this.shotTypes.shotTypes?.base;
+        if (baseConfig) {
+            const baseStage = this.getCurrentPowerStage(baseConfig.powerStages);
+            if (baseStage) {
+                this.damage = baseStage.damage;
+                this.currentCooldown = baseStage.cooldown;
+                this.currentPattern = baseStage.pattern;
+            }
+        }
+    }
+
+    getCurrentPowerStage(powerStages) {
+        if (!powerStages) return null;
+        return powerStages.reduce((current, stage) => {
+            return (this.power >= stage.minPower && 
+                   (!current || stage.minPower > current.minPower)) 
+                   ? stage : current;
+        }, null);
     }
 
     shoot(cursor) {
         if (!cursor || this.cooldownCounter > 0) return;
+
+        // Fire all active shot types
+        for (const [id, shotType] of this.activeShotTypes) {
+            if (shotType.cooldown > 0) continue;
+
+            switch(shotType.type) {
+                case 'pattern':
+                    this.firePattern(cursor);
+                    break;
+                    
+                case 'homing':
+                    this.fireHomingCards(cursor, shotType.config);
+                    break;
+                    
+                // Add other shot type handlers here
+            }
+        }
+
+        this.cooldownCounter = this.currentCooldown;
+        if (window.playSoundEffect) {
+            playSoundEffect(soundEffects.shot);
+        }
+    }
+
+    firePattern(cursor) {
+        const bullets = CardBullet.createPattern(
+            this.currentPattern,
+            cursor.x + cursor.width/2,
+            cursor.y,
+            this.damage
+        );
         
-        this.currentSpawnPattern().forEach(pos => {
-            const x = cursor.x + cursor.width / 2 + pos.xOffset;
-            const y = cursor.y + pos.yOffset;
-            const bullet = CardBullet.create(x, y, this.damage);
+        bullets.forEach(bullet => {
+            if (window.bulletManager) {
+                window.bulletManager.addBullet(bullet);
+            }
+        });
+    }
+
+    fireHomingCards(cursor, config) {
+        config.angles.forEach(angle => {
+            const bullet = new HomingCardBullet({
+                x: cursor.x + cursor.width/2,
+                y: cursor.y - 20,
+                angle: angle,
+                damage: config.damage,
+                speed: config.speed,
+                turnRate: config.turnRate,
+                image: config.image || 'cardBack'
+            });
+            
             if (window.bulletManager) {
                 window.bulletManager.addBullet(bullet);
             }
         });
         
-        this.cooldownCounter = this.currentCooldown;
-        if (window.playSoundEffect) {
-            playSoundEffect(soundEffects.shot);
+        // Set individual cooldown for this shot type
+        this.activeShotTypes.get('01').cooldown = config.cooldown;
+    }
+
+    update() {
+        if (this.cooldownCounter > 0) this.cooldownCounter--;
+        
+        // Update cooldowns for all active shot types
+        for (const [id, shotType] of this.activeShotTypes) {
+            if (shotType.cooldown > 0) {
+                shotType.cooldown--;
+            }
         }
     }
 }

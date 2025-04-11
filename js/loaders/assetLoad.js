@@ -94,7 +94,7 @@ async function loadAllAssets() {
             for (const character of characters) {
                 await assetLoader.loadImage(
                     `character${character}Cursor`,
-                    `assets/graphics/characters/${character}/cursor.png`
+                    `assets/graphics/cursors/${character}/cursor.png`
                 );
                 console.info(`cursor for ${character} loaded`)
             }
@@ -103,7 +103,7 @@ async function loadAllAssets() {
             for (const character of characters) {
                 await assetLoader.loadImage(
                     `portrait${character}`,
-                    `assets/graphics/characters/${character}/portrait.png`
+                    `assets/graphics/portraits/${character}/portrait.png`
                 );
                 console.info(`portrait for ${character} loaded`)
             }
@@ -120,8 +120,12 @@ async function loadAllAssets() {
         // Load spawner images
         for (let i = 1; i <= 4; i++) {
             await assetLoader.loadImage(`spawner${i}`, `assets/graphics/spawners/spawn${i}.png`);
-            console.info(`Spawner${i} loaded`)
         }
+
+        await assetLoader.loadImage(`redFairy`, 'assets/graphics/cursors/Fairy/red.png')
+        await assetLoader.loadImage(`greenFairy`, 'assets/graphics/cursors/Fairy/green.png')
+        await assetLoader.loadImage(`blueFairy`, 'assets/graphics/cursors/Fairy/blue.png')
+        await assetLoader.loadImage(`testFairy`, 'assets/graphics/cursors/Fairy/test.png')
 
         console.log("All assets loaded");
 

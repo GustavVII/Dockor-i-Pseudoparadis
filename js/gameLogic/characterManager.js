@@ -1,6 +1,6 @@
 class CharacterManager {
     constructor() {
-        this.characters = characterData.characters;
+        this.characters = []; // Initialize as empty array
         this.currentCharacter = null;
         this.cursorImage = null;
         this.cursor = {
@@ -26,16 +26,43 @@ class CharacterManager {
         this.isSpellcardActive = false;
         this.canvas = null;
         this.ctx = null;
+        this.isInitialized = false;
     }
 
-    init(canvas) {
+    async loadCharacterData() {
+        try {
+            // Load the JSON file
+            const response = await fetch('data/characters.json');
+            if (!response.ok) {
+                throw new Error('Failed to load character data');
+            }
+            const characterData = await response.json();
+            this.characters = characterData.characters;
+            this.isInitialized = true;
+        } catch (error) {
+            console.error('Error loading character data:', error);
+            // Fallback to empty array if loading fails
+            this.characters = [];
+        }
+    }
+
+    async ensureDataLoaded() {
+        if (!this.isInitialized) {
+            await this.loadCharacterData();
+        }
+    }
+
+    async init(canvas) {
+        await this.ensureDataLoaded();
         this.canvas = canvas;
         this.ctx = canvas.getContext('2d');
         this.cursor.x = canvas.width / 2;
         this.cursor.y = canvas.height - 64;
     }
 
-    setCharacter(characterId) {
+    async setCharacter(characterId) {
+        await this.ensureDataLoaded();
+        
         const character = this.characters.find(char => char.id === characterId);
         if (!character) {
             console.error(`Character "${characterId}" not found.`);
@@ -59,9 +86,6 @@ class CharacterManager {
         if (!this.cursor.image) {
             console.error(`Cursor image for "${characterId}" not found in assetLoader`);
         }
-    
-        // Set the shot type for the character using the shotTypeId
-        //shotTypeManager.setShotType(character.shotTypeId);
     
         console.log(`Character "${characterId}" selected.`);
     }

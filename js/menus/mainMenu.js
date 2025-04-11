@@ -215,7 +215,6 @@ class MainMenu {
         // Handle X button (back/cancel)
         if (window.menuInputHandler.isKeyPressed('x') || window.menuInputHandler.isKeyPressed('X')) {
             playSoundEffect(soundEffects.cancel);
-            console.log('Back button pressed');
             return false;
         }
 
