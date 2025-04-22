@@ -1,0 +1,18 @@
+{
+  "fairyTypes": {
+    "red": {
+      "color": "red",
+      "image": "redFairy",
+      "width": 32,
+      "height": 32,
+      "health": 100
+    },
+    "blue": {
+      "color": "blue",
+      "image": "blueFairy",
+      "width": 32,
+      "height": 32,
+      "health": 80
+    }
+  }
+}

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pattern Editor</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="editor-container">
+        <div class="canvas-container">
+            <canvas id="editorCanvas" width="974" height="1070"></canvas>
+            <div class="screen-indicator"></div>
+        </div>
+        <div class="controls">
+            <div class="pattern-controls">
+                <h2>Pattern Editor</h2>
+                
+                <div id="patternParams"></div>
+                
+                <div class="form-group">
+                    <label>Bullet Type:</label>
+                    <div class="bullet-type-selector">
+                        <select id="bulletColor">
+                        </select>
+                        <select id="bulletType">
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="bulletBehavior">Bullet Behavior:</label>
+                    <select id="bulletBehavior"></select>
+                </div>
+                
+                <div class="pattern-management">
+                    <h3>Saved Patterns</h3>
+                    <ul id="savedPatterns"></ul>
+                    <div class="button-group">
+                        <button id="newPattern">New</button>
+                        <button id="renamePattern">Rename</button>
+                        <button id="testPattern">Test</button>
+                        <button id="savePattern">Save Pattern</button>
+                        <button id="loadPattern">Load Pattern</button>
+                        <button id="deletePattern" class="danger">Delete Pattern</button>
+                        <button id="saveList">Save List</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/enemyLogic/bullets/enemyBulletManager.js"></script>
+    <script src="js/enemyLogic/bullets/enemyBullets.js"></script>
+    <script src="js/enemyLogic/bullets/bulletBehaviours.js"></script>
+    <script src="js/enemyLogic/bullets/patternProcessor.js"></script>
+    <script src="js/loaders/assetLoad.js"></script>
+    <script src="editor.js"></script>
+</body>
+</html>

@@ -11,8 +11,7 @@ class GameInputHandler {
             'x': false,  // Bomb/Spellcard
             'X': false,  // Bomb/Spellcard
             'Shift': false,
-            'f': false,
-            'F': false,
+            'e': false,
             '1': false,
             '2': false,
             '3': false,
@@ -64,20 +63,23 @@ class GameInputHandler {
             this.keys.X = true;
         }
 
-        // Character switching
-        if (key === '1') {
-            characterManager.setCharacter('Murasa');
-        } else if (key === '2') {
-            characterManager.setCharacter('Reimu');
-        } else if (key === '3') {
-            characterManager.setCharacter('Marisa');
-        } else if (key === '4') {
-            characterManager.setCharacter('Nue');
+        // test
+        if (key === '1' && e.location === KeyboardEvent.DOM_KEY_LOCATION_NUMPAD) {
+            itemManager.spawnItem(characterManager.cursor.x, characterManager.cursor.y - 100, '1up');
+        } else if (key === '2' && e.location === KeyboardEvent.DOM_KEY_LOCATION_NUMPAD) {
+            itemManager.spawnItem(characterManager.cursor.x, characterManager.cursor.y - 100, 'bomb');
+        } else if (key === '3' && e.location === KeyboardEvent.DOM_KEY_LOCATION_NUMPAD) {
+            itemManager.spawnItem(characterManager.cursor.x, characterManager.cursor.y - 100, 'fragment');
+        } else if (key === '4' && e.location === KeyboardEvent.DOM_KEY_LOCATION_NUMPAD) {
+            itemManager.spawnItem(characterManager.cursor.x, characterManager.cursor.y - 100, 'full');
+        } else if (key === '5' && e.location === KeyboardEvent.DOM_KEY_LOCATION_NUMPAD) {
+            itemManager.spawnItem(characterManager.cursor.x, characterManager.cursor.y - 100, 'power');
+        } else if (key === '6' && e.location === KeyboardEvent.DOM_KEY_LOCATION_NUMPAD) {
+            itemManager.spawnItem(characterManager.cursor.x, characterManager.cursor.y - 100, 'point');
         }
 
         // Prevent default behavior
-        if (key === ' ' || 
-            key === 'ArrowLeft' || 
+        if (key === 'ArrowLeft' || 
             key === 'ArrowRight' || 
             key === 'ArrowUp' || 
             key === 'ArrowDown' ||
@@ -85,8 +87,7 @@ class GameInputHandler {
             key === 'Z' ||
             key === 'x' ||
             key === 'X' ||
-            key === 'f' ||
-            key === 'F') {
+            key === 'e') {
             e.preventDefault();
         }
     }
@@ -122,13 +123,34 @@ class GameInputHandler {
     handleInput() {     
         if (!gameRunning) return;
         // Shooting (both Z and Space)
-        if ((this.keys.z || this.keys.Z) && shotTypeManager.cooldownCounter <= 0) {
-            shotTypeManager.shoot(characterManager.cursor);
+        if (this.keys.z || this.keys.Z) {
+            window.shotTypeManager?.shoot(
+                window.characterManager.cursor,
+                window.characterManager.focusMode
+            );
+        }
+
+        if (this.keys['1'] && !this.keys['Shift']) {
+            if (window.enemyManager && window.patternDatabase) {
+                console.log('Available patterns:', Object.keys(window.patternDatabase));
+                const enemy = window.enemyManager.addEnemy('fairy', {
+                    x: canvas.width / 2,
+                    y: 100,
+                    bulletPatterns: [
+                        {
+                            name: "Real", // Must match exactly with pattern name
+                            cooldown: 120
+                        }
+                    ]
+                });
+                console.log('Spawned enemy with pattern:', enemy);
+                this.keys['1'] = false;
+            }
         }
     
         // Bomb/Spellcard
         if ((this.keys.x || this.keys.X) && gameRunning && !characterManager.isSpellcardActive) {
-            spellcardManager.invokeSpellcard(characterManager.currentCharacter.name);
+            //spellcardManager.invokeSpellcard(characterManager.currentCharacter.name);
         }
     
         // Power adjustment
@@ -140,10 +162,22 @@ class GameInputHandler {
             decreasePower(1);
             this.keys['-'].handled = true;
         }
-        if (this.keys.f || this.keys.F) {
-            enemyManager.spawnFairy(); // Spawn at random position with random color
+        if (this.keys.e) { // Press 'E' to spawn 3 fairies
+            if (window.enemyManager) {
+                const spawnArea = {
+                    x: 100,
+                    y: 100,
+                    width: canvas.width - 200,
+                    height: 300
+                };
+                window.enemyManager.spawnEnemies('fairy', 3, spawnArea);
+                console.log('Spawned 3 fairies', window.enemyManager.activeEnemies);
+                // Reset the key so it doesn't keep spawning
+                this.keys.e = false;
+            } else {
+                console.error('Enemy manager not found');
+            }
         }
-    
         // Focus mode
         if (this.keys.Shift) {
             characterManager.setFocusMode(true);

@@ -13,4 +13,7 @@ canvas {
   image-rendering: crisp-edges;
   image-rendering: pixelated;
   display: block;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
 }

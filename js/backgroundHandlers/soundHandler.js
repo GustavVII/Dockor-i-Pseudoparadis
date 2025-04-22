@@ -41,19 +41,27 @@ async function initializeSoundEffects() {
     try {
         getAudioContext();
 
-        soundEffects.shot = await loadSoundEffect('assets/sfx/shot.wav');
-        soundEffects.hit = await loadSoundEffect('assets/sfx/hit.wav');
+        soundEffects.shot = await loadSoundEffect('assets/sfx/player/shot.wav');
+        soundEffects.extend = await loadSoundEffect(`assets/sfx/player/extend.wav`);
+        soundEffects.bombget = await loadSoundEffect(`assets/sfx/player/bombget.wav`);
+        soundEffects.itemget = await loadSoundEffect(`assets/sfx/player/itemget.wav`);
+        soundEffects.powerup = await loadSoundEffect(`assets/sfx/player/powerup.wav`);
+        soundEffects.focus = await loadSoundEffect(`assets/sfx/player/focus.wav`);
+        
+        soundEffects.select = await loadSoundEffect('assets/sfx/menu/select.wav');
+        soundEffects.ok = await loadSoundEffect('assets/sfx/menu/ok.wav');
+        soundEffects.cancel = await loadSoundEffect('assets/sfx/menu/cancel.wav');
+        soundEffects.timeout = await loadSoundEffect(`assets/sfx/menu/timeout.wav`);
+        soundEffects.invalid = await loadSoundEffect(`assets/sfx/menu/invalid.wav`);
+        soundEffects.pause = await loadSoundEffect(`assets/sfx/menu/pause.wav`);
+        
+        soundEffects.hit = await loadSoundEffect('assets/sfx/enemy/hit.wav');
+        soundEffects.destroy = await loadSoundEffect(`assets/sfx/enemy/destroy.wav`);
+
         soundEffects.spellcard = await loadSoundEffect('assets/sfx/spellcard.wav');
         soundEffects.powershot = await loadSoundEffect('assets/sfx/powershot.wav');
         soundEffects.laser = await loadSoundEffect('assets/sfx/laser.wav');
-        soundEffects.select = await loadSoundEffect('assets/sfx/select.wav');
-        soundEffects.ok = await loadSoundEffect('assets/sfx/ok.wav');
-        soundEffects.cancel = await loadSoundEffect('assets/sfx/cancel.wav');
-        soundEffects.timeout = await loadSoundEffect(`assets/sfx/timeout.wav`)
-        soundEffects.invalid = await loadSoundEffect(`assets/sfx/invalid.wav`)
-        soundEffects.extend = await loadSoundEffect(`assets/sfx/extend.wav`)
-        soundEffects.destroy = await loadSoundEffect(`assets/sfx/destroy.wav`)
-        soundEffects.pause = await loadSoundEffect(`assets/sfx/pause.wav`)
+        
         console.log('All sound effects loaded successfully:', soundEffects);
     } catch (error) {
         console.error('Failed to load sound effects:', error);
@@ -136,23 +144,6 @@ function saveSettings() {
     localStorage.setItem('sfxVolume', sfxVolume * 100);
     localStorage.setItem('playerLives', optionsMenu?.options[0]?.value || localStorage.playerLives);
     localStorage.setItem('bombs', optionsMenu?.options[1]?.value || localStorage.bombs);
-    console.log('Settings saved');
-
-    const feedback = document.createElement('div');
-    feedback.textContent = 'Settings Saved';
-    feedback.style.position = 'fixed';
-    feedback.style.bottom = '20px';
-    feedback.style.right = '20px';
-    feedback.style.backgroundColor = 'rgba(0,0,0,0.7)';
-    feedback.style.color = 'white';
-    feedback.style.padding = '10px';
-    feedback.style.borderRadius = '5px';
-    feedback.style.zIndex = '1000';
-    document.body.appendChild(feedback);
-    
-    setTimeout(() => {
-        document.body.removeChild(feedback);
-    }, 2000);
 }
 
 // Load settings from localStorage

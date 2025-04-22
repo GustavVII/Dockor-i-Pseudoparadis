@@ -1,0 +1,44 @@
+{
+  "patterns": [
+    {
+      "name": "Real",
+      "bulletColor": "Magenta",
+      "bulletType": "Kunai",
+      "bulletBehavior": "linear",
+      "bulletsPerShot": 60,
+      "shotsCount": 5,
+      "spread": 360,
+      "angle": "aimed",
+      "speed": 2,
+      "speedIncrement": 0.5,
+      "shotDelay": 5,
+      "bulletBehaviorParams": {},
+      "bulletSpread": 360,
+      "bulletAngle": "aimed",
+      "bulletSpeed": 2,
+      "repeatPattern": false,
+      "repeatDelay": 5,
+      "maxRepeats": 20
+    },
+    {
+      "name": "Grav",
+      "bulletColor": "Magenta",
+      "bulletType": "Falcon",
+      "bulletBehavior": "gravity",
+      "bulletsPerShot": 20,
+      "shotsCount": 4,
+      "spread": 60,
+      "angle": "270",
+      "speed": 2,
+      "speedIncrement": 0.5,
+      "shotDelay": 5,
+      "bulletBehaviorParams": {},
+      "bulletSpread": 60,
+      "bulletAngle": "270",
+      "bulletSpeed": 2,
+      "repeatPattern": false,
+      "repeatDelay": 60,
+      "maxRepeats": 0
+    }
+  ]
+}

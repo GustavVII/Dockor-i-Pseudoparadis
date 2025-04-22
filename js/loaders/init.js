@@ -63,6 +63,11 @@ async function init() {
 
     // Initialize systems
     console.log("Initializing game systems...");
+    await Promise.all([
+        import('../enemyLogic/enemies/baseEnemy.js'),
+        import('../enemyLogic/enemies/fairy.js')
+    ]);
+
     await initializeSoundEffects();
     await languageManager.init();
     await declareMenuManagers();
@@ -276,6 +281,7 @@ async function startGame(characterId) {
     await window.shotTypeManager.loadShotTypes();
     
     document.getElementById('menuBox').style.display = 'none';
+    setMenuBackground('gameBackground');
     document.getElementById('canvas').style.display = 'block';
     document.getElementById('playerStatsDisplay').style.display = 'flex';
     
@@ -303,18 +309,6 @@ async function startGame(characterId) {
     document.getElementById('playerStatsDisplay').style.display = 'flex';
 
     try {
-        // Load the stage
-        const loaded = await window.stageManager.loadStage(
-            stageId,
-            gameMode,
-            difficulty
-        );
-
-        if (!loaded) {
-            console.error('Failed to load stage');
-            return;
-        }
-
         // Initialize game systems
         await initializeGameSystems();
 

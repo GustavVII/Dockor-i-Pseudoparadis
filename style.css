@@ -1,0 +1,203 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+}
+
+.editor-container {
+    display: flex;
+    gap: 20px;
+}
+
+.canvas-container {
+    position: relative;
+    border: 2px solid #333;
+}
+
+#editorCanvas {
+    background-color: #222;
+    display: block;
+}
+
+.screen-indicator {
+    position: absolute;
+    top: 200px;
+    left: 200px;
+    width: 574px;
+    height: 670px;
+    border: 2px dashed rgba(255, 255, 255, 0.5);
+    pointer-events: none;
+}
+
+.controls {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.pattern-controls, .pattern-list {
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.form-group input, .form-group select {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.button-group {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.button-group button {
+    padding: 8px 15px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.button-group button:hover {
+    background-color: #45a049;
+}
+
+#patternParams {
+    margin-bottom: 15px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 4px;
+}
+
+#savedPatterns {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+#savedPatterns li {
+    padding: 8px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+}
+
+#savedPatterns li:hover {
+    background-color: #f0f0f0;
+}
+
+.bullet-type-selector {
+    display: flex;
+    gap: 5px;
+}
+
+.bullet-type-selector select {
+    flex: 1;
+}
+
+.form-group.checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 15px;
+}
+
+.form-group.checkbox-group label {
+    margin-bottom: 0;
+    font-weight: normal;
+    cursor: pointer;
+}
+
+.form-group.checkbox-group input[type="checkbox"] {
+    margin: 0;
+    width: auto;
+}
+
+.controls {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+/* Optional scrollbar styling */
+.controls::-webkit-scrollbar {
+    width: 8px;
+}
+
+.controls::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.controls::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+.controls::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.button-group .danger {
+    background-color: #f44336;
+}
+
+.button-group .danger:hover {
+    background-color: #d32f2f;
+}
+
+#savedPatterns {
+    max-height: 200px;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 5px;
+    margin-bottom: 15px;
+}
+
+.pattern-item {
+    padding: 5px;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+.pattern-item:hover {
+    background-color: #f0f0f0;
+}
+
+.pattern-item.selected {
+    background-color: #d0e0ff;
+    font-weight: bold;
+}
+
+.button-group {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.button-group button {
+    flex: 1;
+    min-width: 120px;
+}

@@ -1,9 +1,10 @@
 let highScore = localStorage.getItem('highScore') || 0;
 let score = 0;
-let playerLives = 3;
-let bombs = 3;
+let playerLives = parseInt(localStorage.getItem('playerLives')) || 3;
+let bombs = parseInt(localStorage.getItem('bombs')) || 3;
 let power = 0;
 let graze = 0;
+let points = 0;
 const POWER_LEVELS = [32, 64, 96, 128];
 const MAX_POWER = 128;
 let powerLevel = 0;
@@ -24,37 +25,53 @@ function generateStars(count, type) {
 
 // Updaterande av lådan
 function updatePlayerStatsDisplay() {
-    if (!menuActive) { // Rendera endast om inte i menyn, dvs i spelet
+    if (!menuActive) {
         const playerStatsDisplay = document.getElementById('playerStatsDisplay');
         if (playerStatsDisplay) {
             playerStatsDisplay.innerHTML = `
                 <br>
                 <br>
-                <div style="display: flex; justify-content: space-between;">
+                <div style="display: flex;">
                     <span class="highscore-text">High Score</span>
                     <span class="highscore-data">${padNumber(highScore, 9)}</span>
                 </div>
-                <div style="display: flex; justify-content: space-between;">
+                <div style="display: flex;">
                     <span class="score-text">Score</span>
                     <span class="score-data">${padNumber(score, 9)}</span>
                 </div>
                 <br>
-                <div style="display: flex; justify-content: space-between;">
+                <div style="display: flex;">
                     <span class="player-text">Player</span>
-                    <span>${generateStars(playerLives - 1, 'health')}</span>
+                    <span>${generateStars(Math.min(playerLives - 1, 7), 'health')}</span>
                 </div>
-                <div style="display: flex; justify-content: space-between;">
+                <div style="display: flex;">
                     <span class="bomb-text">Bomb</span>
-                    <span>${generateStars(bombs, 'bomb')}</span>
+                    <span>${generateStars(Math.min(bombs, 7), 'bomb')}</span>
                 </div>
                 <br>
-                <div style="display: flex; justify-content: space-between;">
+                <div style="display: flex;">
                     <span class="power-text">Power</span>
-                    <span class="power-data">${power}/${MAX_POWER} (Lv.${powerLevel})</span>
+                    <span class="power-data">${power >= MAX_POWER ? 'MAX POWER' : `${power}`}</span>
                 </div>
-                <div style="display: flex; justify-content: space-between;">
+                <div style="display: flex;">
                     <span class="graze-text">Graze</span>
                     <span class="graze-data">${graze}</span>
+                </div>
+                <div style="display: flex;">
+                    <span class="point-text">Point</span>
+                    <span class="point-data">${points}</span>
+                </div>
+                <div class="statstitle", style="display: flex; justify-content: center;">
+                    <span class="first-char">蓬</span>
+                </div>
+                <div class="statstitle", style="display: flex; justify-content: center;">
+                    <span class="second-char">莱</span>
+                </div>
+                <div class="statstitle", style="display: flex; justify-content: center;">
+                    <span class="third-char">人</span>
+                </div>
+                <div class="statstitle", style="display: flex; justify-content: center;">
+                    <span class="fourth-char">形</span>
                 </div>
             `;
         }
@@ -73,13 +90,13 @@ function updateScore(points) {
 
 // Uppdatera antal liv
 function updatePlayerLives(lives) {
-    playerLives = lives;
+    playerLives = Math.min(Math.max(lives, 0), 8); // Clamp between 0-8
     updatePlayerStatsDisplay();
 }
 
 // Uppdatera antal bomber
 function updateBombs(bombCount) {
-    bombs = bombCount;
+    bombs = Math.min(Math.max(bombCount, 0), 7); // Clamp between 0-7
     updatePlayerStatsDisplay();
 }
 
@@ -106,11 +123,17 @@ function updateGraze(grazeCount) {
     updatePlayerStatsDisplay();
 }
 
+function updatePoints(value) {
+    points = Math.max(0, points + value);
+    updatePlayerStatsDisplay();
+}
+
 // Testfunktion att återställa alla nummer
 function resetStats() {
     score = 0;
-    playerLives = 3;
-    bombs = 3;
+    points = 0;
+    playerLives = parseInt(localStorage.getItem('playerLives')) || 3;
+    bombs = parseInt(localStorage.getItem('bombs')) || 3;
     power = 0;
     graze = 0;
     updatePlayerStatsDisplay();

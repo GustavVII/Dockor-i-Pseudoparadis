@@ -18,6 +18,8 @@
         <link rel="stylesheet" href="css/menu.practice.css">
         <link rel="stylesheet" href="css/canvas.css">
         <link rel="stylesheet" href="css/background.css">
+
+        <link href="assets/fonts/Swagger.ttf" as="font" type="font/ttf" crossorigin>
     </head>
     <body>
         <div class="container" width="960" height="720"></div>
@@ -103,6 +105,9 @@
             
         </script>
 
+        <script src="js/rendering/autoScale.js"></script>
+        <script src="js/rendering/spawners.js"></script>
+
         <script src="lang/languageManager.js"></script>
 
         <script src="js/backgroundHandlers/gameInputHandler.js"></script>
@@ -120,20 +125,29 @@
         <script src="js/menus/title.js"></script>
         <script src="js/menus/pauseMenu.js"></script>
         <script src="js/menus/stageSelect.js"></script>
-
-        <script src="js/enemyManager.js"></script>
-        <script src="js/stageManager.js"></script>
-
-        <script src="js/enemies/fairy.js"></script>
         
-        <script src="js/gameLogic/bulletBehaviour/cardBullet.js"></script>
-        <script src="js/gameLogic/bulletBehaviour/homingCardBullet.js"></script>
-        <script src="js/gameLogic/bulletBehaviour/starBullet.js"></script>
-        <script src="js/gameLogic/bulletBehaviour/bulletManager.js"></script>
+        <script src="js/enemyLogic/enemyManager.js"></script>
+
+        <script src="js/enemyLogic/enemies/baseEnemy.js"></script>
+        <script src="js/enemyLogic/enemies/fairy.js"></script>
+        <script src="js/enemyLogic/enemies/spinner.js"></script>
+        <script src="js/enemyLogic/enemies/yinyang.js"></script>
+
+        <script src="js/enemyLogic/bullets/enemyBulletManager.js"></script>
+        <script src="js/enemyLogic/bullets/enemyBullets.js"></script>
+        <script src="js/enemyLogic/bullets/patternProcessor.js"></script>
         
-        <script src="js/gameLogic/characterManager.js"></script>
-        <script src="js/gameLogic/shottype.js"></script>
-        <script src="js/gameLogic/spellcard.js"></script>
+        <script src="js/playerLogic/bulletBehaviour/cardBullet.js"></script>
+        <script src="js/playerLogic/bulletBehaviour/homingCardBullet.js"></script>
+        <script src="js/playerLogic/bulletBehaviour/starBullet.js"></script>
+        <script src="js/playerLogic/bulletBehaviour/bulletManager.js"></script>
+        
+        <script src="js/playerLogic/characterManager.js"></script>
+        <script src="js/playerLogic/sprite.js"></script>
+        <script src="js/playerLogic/shottype.js"></script>
+        <script src="js/playerLogic/spellcard.js"></script>
+        <script src="js/playerLogic/item.js"></script>
+        <script src="js/playerLogic/itemManager.js"></script>
 
         <script src="js/loops/startMenuLoop.js"></script>
         <script src="js/loops/gameloop.js"></script>

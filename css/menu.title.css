@@ -36,10 +36,20 @@
     will-change: transform; 
 }
 
+@font-face {
+  font-family: 'Swagger';
+  src: url('../assets/fonts/Swagger.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Apply to title elements */
 .series-title, .game-title {
-    font-size: 64px;
-    font-weight: bold;
-    will-change: transform;
+  font-family: 'Swagger', 'Meiryo', sans-serif;
+  font-size: 96px;
+  font-weight: 1000;
+  will-change: transform;
 }
 
 .series-title {

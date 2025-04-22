@@ -13,19 +13,29 @@ async function gameLoop(currentTime) {
         shotTypeManager.update();
         enemyManager.update(deltaTime);
         bulletManager.update();
+        itemManager.update();
+        enemyBulletManager.update();
+        
+        if (characterManager && shotTypeManager && spawnerManager) {
+            spawnerManager.updateSpawners(
+                characterManager.cursor, 
+                shotTypeManager.activeShotTypes, 
+                shotTypeManager, 
+                characterManager.focusMode
+            );
+            spawnerManager.update();
+        }
 
         // Render everything
-        //renderBackground();
         enemyManager.render(ctx);
         bulletManager.render(ctx);
         characterManager.renderCursor();
+        itemManager.render(ctx);
+        window.spawnerManager.render(ctx);
+        enemyBulletManager.render(ctx);
         updatePlayerStatsDisplay();
 
         lastTime = currentTime;
-
-        /*if (stageIsComplete) {
-            await window.stageManager.onStageComplete();
-        }*/
     }
 
     requestAnimationFrame(gameLoop);

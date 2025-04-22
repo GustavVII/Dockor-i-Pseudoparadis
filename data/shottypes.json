@@ -1,102 +1,174 @@
 {
-    "shotTypes": {
-      "base": {
-        "powerStages": [
-          {
-            "minPower": 0,
-            "damage": 10,
-            "cooldown": 5,
-            "pattern": "single"
-          },
-          {
-            "minPower": 16,
-            "damage": 12,
-            "cooldown": 4,
-            "pattern": "single"
-          },
-          {
-            "minPower": 48,
-            "damage": 16,
-            "cooldown": 5,
-            "pattern": "double"
-          },
-          {
-            "minPower": 80,
-            "damage": 20,
-            "cooldown": 4,
-            "pattern": "triple"
-          },
-          {
-            "minPower": 112,
-            "damage": 20,
-            "cooldown": 5,
-            "pattern": "triple"
-          },
-          {
-            "minPower": 128,
-            "damage": 24,
-            "cooldown": 6,
-            "pattern": "quad"
-          }
-        ],
-        "patterns": {
-          "single": [{ "xOffset": 0, "yOffset": 0 }],
-          "double": [
-            { "xOffset": -16, "yOffset": 0 },
-            { "xOffset": 16, "yOffset": 0 }
-          ],
-          "triple": [
-            { "xOffset": -24, "yOffset": 0 },
-            { "xOffset": 0, "yOffset": -10 },
-            { "xOffset": 24, "yOffset": 0 }
-          ],
-          "quad": [
-            { "xOffset": -32, "yOffset": 0 },
-            { "xOffset": -12, "yOffset": -10 },
-            { "xOffset": 12, "yOffset": -10 },
-            { "xOffset": 32, "yOffset": 0 }
-          ]
+  "shotTypes": {
+    "base": {
+      "bulletType": "card",
+      "powerStages": [
+        {
+          "minPower": 0,
+          "damage": 12,
+          "cooldown": 5,
+          "angles": [0]
+        },
+        {
+          "minPower": 16,
+          "damage": 16,
+          "cooldown": 4,
+          "angles": [0]
+        },
+        {
+          "minPower": 48,
+          "damage": 20,
+          "cooldown": 5,
+          "angles": [-3, 3]
+        },
+        {
+          "minPower": 80,
+          "damage": 24,
+          "cooldown": 4,
+          "angles": [-5, 0, 5]
+        },
+        {
+          "minPower": 112,
+          "damage": 28,
+          "cooldown": 5,
+          "angles": [-5, 0, 5]
+        },
+        {
+          "minPower": 128,
+          "damage": 32,
+          "cooldown": 6,
+          "angles": [-10, -3, 3, 10]
         }
-      },
-      "01": {
-        "name": "Homing Cards",
-        "powerStages": [
-          {
-            "minPower": 32,
+      ]
+    },
+    "01": {
+      "name": "Homing Cards",
+      "bulletType": "homingCard",
+      "useSpawners": true,
+      "minPowerForSpawners": 8,
+      "sequentialFire": true,
+      "powerStages": [
+        {
+          "minPower": 8,
+          "damage": 8,
+          "cooldown": 30,
+          "count": 2,
+          "angles": [-30]
+        },
+        {
+          "minPower": 32,
+          "damage": 12,
+          "cooldown": 20,
+          "count": 2,
+          "angles": [-30]
+        },
+        {
+          "minPower": 64,
+          "damage": 16,
+          "cooldown": 12,
+          "count": 2,
+          "angles": [-30, -40]
+        },
+        {
+          "minPower": 96,
+          "damage": 20,
+          "cooldown": 6,
+          "count": 2,
+          "angles": [-30, -45, -60]
+        },
+        {
+          "minPower": 128,
+          "damage": 24,
+          "cooldown": 4,
+          "count": 2,
+          "angles": [-30, -45, -60]
+        }
+      ],
+      "bulletConfig": {
+        "speed": 12,
+        "turnRate": 5,
+        "image": "cardBack",
+        "width": 32,
+        "height": 32
+      }
+    },
+    "02": {
+      "name": "Star Bullets",
+      "bulletType": "star",
+      "useSpawners": true,
+      "minPowerForSpawners": 8,
+      "sequentialFire": false,
+      "powerStages": [
+        {
+            "minPower": 8,
             "damage": 20,
-            "cooldown": 20,
-            "count": 2,
-            "angles": [-45, 45]
-          },
-          {
-            "minPower": 64,
+            "cooldown": 6,
+            "angles": [0],
+            "colors": [1]
+        },
+        {
+            "minPower": 16,
+            "damage": 22,
+            "cooldown": 4,
+            "angles": [2],
+            "colors": [3]
+        },
+        {
+            "minPower": 32,
             "damage": 24,
-            "cooldown": 12,
-            "count": 2,
-            "angles": [-45, 45]
-          },
-          {
-            "minPower": 96,
+            "cooldown": 8,
+            "angles": [3, 1],
+            "colors": [1, 3]
+        },
+        {
+            "minPower": 48,
             "damage": 28,
             "cooldown": 6,
-            "count": 2,
-            "angles": [-45, 45]
-          },
-          {
-            "minPower": 128,
-            "damage": 32,
-            "cooldown": 2,
-            "count": 2,
-            "angles": [-45, 45]
-          }
-        ],
-        "bulletConfig": {
-          "speed": 12,
-          "turnRate": 5,
-          "image": "cardBack",
-          "width": 32,
-          "height": 32
+            "angles": [4, 1],
+            "colors": [2, 4]
+        },
+        {
+          "minPower": 64,
+          "damage": 30,
+          "cooldown": 9,
+          "angles": [5, 3, 0],
+          "colors": [1, 2, 3]
+        },
+        {
+          "minPower": 80,
+          "damage": 32,
+          "cooldown": 7,
+          "angles": [5, 2, -1],
+          "colors": [4, 5, 6]
+        },
+        {
+          "minPower": 96,
+          "damage": 34,
+          "cooldown": 10,
+          "angles": [4, 2, 0, -2],
+          "colors": [5, 6, 7, 8]
+        },
+        {
+          "minPower": 112,
+          "damage": 36,
+          "cooldown": 8,
+          "angles": [3, -1, 1, -3],
+          "colors": [2, 5, 6, 8]
+        },
+        {
+          "minPower": 128,
+          "damage": 40,
+          "cooldown": 12,
+          "angles": [4, 2, 0, -2, -4],
+          "colors": [1, 3, 4, 6, 8]
         }
+      ],
+      "bulletConfig": {
+        "speed": 10,
+        "rotationSpeed": 10,
+        "width": 24,
+        "height": 24
       }
     }
   }
+}

@@ -1,5 +1,5 @@
 #playerStatsDisplay {
-  font-family: Arial, sans-serif;
+  font-family: 'Swagger', Arial, sans-serif;
   font-size: 20px;
   font-weight: bold;
   position: absolute; /* Change to absolute positioning */
@@ -37,6 +37,10 @@
   margin-bottom: 10px;
 }
 
+div .statstitle {
+  margin-bottom: 0px !important;
+}
+
 #playerStatsDisplay span {
   display: inline-block;
 }
@@ -63,42 +67,42 @@
   background: -webkit-linear-gradient(lightblue, white, LightSteelBlue, dimgrey, black);
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-shadow: none;
 }
 
 #playerStatsDisplay .score-text {
   background: -webkit-linear-gradient(lightblue, white, LightSteelBlue, dimgrey, black);
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-shadow: none;
 }
 
 #playerStatsDisplay .player-text {
   background: -webkit-linear-gradient(white, lightgrey, lightyellow, dimgrey, black);
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-shadow: none;
 }
 
 #playerStatsDisplay .bomb-text {
   background: -webkit-linear-gradient(white, lightgrey, lightyellow, dimgrey, black);
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-shadow: none;
 }
 
 #playerStatsDisplay .power-text {
-  background: -webkit-linear-gradient(red, lightgrey);
+  background: -webkit-linear-gradient(lightgrey, red);
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-shadow: none;
 }
 
 #playerStatsDisplay .graze-text {
-  background: -webkit-linear-gradient(lightgrey, green);
+  background: -webkit-linear-gradient(lightgrey, darkgreen);
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-shadow: none;
+}
+
+#playerStatsDisplay .point-text {
+  background: -webkit-linear-gradient(lightgrey, darkslateblue);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 #playerStatsDisplay .highscore-data {
@@ -106,7 +110,6 @@
   background: -webkit-linear-gradient(lightblue, white, LightSteelBlue, dimgrey);
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-shadow: none;
 }
 
 #playerStatsDisplay .score-data {
@@ -114,7 +117,6 @@
   background: -webkit-linear-gradient(lightblue, white, LightSteelBlue, dimgrey);
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-shadow: none;
 }
 
 #playerStatsDisplay .power-data {
@@ -122,7 +124,6 @@
   background: -webkit-linear-gradient(lightblue, white, LightSteelBlue, dimgrey);
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-shadow: none;
 }
 
 #playerStatsDisplay .graze-data {
@@ -130,5 +131,47 @@
   background: -webkit-linear-gradient(lightblue, white, LightSteelBlue, dimgrey);
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-shadow: none;
+}
+
+#playerStatsDisplay .point-data {
+  font-size: 24px;
+  background: -webkit-linear-gradient(lightblue, white, LightSteelBlue, dimgrey);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.first-char {
+  font-size: 72px;
+  margin-top: 10px;
+  font-family: 'Swagger', 'Meiryo', sans-serif;
+  background: -webkit-linear-gradient(lightblue, white, LightSteelBlue, dimgrey);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+#playerStatsDisplay .second-char {
+  font-size: 72px;
+  margin-left: 64px;
+  font-family: 'Swagger', 'Meiryo', sans-serif;
+  background: -webkit-linear-gradient(lightblue, white, LightSteelBlue, dimgrey);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+#playerStatsDisplay .third-char {
+  font-size: 72px;
+  margin-right: 64px;
+  margin-top: -32px;
+  font-family: 'Swagger', 'Meiryo', sans-serif;
+  background: -webkit-linear-gradient(lightblue, white, LightSteelBlue, dimgrey);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+#playerStatsDisplay .fourth-char {
+  font-size: 72px;
+  font-family: 'Swagger', 'Meiryo', sans-serif;
+  background: -webkit-linear-gradient(lightblue, white, LightSteelBlue, dimgrey);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
